@@ -2,6 +2,7 @@ package org.acme.Util;
 
 
 import org.acme.models.DTO.DTO;
+import org.acme.models.DTO.ProductDTO;
 import org.acme.models.Model;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -19,9 +20,8 @@ public class FieldUtil {
         for (Field attribute : attributes) {
             try {
                 attribute.setAccessible(true);
-                Object returnGet = newObject.getClass().getDeclaredMethod("get" + updateStringToGetorSet(attribute)).invoke(newObject);
-                if(returnGet != null){
-                    oldObject.getClass().getDeclaredMethod("set"+updateStringToGetorSet(attribute),attribute.getType()).invoke(oldObject,returnGet);
+                if(attribute.get(newObject) != null){
+                    oldObject.getClass().getDeclaredMethod("set"+updateStringToGetorSet(attribute),attribute.getType()).invoke(oldObject,attribute.get(newObject));
                 }
             } catch (Exception e) {
                 throw new RuntimeException();
