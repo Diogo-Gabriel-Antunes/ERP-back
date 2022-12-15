@@ -25,31 +25,31 @@ public class ClienteController {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Cliente> listAll(){
-//        return clienteService.findAll();
-        Cliente cliente = new Cliente();
-        cliente.setXNome("teste");
-        cliente.setIe("teste");
-        cliente.setIm("teste");
-        cliente.setEmail("teste");
-        cliente.setCpf("teste");
-        cliente.setCnpj("teste");
-        cliente.setIsuf("teste");
-        cliente.setIdEstrangeiro("teste");
-        cliente.setIndIEDest("teste");
-        Endereco endereco = new Endereco();
-        endereco.setXEnder("Adilia");
-        endereco.setXLgr("teste");
-        endereco.setNro("teste");
-        endereco.setXCpl("teste");
-        endereco.setXBairro("teste");
-        endereco.setCMun("teste");
-        endereco.setXMun("Joinville");
-        endereco.setUf("SC");
-        endereco.setCEP("89229129");
-        endereco.setCPais("Brasil");
-        endereco.setXPais("Brasil");
-        cliente.setEndereco(endereco);
-        return List.of(cliente);
+        return clienteService.findAll();
+//        Cliente cliente = new Cliente();
+//        cliente.setXNome("teste");
+//        cliente.setIe("teste");
+//        cliente.setIm("teste");
+//        cliente.setEmail("teste");
+//        cliente.setCpf("teste");
+//        cliente.setCnpj("teste");
+//        cliente.setIsuf("teste");
+//        cliente.setIdEstrangeiro("teste");
+//        cliente.setIndIEDest("teste");
+//        Endereco endereco = new Endereco();
+//        endereco.setXEnder("Adilia");
+//        endereco.setXLgr("teste");
+//        endereco.setNro("teste");
+//        endereco.setXCpl("teste");
+//        endereco.setXBairro("teste");
+//        endereco.setCMun("teste");
+//        endereco.setXMun("Joinville");
+//        endereco.setUf("SC");
+//        endereco.setCEP("89229129");
+//        endereco.setCPais("Brasil");
+//        endereco.setXPais("Brasil");
+//        cliente.setEndereco(endereco);
+//        return List.of(cliente);
     }
 
     @GET

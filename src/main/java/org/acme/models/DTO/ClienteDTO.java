@@ -4,6 +4,10 @@ import lombok.Getter;
 import lombok.Setter;
 import org.acme.Util.FieldUtil;
 import org.acme.models.Cliente;
+import org.acme.models.Endereco;
+
+import javax.persistence.OneToOne;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -17,7 +21,9 @@ public class ClienteDTO implements DTO {
     private String isuf;
     private String im;
     private String email;
-
+    private Endereco endereco;
+    private LocalDate dataCriacao;
+    private LocalDate ultimaAtualização;
     public static ClienteDTO convert(Cliente cliente) {
         ClienteDTO clienteDTO = new ClienteDTO();
         FieldUtil fieldUtil = new FieldUtil();

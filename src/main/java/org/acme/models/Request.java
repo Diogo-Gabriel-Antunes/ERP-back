@@ -28,4 +28,5 @@ public class Request implements Model{
     private LocalDate finishDate;
     @ManyToOne
     private StatusRequest status;
+    private Double value;
 }

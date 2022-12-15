@@ -3,6 +3,7 @@ package org.acme.services;
 import org.acme.Util.FieldUtil;
 import org.acme.models.Category;
 import org.acme.models.DTO.ProductDTO;
+import org.acme.models.Imposto;
 import org.acme.models.Product;
 import org.acme.models.enums.Status;
 
@@ -12,6 +13,7 @@ import javax.persistence.EntityManager;
 import java.lang.reflect.Field;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
@@ -26,11 +28,16 @@ public class ProductServices {
         return em.createQuery("SELECT p from Product p", Product.class).getResultList();
     }
 
-    public Product createProduct(Product Product) {
-        Product.setDateCreate(LocalDate.now());
-        Product.setDataAlteracao(LocalDate.now());
-        Product.setStatus(true);
-        return em.merge(Product);
+    public Product createProduct(Product product) {
+        product.setDateCreate(LocalDate.now());
+        product.setDataAlteracao(LocalDate.now());
+        product.setStatus(true);
+        Product productMerge = em.merge(product);
+        product.getImposto().forEach(imposto -> {
+            imposto.setProducts(productMerge);
+            em.merge(imposto);
+        });
+        return productMerge;
     }
 
     public Product getOneProduct(String id) {

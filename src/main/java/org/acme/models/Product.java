@@ -9,6 +9,8 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -21,14 +23,16 @@ public class Product implements Model {
     private String uuid;
     private String name;
     private String codeBar;
-    @ManyToOne(targetEntity = Category.class)
-    private Category category;
     private LocalDate dateCreate;
 
     private LocalDate dataAlteracao;
 
     private boolean status;
 
+    @OneToMany(mappedBy = "products",fetch = FetchType.EAGER)
+    private List<Imposto> imposto;
+    @ManyToOne(targetEntity = Category.class)
+    private Category category;
     @ManyToMany(mappedBy = "products")
     @JsonbTransient
     private Set<Request> requests;

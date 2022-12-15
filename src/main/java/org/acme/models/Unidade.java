@@ -8,27 +8,19 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 
 @Getter
 @Setter
 @Entity
-public class Cliente implements Model {
+public class Unidade implements Model{
     @Id
     @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String uuid;
-    private String cnpj;
-    private String cpf;
-    private String idEstrangeiro;
-    private String xNome;
-    private String indIEDest;
-    private String ie;
-    private String isuf;
-    private String im;
-    private String email;
     @OneToOne
-    private Endereco endereco;
-    private LocalDate dataCriacao;
-    private LocalDate ultimaAtualização;
+    private Pessoa pessoa;
+    private LocalDate criadoEm;
+    private LocalDate atualizadoEm;
 }
