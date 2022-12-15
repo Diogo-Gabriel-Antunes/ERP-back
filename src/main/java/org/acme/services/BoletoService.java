@@ -6,7 +6,6 @@ import org.acme.Util.GsonUtil;
 import org.acme.models.boleto.asaas.BoletoAsaas;
 import org.acme.models.boleto.asaas.BoletoAsaasDTO;
 import org.acme.models.boleto.asaas.RetornoAsaas;
-import org.apache.commons.io.Charsets;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -15,8 +14,6 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @ApplicationScoped
@@ -25,33 +22,35 @@ public class BoletoService {
     private EntityManager em;
     private Gson gson = new GsonUtil().parser;
     private FieldUtil fieldUtil = new FieldUtil();
-    public List<BoletoAsaas> listAll(){
+
+    public List<BoletoAsaas> listAll() {
         return em.createQuery("SELECT b FROM BoletoAsaas b", BoletoAsaas.class).getResultList();
     }
 
     public BoletoAsaas listOne(String uuid) {
 
-       return em.createQuery("SELECT b from BoletoAsaas b WHERE uuid = :uuid", BoletoAsaas.class).setParameter("uuid",uuid).getSingleResult();
+        return em.createQuery("SELECT b from BoletoAsaas b WHERE uuid = :uuid", BoletoAsaas.class).setParameter("uuid", uuid).getSingleResult();
     }
 
     public BoletoAsaas create(BoletoAsaas boletoAsaas) {
-        try{
+        try {
             HttpClient httpClient = HttpClient.newBuilder().build();
             HttpRequest httpRequest = HttpRequest.newBuilder()
                     .POST(HttpRequest.BodyPublishers.ofString(gson.toJson(boletoAsaas)))
-                    .header("access_token","$aact_YTU5YTE0M2M2N2I4MTliNzk0YTI5N2U5MzdjNWZmNDQ6OjAwMDAwMDAwMDAwMDAwNDU1NTg6OiRhYWNoX2QwNmE1ZDMxLTEyNzAtNDkzMS04MDlkLTQ3NmY0MzI5ZTA1NQ==")
-                    .header("Content-Type","application/json")
+                    .header("access_token", "$aact_YTU5YTE0M2M2N2I4MTliNzk0YTI5N2U5MzdjNWZmNDQ6OjAwMDAwMDAwMDAwMDAwNDU1NTg6OiRhYWNoX2QwNmE1ZDMxLTEyNzAtNDkzMS04MDlkLTQ3NmY0MzI5ZTA1NQ==")
+                    .header("Content-Type", "application/json")
                     .uri(new URI("https://sandbox.asaas.com/api/v3/paymentLinks"))
                     .build();
             HttpResponse<String> resposta = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
-            RetornoAsaas retornoAsaas = gson.fromJson(resposta.body(), RetornoAsaas.class);
-            em.merge(retornoAsaas);
-            boletoAsaas.setRetornoAsaas(retornoAsaas);
-            if(resposta.statusCode() == 200){
-                return em.merge(boletoAsaas);
+            if (resposta.statusCode() == 200) {
+                RetornoAsaas retornoAsaas = gson.fromJson(resposta.body(), RetornoAsaas.class);
+                em.merge(retornoAsaas);
+                boletoAsaas.setRetornoAsaas(retornoAsaas);
+                em.merge(boletoAsaas);
+                return boletoAsaas;
             }
             throw new RuntimeException();
-        }catch (Throwable t){
+        } catch (Throwable t) {
             t.printStackTrace();
             return null;
         }
@@ -62,7 +61,7 @@ public class BoletoService {
         BoletoAsaas boletoAsaas = listOne(uuid);
 
         em.merge(boletoAsaas);
-        fieldUtil.updateFields(boletoAsaas,boletoAsaasDTO);
+        fieldUtil.updateFieldsDtoToModel(boletoAsaas, boletoAsaasDTO);
         em.persist(boletoAsaas);
         return boletoAsaas;
     }

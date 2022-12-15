@@ -15,13 +15,27 @@ public class FieldUtil {
         return attribute.getName().replaceFirst(attribute.getName().substring(0,1),attribute.getName().substring(0,1).toUpperCase());
     }
 
-    public void updateFields(Model oldObject, DTO newObject){
+    public void updateFieldsDtoToModel(Model oldObject, DTO newObject){
         Field[] attributes = newObject.getClass().getDeclaredFields();
         for (Field attribute : attributes) {
             try {
                 attribute.setAccessible(true);
                 if(attribute.get(newObject) != null){
                     oldObject.getClass().getDeclaredMethod("set"+updateStringToGetorSet(attribute),attribute.getType()).invoke(oldObject,attribute.get(newObject));
+                }
+            } catch (Exception e) {
+                throw new RuntimeException();
+            }
+        }
+    }
+
+    public void updateFieldsModelToDTO(Model model, DTO dto){
+        Field[] attributes = model.getClass().getDeclaredFields();
+        for (int i = 0;i<attributes.length - 5;i++) {
+            try {
+                attributes[i].setAccessible(true);
+                if(attributes[i].get(model) != null){
+                    dto.getClass().getDeclaredMethod("set"+updateStringToGetorSet(attributes[i]), attributes[i].getType()).invoke(dto, attributes[i].get(model));
                 }
             } catch (Exception e) {
                 throw new RuntimeException();

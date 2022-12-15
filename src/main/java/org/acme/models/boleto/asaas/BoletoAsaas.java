@@ -26,7 +26,7 @@ public class BoletoAsaas implements Model {
     private String dueDateLimitDays;
     @Enumerated(EnumType.STRING)
     private SubscriptionCycle subscriptionCycle;
-    private String maxInstallmentCount;
+    private float maxInstallmentCount;
     private String notificationEnabled;
     @OneToOne
     private RetornoAsaas retornoAsaas;

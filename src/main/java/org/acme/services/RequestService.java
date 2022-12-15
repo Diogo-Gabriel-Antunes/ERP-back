@@ -33,7 +33,7 @@ public class RequestService {
     public Request create(RequestDTO requestDTO) {
         Request request = new Request();
 
-        fieldUtil.updateFields(request,requestDTO);
+        fieldUtil.updateFieldsDtoToModel(request,requestDTO);
         request.setCreateDate(LocalDate.now());
         request.setFinishDate(LocalDate.now());
         em.persist(request);
@@ -43,7 +43,7 @@ public class RequestService {
     public void update(String uuid, RequestDTO requestDTO) {
         Request request = findOne(uuid);
         em.merge(request);
-        fieldUtil.updateFields(request,requestDTO);
+        fieldUtil.updateFieldsDtoToModel(request,requestDTO);
         request.setFinishDate(LocalDate.now());
         em.persist(request);
     }

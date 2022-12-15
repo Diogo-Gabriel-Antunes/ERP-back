@@ -44,7 +44,7 @@ public class ProductServices {
 
         em.merge(product);
 
-        fieldUtil.updateFields(product,newProduct);
+        fieldUtil.updateFieldsDtoToModel(product,newProduct);
 
         em.persist(product);
         return product;

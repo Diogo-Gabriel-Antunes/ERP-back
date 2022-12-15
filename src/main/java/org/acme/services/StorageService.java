@@ -40,7 +40,7 @@ public class StorageService {
     public Storage update(String uuid,StorageDTO storageDTO) {
         Storage storage = findOne(uuid);
         Storage newStorage = em.merge(storage);
-        fieldUtil.updateFields(newStorage,storageDTO);
+        fieldUtil.updateFieldsDtoToModel(newStorage,storageDTO);
         newStorage.setLastUpdate(LocalDate.now());
         em.persist(newStorage);
         return newStorage;
