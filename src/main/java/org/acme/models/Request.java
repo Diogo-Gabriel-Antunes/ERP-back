@@ -18,12 +18,10 @@ public class Request implements Model{
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String uuid;
     private String numberRequest;
-    @ManyToMany
-    @JoinTable(name = "productsToResquest",
-    joinColumns =
-            {@JoinColumn(name = "product_id")},
-            inverseJoinColumns = @JoinColumn(name = "request_id"))
-    private Set<Product> products;
+    @OneToMany(mappedBy = "pedido")
+    private List<Itens> itens;
+    @OneToOne
+    private Cliente cliente;
     private LocalDate createDate;
     private LocalDate finishDate;
     @ManyToOne

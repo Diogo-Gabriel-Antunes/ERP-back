@@ -41,8 +41,8 @@ public class RequestController {
     @Transactional
     public Response create(String json){
         RequestDTO requestDTO = gson.fromJson(json,RequestDTO.class);
-        requestService.create(requestDTO);
-        return Response.ok().build();
+        Request request = requestService.create(requestDTO);
+        return Response.ok(request).build();
     }
 
     @PUT

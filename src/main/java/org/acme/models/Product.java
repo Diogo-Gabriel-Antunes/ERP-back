@@ -33,9 +33,7 @@ public class Product implements Model {
     private List<Imposto> imposto;
     @ManyToOne(targetEntity = Category.class)
     private Category category;
-    @ManyToMany(mappedBy = "products")
-    @JsonbTransient
-    private Set<Request> requests;
 
 
+    private Double value;
 }

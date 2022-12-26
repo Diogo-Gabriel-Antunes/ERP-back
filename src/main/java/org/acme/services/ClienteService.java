@@ -42,6 +42,7 @@ public class ClienteService {
         Cliente cliente= findOne(uuid);
 
         em.merge(cliente);
+        em.merge(clienteDTO.getEndereco());
         fieldUtil.updateFieldsDtoToModel(cliente,clienteDTO);
         em.persist(cliente.getEndereco());
         cliente.setUltimaAtualização(LocalDate.now());
