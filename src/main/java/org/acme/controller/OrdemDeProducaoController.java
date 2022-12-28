@@ -32,10 +32,10 @@ public class OrdemDeProducaoController {
     @GET
     @Path("{uuid}")
     @Produces(MediaType.APPLICATION_JSON)
-    public OrdemDeProducaoDTO listOne(@PathParam("uuid")String uuid){
-        OrdemDeProducao ordemDeProducao = ordemDeProducaoService.findOne(uuid);
+    public OrdemDeProducao listOne(@PathParam("uuid")String uuid){
 
-        return OrdemDeProducaoDTO.convert(ordemDeProducao);
+
+        return ordemDeProducaoService.findOne(uuid);
     }
     @POST
     @Transactional
@@ -44,7 +44,14 @@ public class OrdemDeProducaoController {
         ordemDeProducaoService.create(ordemDeProducaoDTO);
         return ordemDeProducaoDTO;
     }
+    @GET
+    @Path("/mes")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<OrdemDeProducao> listByMonth(){
 
+
+        return ordemDeProducaoService.findByMonth();
+    }
     @PUT
     @Path("{uuid}")
     @Transactional
@@ -53,7 +60,19 @@ public class OrdemDeProducaoController {
         ordemDeProducaoService.update(uuid,ordemDeProducaoDTO);
         return ordemDeProducaoDTO;
     }
-
+    @PUT
+    @Path("{uuid}/finalizar")
+    @Transactional
+    public Response finish(@PathParam("uuid") String uuid ){
+        try{
+            ordemDeProducaoService.updateFinish(uuid);
+            return Response.ok().build();
+        }catch (Throwable t){
+            t.printStackTrace();
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
+    
     @Path("{uuid}")
     @DELETE
     @Transactional

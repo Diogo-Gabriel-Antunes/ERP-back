@@ -7,6 +7,7 @@ import org.acme.models.Model;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.lang.reflect.Field;
+import java.util.Arrays;
 
 @ApplicationScoped
 public class FieldUtil {

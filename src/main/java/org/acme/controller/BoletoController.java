@@ -33,7 +33,11 @@ public class BoletoController {
     public BoletoAsaas listOne(@PathParam("uuid")String uuid){
         return boletoService.listOne(uuid);
     }
-
+    @GET
+    @Path("/mes")
+    public List<BoletoAsaas> listByMonth(){
+        return boletoService.listByMonth();
+    }
     @POST
     @Transactional
     public BoletoAsaas create(String json) throws Exception{
@@ -49,4 +53,5 @@ public class BoletoController {
         BoletoAsaas newBoletoAsaas = boletoService.update(uuid, boletoAsaasDTO);
         return Response.ok(newBoletoAsaas).build();
     }
+
 }

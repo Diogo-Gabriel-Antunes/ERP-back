@@ -45,4 +45,17 @@ public class StorageService {
         em.persist(newStorage);
         return newStorage;
     }
+    public Storage findByProduct(String productUuid){
+        return em.createQuery("SELECT e FROM Storage e WHERE e.product.uuid = :uuid", Storage.class)
+                .setParameter("uuid", productUuid).getSingleResult();
+    }
+
+    public List<Storage> findMonth() {
+        LocalDate hoje = LocalDate.now();
+        LocalDate umMesAtras = LocalDate.of(hoje.getYear(),hoje.getMonth().getValue() -1 , hoje.getDayOfMonth());
+        return em.createQuery("SELECT s FROM Storage s WHERE s.lastUpdate <= :hoje AND s.lastUpdate >= :umMesAtras",Storage.class)
+                .setParameter("hoje",hoje)
+                .setParameter("umMesAtras",umMesAtras)
+                .getResultList();
+    }
 }

@@ -6,6 +6,7 @@ import org.acme.models.Model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -30,6 +31,7 @@ public class BoletoAsaas implements Model {
     private String notificationEnabled;
     @OneToOne
     private RetornoAsaas retornoAsaas;
+    private LocalDate atualizadoEm;
 }
 
 enum BillingType{

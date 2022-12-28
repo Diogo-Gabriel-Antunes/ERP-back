@@ -23,9 +23,9 @@ import java.util.List;
 public class ProductController {
 
     @Inject
-    private ProductServices productServices;
+    ProductServices productServices;
     @Inject
-    private StorageService storageService;
+    StorageService storageService;
 
     private Gson gson = new GsonUtil().parser;
 

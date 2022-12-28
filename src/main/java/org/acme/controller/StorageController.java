@@ -42,6 +42,13 @@ public class StorageController {
         return storageService.findOne(uuid);
     }
 
+    @GET
+    @Path("/mes")
+    @Transactional
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Storage> listAMonth(){
+        return storageService.findMonth();
+    }
     @PUT
     @Path("{uuid}")
     @Transactional
@@ -51,4 +58,5 @@ public class StorageController {
         Storage update = storageService.update(uuid, storageDTO);
         return Response.ok(update).build();
     }
+
 }

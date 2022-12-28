@@ -1,5 +1,6 @@
 package org.acme.models;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Getter;
 import lombok.Setter;
 import org.acme.models.enums.TipoImposto;
@@ -13,7 +14,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-public class Imposto implements Serializable {
+public class Imposto extends PanacheEntityBase implements Serializable {
     @Id
     @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")

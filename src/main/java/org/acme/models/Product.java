@@ -1,5 +1,6 @@
 package org.acme.models;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Getter;
 import lombok.Setter;
 import org.acme.models.enums.Status;
@@ -16,7 +17,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-public class Product implements Model {
+public class Product extends PanacheEntityBase implements Model {
 
     @Id @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")

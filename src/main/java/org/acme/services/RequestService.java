@@ -1,14 +1,17 @@
 package org.acme.services;
 
 
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import org.acme.Util.FieldUtil;
 import org.acme.models.DTO.RequestDTO;
 import org.acme.models.Request;
 import org.acme.models.StatusRequest;
+import org.bouncycastle.ocsp.Req;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.ws.rs.core.Response;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -63,7 +66,6 @@ public class RequestService {
 
     public void update(String uuid, RequestDTO requestDTO) {
         Request request = findOne(uuid);
-//        Cliente cliente = clienteService.findOne(requestDTO.getCliente().getUuid());
         em.merge(request);
         em.merge(requestDTO.getCliente());
         requestDTO.getItens().forEach(item->{
@@ -73,5 +75,29 @@ public class RequestService {
         fieldUtil.updateFieldsDtoToModel(request,requestDTO);
         request.setFinishDate(LocalDate.now());
         em.persist(request);
+    }
+
+    public List<Request> findMonth() {
+        LocalDate hoje = LocalDate.now();
+        LocalDate umMesAtras = LocalDate.of(hoje.getYear(),hoje.getMonth().getValue()-1,hoje.getDayOfMonth());
+        return em.createQuery("SELECT r FROM Request r WHERE r.finishDate <= :hoje AND r.finishDate >= :umMesAtras AND r.status = :status",Request.class)
+                .setParameter("hoje", hoje)
+                .setParameter("umMesAtras",umMesAtras)
+                .setParameter("status",StatusRequest.findById("5"))
+                .getResultList();
+
+    }
+
+    public Response updateFinish(String uuid) {
+        try{
+            Request request = Request.findById(uuid);
+            request.setStatus(StatusRequest.findById("5"));
+            request.setFinishDate(LocalDate.now());
+            Request.persist(request);
+            return Response.ok().build();
+        }catch (Throwable t){
+            t.printStackTrace();
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
     }
 }

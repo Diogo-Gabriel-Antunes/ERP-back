@@ -1,5 +1,6 @@
 package org.acme.models;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -13,7 +14,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
-public class ContasAPagar implements Model{
+public class ContasAPagar extends PanacheEntityBase implements Model{
     @Id
     @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")

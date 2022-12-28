@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -28,6 +29,7 @@ public class RetornoAsaas {
     private float viewCount;
     private float maxInstallmentCount;
     private float dueDateLimitDays;
+    private LocalDate atualizadoEm;
     private boolean notificationEnabled;
     @OneToOne
     @JsonbTransient

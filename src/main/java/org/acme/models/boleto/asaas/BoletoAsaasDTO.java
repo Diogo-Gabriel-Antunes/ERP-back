@@ -7,6 +7,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -22,6 +23,7 @@ public class BoletoAsaasDTO implements DTO {
     private String dueDateLimitDays;
     private SubscriptionCycle subscriptionCycle;
     private String maxInstallmentCount;
+    private LocalDate atualizadoEm;
     private String notificationEnabled;
 }
 

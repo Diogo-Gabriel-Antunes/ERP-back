@@ -3,6 +3,7 @@ package org.acme.services;
 import com.google.gson.Gson;
 import org.acme.Util.FieldUtil;
 import org.acme.Util.GsonUtil;
+import org.acme.models.OrdemDeProducao;
 import org.acme.models.boleto.asaas.BoletoAsaas;
 import org.acme.models.boleto.asaas.BoletoAsaasDTO;
 import org.acme.models.boleto.asaas.RetornoAsaas;
@@ -14,6 +15,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.LocalDate;
 import java.util.List;
 
 @ApplicationScoped
@@ -64,5 +66,14 @@ public class BoletoService {
         fieldUtil.updateFieldsDtoToModel(boletoAsaas, boletoAsaasDTO);
         em.persist(boletoAsaas);
         return boletoAsaas;
+    }
+
+    public List<BoletoAsaas> listByMonth() {
+        LocalDate hoje = LocalDate.now();
+        LocalDate umMesAtras = LocalDate.of(hoje.getYear(),hoje.getMonth().getValue()-1,hoje.getDayOfMonth());
+        return em.createQuery("SELECT b FROM BoletoAsaas b WHERE b.atualizadoEm <= :hoje AND b.atualizadoEm >= :umMesAtras ", BoletoAsaas.class)
+                .setParameter("hoje",hoje)
+                .setParameter("umMesAtras",umMesAtras)
+                .getResultList();
     }
 }

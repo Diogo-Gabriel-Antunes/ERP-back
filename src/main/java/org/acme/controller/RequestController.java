@@ -36,6 +36,11 @@ public class RequestController {
         return requestService.findOne(uuid);
     }
 
+    @GET
+    @Path("mes")
+    public List<Request> listAllAMonth(){
+        return requestService.findMonth();
+    }
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
@@ -52,5 +57,11 @@ public class RequestController {
         RequestDTO requestDTO = gson.fromJson(newObject, RequestDTO.class);
         requestService.update(uuid,requestDTO);
         return Response.ok().build();
+    }
+    @PUT
+    @Transactional
+    @Path("{uuid}/finalizar")
+    public Response updateFinish(@PathParam("uuid")String uuid){
+        return requestService.updateFinish(uuid);
     }
 }

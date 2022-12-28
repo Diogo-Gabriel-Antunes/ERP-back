@@ -3,22 +3,26 @@ package org.acme.models;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Getter;
 import lombok.Setter;
+import org.acme.models.enums.StatusDaProducao;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
-import java.util.List;
+import java.time.LocalDateTime;
 
-@Entity
 @Getter
 @Setter
-public class StatusRequest extends PanacheEntityBase {
-    @Id
-    @GeneratedValue(generator="system-uuid")
+@Entity
+public class TimesOrdemDeProducao extends PanacheEntityBase {
+    @Id @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String uuid;
-    private String status;
-    @OneToMany(mappedBy = "status")
+    private LocalDateTime time;
+    @Enumerated(EnumType.STRING)
+    private StatusDaProducao statusDaProducao;
+    @ManyToOne
     @JsonbTransient
-    private List<Request> requests;
+    private OrdemDeProducao ordemDeProducao;
+
 }
+
