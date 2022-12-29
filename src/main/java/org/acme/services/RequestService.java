@@ -46,7 +46,7 @@ public class RequestService {
         request.setFinishDate(LocalDate.now());
 
         StatusRequest status = new StatusRequest();
-        status.setUuid("1");
+        status.setUuid("2");
         request.setStatus(status);
         request.setNumberRequest(String.valueOf((long)(Math.random() * 1000000)));
 

@@ -39,16 +39,18 @@ public class BoletoService {
             HttpClient httpClient = HttpClient.newBuilder().build();
             HttpRequest httpRequest = HttpRequest.newBuilder()
                     .POST(HttpRequest.BodyPublishers.ofString(gson.toJson(boletoAsaas)))
-                    .header("access_token", "$aact_YTU5YTE0M2M2N2I4MTliNzk0YTI5N2U5MzdjNWZmNDQ6OjAwMDAwMDAwMDAwMDAwNDU1NTg6OiRhYWNoX2QwNmE1ZDMxLTEyNzAtNDkzMS04MDlkLTQ3NmY0MzI5ZTA1NQ==")
+                    .header("access_token", "$aact_YTU5YTE0M2M2N2I4MTliNzk0YTI5N2U5MzdjNWZmNDQ6OjAwMDAwMDAwMDAwMDAwNDU1NTg6OiRhYWNoXzU5ZTZmNjlkLWFkZmItNGU4YS1iN2FkLTEyOTQxNjEyYzcyYg==")
                     .header("Content-Type", "application/json")
                     .uri(new URI("https://sandbox.asaas.com/api/v3/paymentLinks"))
                     .build();
             HttpResponse<String> resposta = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
             if (resposta.statusCode() == 200) {
                 RetornoAsaas retornoAsaas = gson.fromJson(resposta.body(), RetornoAsaas.class);
-                em.merge(retornoAsaas);
-                boletoAsaas.setRetornoAsaas(retornoAsaas);
+                retornoAsaas.setAtualizadoEm(LocalDate.now().toString());
+                RetornoAsaas retornoAsaasBD = em.merge(retornoAsaas);
+                boletoAsaas.setRetornoAsaas(retornoAsaasBD);
                 em.merge(boletoAsaas);
+                em.flush();
                 return boletoAsaas;
             }
             throw new RuntimeException();
@@ -72,8 +74,8 @@ public class BoletoService {
         LocalDate hoje = LocalDate.now();
         LocalDate umMesAtras = LocalDate.of(hoje.getYear(),hoje.getMonth().getValue()-1,hoje.getDayOfMonth());
         return em.createQuery("SELECT b FROM BoletoAsaas b WHERE b.atualizadoEm <= :hoje AND b.atualizadoEm >= :umMesAtras ", BoletoAsaas.class)
-                .setParameter("hoje",hoje)
-                .setParameter("umMesAtras",umMesAtras)
+                .setParameter("hoje",hoje.toString())
+                .setParameter("umMesAtras",umMesAtras.toString())
                 .getResultList();
     }
 }

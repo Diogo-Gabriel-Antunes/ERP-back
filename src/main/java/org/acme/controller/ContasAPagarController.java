@@ -29,14 +29,6 @@ public class ContasAPagarController {
         return contasAPagarService.listAll();
 
     }
-
-    @POST
-    @Transactional
-    public ContasAPagarDTO create(String json){
-        ContasAPagarDTO contasAPagarDTO = gson.fromJson(json, ContasAPagarDTO.class);
-        contasAPagarService.create(contasAPagarDTO);
-        return contasAPagarDTO;
-    }
     @GET
     @Path("{uuid}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -45,6 +37,14 @@ public class ContasAPagarController {
 
         return ContasAPagarDTO.convert(contasAPagar);
     }
+    @POST
+    @Transactional
+    public ContasAPagarDTO create(String json){
+        ContasAPagarDTO contasAPagarDTO = gson.fromJson(json, ContasAPagarDTO.class);
+        contasAPagarService.create(contasAPagarDTO);
+        return contasAPagarDTO;
+    }
+
     @PUT
     @Path("{uuid}")
     @Transactional

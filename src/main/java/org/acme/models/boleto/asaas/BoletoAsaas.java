@@ -3,6 +3,7 @@ package org.acme.models.boleto.asaas;
 import lombok.Getter;
 import lombok.Setter;
 import org.acme.models.Model;
+import org.acme.models.cobranca.BillingType;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -31,12 +32,10 @@ public class BoletoAsaas implements Model {
     private String notificationEnabled;
     @OneToOne
     private RetornoAsaas retornoAsaas;
-    private LocalDate atualizadoEm;
+    private String atualizadoEm;
 }
 
-enum BillingType{
-    BOLETO,CREDIT_CARD,PIX,UNDEDFINED;
-}
+
 enum ChargeType{
     DETACHED,RECURRENT,INSTALLMENT;
 }

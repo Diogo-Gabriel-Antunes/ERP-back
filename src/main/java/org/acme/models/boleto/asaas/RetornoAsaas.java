@@ -22,14 +22,14 @@ public class RetornoAsaas {
     private String chargeType;
     private String url;
     private String billingType;
-    private String subscriptionCycle = null;
+    private String subscriptionCycle;
     private String description;
     private String endDate;
     private boolean deleted;
     private float viewCount;
     private float maxInstallmentCount;
     private float dueDateLimitDays;
-    private LocalDate atualizadoEm;
+    private String atualizadoEm;
     private boolean notificationEnabled;
     @OneToOne
     @JsonbTransient

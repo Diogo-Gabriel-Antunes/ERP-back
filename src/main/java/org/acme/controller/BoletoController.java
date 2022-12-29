@@ -34,7 +34,7 @@ public class BoletoController {
         return boletoService.listOne(uuid);
     }
     @GET
-    @Path("/mes")
+    @Path("mes")
     public List<BoletoAsaas> listByMonth(){
         return boletoService.listByMonth();
     }
