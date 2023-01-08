@@ -23,12 +23,12 @@ public class OrdemDeProducao extends PanacheEntityBase implements Model{
     @OneToOne
     private Product product;
     private Long quantidade;
-    @Column(length = 999999999)
+    @Column(length = 10485760)
     private String descricao;
     @Enumerated(EnumType.STRING)
     private StatusDaProducao status;
     @OneToMany(mappedBy = "ordemDeProducao")
-    private List<TimesOrdemDeProducao> atualizadoEm = new ArrayList<>();
+    private List<TimesOrdemDeProducao> atualizadoEm;
     private LocalDate inicioDaProducao;
     private LocalDate finalizadoEm;
 }

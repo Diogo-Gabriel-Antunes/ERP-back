@@ -1,9 +1,9 @@
 package org.acme.services;
 
 import com.google.gson.Gson;
+import org.acme.Util.DateUtil;
 import org.acme.Util.FieldUtil;
 import org.acme.Util.GsonUtil;
-import org.acme.models.OrdemDeProducao;
 import org.acme.models.boleto.asaas.BoletoAsaas;
 import org.acme.models.boleto.asaas.BoletoAsaasDTO;
 import org.acme.models.boleto.asaas.RetornoAsaas;
@@ -15,6 +15,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -72,10 +73,34 @@ public class BoletoService {
 
     public List<BoletoAsaas> listByMonth() {
         LocalDate hoje = LocalDate.now();
-        LocalDate umMesAtras = LocalDate.of(hoje.getYear(),hoje.getMonth().getValue()-1,hoje.getDayOfMonth());
-        return em.createQuery("SELECT b FROM BoletoAsaas b WHERE b.atualizadoEm <= :hoje AND b.atualizadoEm >= :umMesAtras ", BoletoAsaas.class)
-                .setParameter("hoje",hoje.toString())
-                .setParameter("umMesAtras",umMesAtras.toString())
-                .getResultList();
+
+        try {
+            LocalDate umMesAtras = LocalDate.of(hoje.getYear(), hoje.getMonth().getValue() - 1, hoje.getDayOfMonth() - 1);
+
+            if (new DateUtil().validaData(hoje)) {
+                return em.createQuery("SELECT b FROM BoletoAsaas b WHERE b.atualizadoEm <= :hoje AND b.atualizadoEm >= :umMesAtras ", BoletoAsaas.class)
+                        .setParameter("hoje", hoje.toString())
+                        .setParameter("umMesAtras", umMesAtras.toString())
+                        .getResultList();
+            } else {
+                return em.createQuery("SELECT b FROM BoletoAsaas b WHERE b.atualizadoEm <= :hoje AND b.atualizadoEm >= :umMesAtras ", BoletoAsaas.class)
+                        .setParameter("hoje", hoje.toString())
+                        .setParameter("umMesAtras", umMesAtras.toString())
+                        .getResultList();
+            }
+        } catch (DateTimeException e) {
+            LocalDate umMesAtras = LocalDate.of(hoje.getYear()-1, 12, hoje.getDayOfMonth() - 1);
+            if (new DateUtil().validaData(hoje)) {
+                return em.createQuery("SELECT b FROM BoletoAsaas b WHERE b.atualizadoEm <= :hoje AND b.atualizadoEm >= :umMesAtras ", BoletoAsaas.class)
+                        .setParameter("hoje", hoje.toString())
+                        .setParameter("umMesAtras", umMesAtras.toString())
+                        .getResultList();
+            } else {
+                return em.createQuery("SELECT b FROM BoletoAsaas b WHERE b.atualizadoEm <= :hoje AND b.atualizadoEm >= :umMesAtras ", BoletoAsaas.class)
+                        .setParameter("hoje", hoje.toString())
+                        .setParameter("umMesAtras", umMesAtras.toString())
+                        .getResultList();
+            }
+        }
     }
 }

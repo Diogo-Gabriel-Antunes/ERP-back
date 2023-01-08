@@ -6,6 +6,7 @@ import org.acme.models.Request;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -18,7 +19,13 @@ public class FluxoDeCaixaService {
 
     public Double getFluxoDeCaixa() {
         LocalDate hoje = LocalDate.now();
-        LocalDate umMesAtras = LocalDate.of(hoje.getYear(),hoje.getMonth().getValue()-1,hoje.getDayOfMonth());
+        LocalDate umMesAtras = null;
+        try{
+            umMesAtras =LocalDate.of(hoje.getYear(),hoje.getMonth().getValue()-1,hoje.getDayOfMonth());
+
+        } catch (DateTimeException e){
+            umMesAtras = LocalDate.of(hoje.getYear()-1,12,hoje.getDayOfMonth());
+        }
         List<ContasAPagar> contasAPagar = em.createQuery("SELECT c FROM ContasAPagar c WHERE c.dataQueFoiPago <= :hoje AND c.dataQueFoiPago >= :umMesAtras", ContasAPagar.class)
                 .setParameter("hoje",hoje)
                 .setParameter("umMesAtras",umMesAtras)

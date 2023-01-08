@@ -3,6 +3,7 @@ package org.acme.services;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import org.acme.Util.FieldUtil;
 import org.acme.models.DTO.FuncionarioDTO;
+import org.acme.models.Endereco;
 import org.acme.models.Funcionario;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -19,8 +20,15 @@ public class FuncionarioService {
         try{
             Funcionario funcionario = new Funcionario();
 
+
+            Endereco enderecoBD = em.merge(funcionarioDTO.getEndereco());
+
             fieldUtil.updateFieldsDtoToModel(funcionario,funcionarioDTO);
+            funcionario.setEndereco(enderecoBD);
+            em.persist(enderecoBD);
+
             em.persist(funcionario);
+
             return Response.ok(funcionario).build();
         }catch (Throwable t){
             t.printStackTrace();
@@ -31,6 +39,8 @@ public class FuncionarioService {
     public Response update(String uuid, FuncionarioDTO funcionarioDTO) {
         try{
             Funcionario funcionario = Funcionario.findById(uuid);
+            Endereco endereco = em.merge(funcionarioDTO.getEndereco());
+            funcionarioDTO.setEndereco(endereco);
             fieldUtil.updateFieldsDtoToModel(funcionario,funcionarioDTO);
             Funcionario.persist(funcionario);
             return Response.ok(funcionario).build();

@@ -25,16 +25,13 @@ public class Product extends PanacheEntityBase implements Model {
     private String name;
     private String codeBar;
     private LocalDate dateCreate;
-
     private LocalDate dataAlteracao;
-
     private boolean status;
-
     @OneToMany(mappedBy = "products",fetch = FetchType.EAGER)
     private List<Imposto> imposto;
     @ManyToOne(targetEntity = Category.class)
     private Category category;
-
-
     private Double value;
+    @OneToMany(mappedBy = "produto")
+    private List<Imagem> imagens;
 }

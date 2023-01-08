@@ -35,8 +35,13 @@ public class BoletoController {
     }
     @GET
     @Path("mes")
-    public List<BoletoAsaas> listByMonth(){
-        return boletoService.listByMonth();
+    public Response listByMonth(){
+        try{
+            return Response.ok(boletoService.listByMonth()).build();
+        }catch (Throwable t){
+            t.printStackTrace();
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
     }
     @POST
     @Transactional

@@ -6,9 +6,11 @@ import lombok.Setter;
 import org.acme.models.enums.NivelDeEscolaridade;
 import org.hibernate.annotations.GenericGenerator;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -39,6 +41,9 @@ public class Funcionario extends PanacheEntityBase implements Model{
     private String naturalidade;
     private Double salario;
     private boolean ativo;
+    @OneToMany(mappedBy = "funcionario")
+    @JsonbTransient
+    private List<Atividade> atividades;
 }
 
 

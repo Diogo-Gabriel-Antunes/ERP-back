@@ -1,5 +1,6 @@
 package org.acme.services;
 
+import org.acme.Util.DateUtil;
 import org.acme.Util.FieldUtil;
 import org.acme.models.DTO.StorageDTO;
 import org.acme.models.Product;
@@ -8,6 +9,7 @@ import org.acme.models.Storage;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -52,10 +54,36 @@ public class StorageService {
 
     public List<Storage> findMonth() {
         LocalDate hoje = LocalDate.now();
-        LocalDate umMesAtras = LocalDate.of(hoje.getYear(),hoje.getMonth().getValue() -1 , hoje.getDayOfMonth());
-        return em.createQuery("SELECT s FROM Storage s WHERE s.lastUpdate <= :hoje AND s.lastUpdate >= :umMesAtras",Storage.class)
-                .setParameter("hoje",hoje)
-                .setParameter("umMesAtras",umMesAtras)
-                .getResultList();
+        try{
+            LocalDate umMesAtras = LocalDate.of(hoje.getYear(),hoje.getMonth().getValue() -1 , hoje.getDayOfMonth()-1);
+            if(new DateUtil().validaData(hoje)){
+                return em.createQuery("SELECT s FROM Storage s WHERE s.lastUpdate <= :hoje AND s.lastUpdate >= :umMesAtras",Storage.class)
+                        .setParameter("hoje",hoje)
+                        .setParameter("umMesAtras",umMesAtras)
+                        .getResultList();
+            }else{
+                return em.createQuery("SELECT s FROM Storage s WHERE s.lastUpdate <= :hoje AND s.lastUpdate >= :umMesAtras",Storage.class)
+                        .setParameter("hoje",hoje)
+                        .setParameter("umMesAtras",umMesAtras)
+                        .getResultList();
+            }
+        }catch (DateTimeException e){
+            LocalDate umMesAtras = LocalDate.of(hoje.getYear()-1,12 , hoje.getDayOfMonth()-1);
+            if(new DateUtil().validaData(hoje)){
+                return em.createQuery("SELECT s FROM Storage s WHERE s.lastUpdate <= :hoje AND s.lastUpdate >= :umMesAtras",Storage.class)
+                        .setParameter("hoje",hoje)
+                        .setParameter("umMesAtras",umMesAtras)
+                        .getResultList();
+            }else{
+                return em.createQuery("SELECT s FROM Storage s WHERE s.lastUpdate <= :hoje AND s.lastUpdate >= :umMesAtras",Storage.class)
+                        .setParameter("hoje",hoje)
+                        .setParameter("umMesAtras",umMesAtras)
+                        .getResultList();
+            }
+        }
+
+
     }
+
+
 }

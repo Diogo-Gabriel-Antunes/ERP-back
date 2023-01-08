@@ -2,6 +2,7 @@ package org.acme.services;
 
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import org.acme.Util.DateUtil;
 import org.acme.Util.FieldUtil;
 import org.acme.models.DTO.RequestDTO;
 import org.acme.models.Request;
@@ -12,6 +13,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.ws.rs.core.Response;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -79,12 +81,42 @@ public class RequestService {
 
     public List<Request> findMonth() {
         LocalDate hoje = LocalDate.now();
-        LocalDate umMesAtras = LocalDate.of(hoje.getYear(),hoje.getMonth().getValue()-1,hoje.getDayOfMonth());
-        return em.createQuery("SELECT r FROM Request r WHERE r.finishDate <= :hoje AND r.finishDate >= :umMesAtras AND r.status = :status",Request.class)
-                .setParameter("hoje", hoje)
-                .setParameter("umMesAtras",umMesAtras)
-                .setParameter("status",StatusRequest.findById("5"))
-                .getResultList();
+        try{
+            LocalDate umMesAtras = null;
+            if(new DateUtil().validaData(hoje)){
+                umMesAtras = LocalDate.of(hoje.getYear(),hoje.getMonth().getValue()-1,hoje.getDayOfMonth()-1);
+                return em.createQuery("SELECT r FROM Request r WHERE r.finishDate <= :hoje AND r.finishDate >= :umMesAtras AND r.status = :status",Request.class)
+                        .setParameter("hoje", hoje)
+                        .setParameter("umMesAtras",umMesAtras)
+                        .setParameter("status",StatusRequest.findById("5"))
+                        .getResultList();
+            }else{
+                umMesAtras = LocalDate.of(hoje.getYear(),hoje.getMonth().getValue()-1,hoje.getDayOfMonth());
+                return em.createQuery("SELECT r FROM Request r WHERE r.finishDate <= :hoje AND r.finishDate >= :umMesAtras AND r.status = :status",Request.class)
+                        .setParameter("hoje", hoje)
+                        .setParameter("umMesAtras",umMesAtras)
+                        .setParameter("status",StatusRequest.findById("5"))
+                        .getResultList();
+            }
+        }catch (DateTimeException e){
+            LocalDate umMesAtras = null;
+            if(new DateUtil().validaData(hoje)){
+                umMesAtras = LocalDate.of(hoje.getYear()-1,12,hoje.getDayOfMonth()-1);
+                return em.createQuery("SELECT r FROM Request r WHERE r.finishDate <= :hoje AND r.finishDate >= :umMesAtras AND r.status = :status",Request.class)
+                        .setParameter("hoje", hoje)
+                        .setParameter("umMesAtras",umMesAtras)
+                        .setParameter("status",StatusRequest.findById("5"))
+                        .getResultList();
+            }else{
+                umMesAtras = LocalDate.of(hoje.getYear(),12,hoje.getDayOfMonth());
+                return em.createQuery("SELECT r FROM Request r WHERE r.finishDate <= :hoje AND r.finishDate >= :umMesAtras AND r.status = :status",Request.class)
+                        .setParameter("hoje", hoje)
+                        .setParameter("umMesAtras",umMesAtras)
+                        .setParameter("status",StatusRequest.findById("5"))
+                        .getResultList();
+            }
+        }
+
 
     }
 

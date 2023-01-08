@@ -20,7 +20,7 @@ public class TimesOrdemDeProducao extends PanacheEntityBase {
     private LocalDateTime time;
     @Enumerated(EnumType.STRING)
     private StatusDaProducao statusDaProducao;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonbTransient
     private OrdemDeProducao ordemDeProducao;
 
