@@ -3,13 +3,13 @@ package org.acme.models;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Getter;
 import lombok.Setter;
-import org.acme.models.enums.Status;
 import org.acme.models.enums.StatusDaProducao;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -21,6 +21,7 @@ public class OrdemDeProducao extends PanacheEntityBase implements Model{
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String uuid;
     @OneToOne
+    @Cascade(CascadeType.SAVE_UPDATE)
     private Product product;
     private Long quantidade;
     @Column(length = 10485760)

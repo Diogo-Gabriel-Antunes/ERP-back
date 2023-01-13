@@ -4,11 +4,13 @@ import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Getter;
 import lombok.Setter;
 import org.acme.models.enums.StatusDaProducao;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import org.hibernate.annotations.CascadeType;
 
 @Getter
 @Setter
@@ -19,9 +21,11 @@ public class TimesOrdemDeProducao extends PanacheEntityBase {
     private String uuid;
     private LocalDateTime time;
     @Enumerated(EnumType.STRING)
+    @Cascade(CascadeType.SAVE_UPDATE)
     private StatusDaProducao statusDaProducao;
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonbTransient
+    @Cascade(CascadeType.SAVE_UPDATE)
     private OrdemDeProducao ordemDeProducao;
 
 }

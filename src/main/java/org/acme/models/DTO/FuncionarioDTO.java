@@ -2,6 +2,7 @@ package org.acme.models.DTO;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.acme.models.Beneficios;
 import org.acme.models.Endereco;
 import org.acme.models.enums.NivelDeEscolaridade;
 
@@ -10,6 +11,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.OneToOne;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -31,5 +33,6 @@ public class FuncionarioDTO implements DTO {
     private String nacionalidade;
     private String naturalidade;
     private Double salario;
+    private Set<Beneficios> beneficios;
     private boolean ativo;
 }

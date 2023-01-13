@@ -1,12 +1,9 @@
 package org.acme.Util;
 
-import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDate;
 
-@Getter
-@Setter
+
 public class DateUtil {
 
     public boolean validaData(LocalDate hoje) {

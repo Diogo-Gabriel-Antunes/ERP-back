@@ -86,10 +86,8 @@ public class OrdemDeProducaoService {
         timesOrdemDeProducao.setOrdemDeProducao(ordemDeProducao);
         em.merge(timesOrdemDeProducao);
 
-
         em.persist(storage);
         em.persist(ordemDeProducao);
-
     }
 
     public List<OrdemDeProducao> findByMonth() {

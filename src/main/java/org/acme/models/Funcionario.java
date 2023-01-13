@@ -4,13 +4,15 @@ import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Getter;
 import lombok.Setter;
 import org.acme.models.enums.NivelDeEscolaridade;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
-
+import org.hibernate.annotations.CascadeType;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -23,6 +25,7 @@ public class Funcionario extends PanacheEntityBase implements Model{
     private String uuid;
     private String nome;
     @OneToOne
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private Endereco endereco;
     private String pis;
     @Enumerated(EnumType.STRING)
@@ -43,7 +46,15 @@ public class Funcionario extends PanacheEntityBase implements Model{
     private boolean ativo;
     @OneToMany(mappedBy = "funcionario")
     @JsonbTransient
+    @Cascade(CascadeType.SAVE_UPDATE)
     private List<Atividade> atividades;
+
+    @ManyToMany
+    @Cascade(CascadeType.SAVE_UPDATE)
+    @JoinTable(name="funcionario_beneficios", joinColumns=
+            {@JoinColumn(name="funcionario_id")}, inverseJoinColumns=
+            {@JoinColumn(name="beneficio_id")})
+    private Set<Beneficios> beneficios;
 }
 
 

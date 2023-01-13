@@ -2,12 +2,11 @@ package org.acme.models.boleto.asaas;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import javax.json.bind.annotation.JsonbTransient;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Getter
@@ -31,8 +30,8 @@ public class RetornoAsaas {
     private float dueDateLimitDays;
     private String atualizadoEm;
     private boolean notificationEnabled;
-    @OneToOne
-    @JsonbTransient
+    @OneToOne(fetch = FetchType.LAZY)
+    @Cascade(CascadeType.SAVE_UPDATE)
     private BoletoAsaas boletoAsaas;
 
 }

@@ -4,6 +4,7 @@ import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Getter;
 import lombok.Setter;
 import org.acme.models.enums.TipoImposto;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.json.bind.annotation.JsonbTransient;
@@ -24,5 +25,6 @@ public class Imposto extends PanacheEntityBase implements Serializable {
     private int aliquota;
     @ManyToOne
     @JsonbTransient
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private Product products;
 }

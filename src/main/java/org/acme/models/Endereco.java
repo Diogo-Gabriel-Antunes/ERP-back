@@ -3,6 +3,8 @@ package org.acme.models;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.json.bind.annotation.JsonbTransient;
@@ -32,8 +34,10 @@ public class Endereco extends PanacheEntityBase {
     private String xPais;
     @OneToOne(mappedBy = "endereco")
     @JsonbTransient
+    @Cascade(CascadeType.SAVE_UPDATE)
     private Transportadora transportadora;
     @OneToOne(mappedBy = "endereco")
     @JsonbTransient
+    @Cascade(CascadeType.SAVE_UPDATE)
     private Cliente cliente;
 }

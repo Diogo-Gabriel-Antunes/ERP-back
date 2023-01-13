@@ -5,6 +5,7 @@ import org.acme.Util.GsonUtil;
 import org.acme.models.boleto.asaas.BoletoAsaas;
 import org.acme.models.boleto.asaas.BoletoAsaasDTO;
 import org.acme.services.BoletoService;
+import org.jboss.resteasy.annotations.Body;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -45,10 +46,10 @@ public class BoletoController {
     }
     @POST
     @Transactional
-    public BoletoAsaas create(String json) throws Exception{
-        BoletoAsaas boletoAsaas = gson.fromJson(json, BoletoAsaas.class);
+    public BoletoAsaas create( String json) throws Exception{
 
-        return boletoService.create(boletoAsaas);
+
+        return boletoService.create(json);
     }
     @PUT
     @Transactional

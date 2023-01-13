@@ -1,27 +1,25 @@
 package org.acme.models;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
-import java.util.List;
-import org.hibernate.annotations.CascadeType;
 
-@Entity
 @Getter
 @Setter
-public class StatusRequest extends PanacheEntityBase {
+@Entity
+public class DocumentosParaGarantia {
     @Id
     @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String uuid;
-    private String status;
-    @OneToMany(mappedBy = "status")
-    @JsonbTransient
+    private String documento;
+    @ManyToOne
     @Cascade(CascadeType.SAVE_UPDATE)
-    private List<Request> requests;
+    private Garantia garantia;
+    @ManyToOne
+    private Imagem imagem;
 }

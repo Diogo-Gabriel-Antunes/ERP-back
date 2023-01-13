@@ -43,7 +43,6 @@ public class AtividadesController {
     @Transactional
     @Path("{uuid}")
     public Response update(@PathParam("uuid")String uuid, String json){
-
         return atividadeService.update(uuid,json);
     }
 }

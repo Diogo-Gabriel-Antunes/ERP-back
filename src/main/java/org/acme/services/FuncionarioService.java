@@ -27,7 +27,7 @@ public class FuncionarioService {
             funcionario.setEndereco(enderecoBD);
             em.persist(enderecoBD);
 
-            em.persist(funcionario);
+            em.merge(funcionario);
 
             return Response.ok(funcionario).build();
         }catch (Throwable t){
@@ -38,9 +38,14 @@ public class FuncionarioService {
 
     public Response update(String uuid, FuncionarioDTO funcionarioDTO) {
         try{
+            Endereco endereco = null;
             Funcionario funcionario = Funcionario.findById(uuid);
-            Endereco endereco = em.merge(funcionarioDTO.getEndereco());
+            if(funcionarioDTO.getEndereco() != null){
+                endereco = em.merge(funcionarioDTO.getEndereco());
+            }
             funcionarioDTO.setEndereco(endereco);
+            funcionarioDTO.getBeneficios().addAll(funcionario.getBeneficios());
+
             fieldUtil.updateFieldsDtoToModel(funcionario,funcionarioDTO);
             Funcionario.persist(funcionario);
             return Response.ok(funcionario).build();

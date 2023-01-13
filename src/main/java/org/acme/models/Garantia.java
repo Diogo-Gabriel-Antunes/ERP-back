@@ -10,29 +10,26 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
 @Entity
-public class Cliente extends PanacheEntityBase implements Model {
+public class Garantia extends PanacheEntityBase {
     @Id
     @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String uuid;
-    private String cnpj;
-    private String cpf;
-    private String idEstrangeiro;
-    private String xNome;
-    private String indIEDest;
-    private String ie;
-    private String isuf;
-    private String im;
-    private String email;
-    @OneToOne
+    private Integer quantidadeDeDiasDeGarantia;
+    private String descricaoGarantia;
+    private String contatoParaReivindicar;
+    @OneToMany(mappedBy = "garantia")
     @Cascade(CascadeType.SAVE_UPDATE)
-    private Endereco endereco;
-    private LocalDate dataCriacao;
-    private LocalDate ultimaAtualização;
+    private List<CondicoesDeGarantia> condicoesDeGarantia;
+    @OneToMany(mappedBy = "garantia")
+    @Cascade(CascadeType.SAVE_UPDATE)
+    private List<DocumentosParaGarantia> documentosParaGarantias;
+    private boolean contemExtencao;
 }

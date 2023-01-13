@@ -48,8 +48,6 @@ public class OrdemDeProducaoController {
     @Path("/mes")
     @Produces(MediaType.APPLICATION_JSON)
     public List<OrdemDeProducao> listByMonth(){
-
-
         return ordemDeProducaoService.findByMonth();
     }
     @PUT

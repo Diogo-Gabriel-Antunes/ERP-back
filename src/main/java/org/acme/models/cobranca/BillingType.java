@@ -2,7 +2,7 @@ package org.acme.models.cobranca;
 
 public enum BillingType {
 
-    BOLETO("Boleto"),CREDIT_CARD("Cartão de credito"),PIX("Pix"),UNDEDFINED("Indefinido");
+    BOLETO("Boleto"),CREDIT_CARD("Cartão de credito"),PIX("Pix"),UNDEDFINED("Indefinido"),DEBIT_CARD("Cartão de debito");
 
     private String tipo;
 

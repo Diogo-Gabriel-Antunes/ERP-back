@@ -4,9 +4,10 @@ import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Getter;
 import lombok.Setter;
 import org.acme.models.enums.Status;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.GenericGenerator;
-
+import org.hibernate.annotations.CascadeType;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -28,6 +29,7 @@ public class Product extends PanacheEntityBase implements Model {
     private LocalDate dataAlteracao;
     private boolean status;
     @OneToMany(mappedBy = "products",fetch = FetchType.EAGER)
+    @Cascade(CascadeType.SAVE_UPDATE)
     private List<Imposto> imposto;
     @ManyToOne(targetEntity = Category.class)
     private Category category;

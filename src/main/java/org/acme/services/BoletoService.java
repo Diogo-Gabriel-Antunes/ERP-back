@@ -35,23 +35,26 @@ public class BoletoService {
         return em.createQuery("SELECT b from BoletoAsaas b WHERE uuid = :uuid", BoletoAsaas.class).setParameter("uuid", uuid).getSingleResult();
     }
 
-    public BoletoAsaas create(BoletoAsaas boletoAsaas) {
+    public BoletoAsaas create(String boletoAsaasJson) {
         try {
             HttpClient httpClient = HttpClient.newBuilder().build();
             HttpRequest httpRequest = HttpRequest.newBuilder()
-                    .POST(HttpRequest.BodyPublishers.ofString(gson.toJson(boletoAsaas)))
+                    .POST(HttpRequest.BodyPublishers.ofString(boletoAsaasJson))
                     .header("access_token", "$aact_YTU5YTE0M2M2N2I4MTliNzk0YTI5N2U5MzdjNWZmNDQ6OjAwMDAwMDAwMDAwMDAwNDU1NTg6OiRhYWNoXzU5ZTZmNjlkLWFkZmItNGU4YS1iN2FkLTEyOTQxNjEyYzcyYg==")
                     .header("Content-Type", "application/json")
                     .uri(new URI("https://sandbox.asaas.com/api/v3/paymentLinks"))
                     .build();
             HttpResponse<String> resposta = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
             if (resposta.statusCode() == 200) {
+                BoletoAsaas boletoAsaas = gson.fromJson(boletoAsaasJson,BoletoAsaas.class);
                 RetornoAsaas retornoAsaas = gson.fromJson(resposta.body(), RetornoAsaas.class);
+
                 retornoAsaas.setAtualizadoEm(LocalDate.now().toString());
                 RetornoAsaas retornoAsaasBD = em.merge(retornoAsaas);
                 boletoAsaas.setRetornoAsaas(retornoAsaasBD);
                 em.merge(boletoAsaas);
                 em.flush();
+
                 return boletoAsaas;
             }
             throw new RuntimeException();
@@ -61,6 +64,7 @@ public class BoletoService {
         }
 
     }
+
 
     public BoletoAsaas update(String uuid, BoletoAsaasDTO boletoAsaasDTO) {
         BoletoAsaas boletoAsaas = listOne(uuid);
@@ -89,7 +93,7 @@ public class BoletoService {
                         .getResultList();
             }
         } catch (DateTimeException e) {
-            LocalDate umMesAtras = LocalDate.of(hoje.getYear()-1, 12, hoje.getDayOfMonth() - 1);
+            LocalDate umMesAtras = LocalDate.of(hoje.getYear() - 1, 12, hoje.getDayOfMonth() - 1);
             if (new DateUtil().validaData(hoje)) {
                 return em.createQuery("SELECT b FROM BoletoAsaas b WHERE b.atualizadoEm <= :hoje AND b.atualizadoEm >= :umMesAtras ", BoletoAsaas.class)
                         .setParameter("hoje", hoje.toString())
