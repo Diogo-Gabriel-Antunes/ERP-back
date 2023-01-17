@@ -4,12 +4,13 @@ import com.google.gson.Gson;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import org.acme.Util.FieldUtil;
 import org.acme.Util.GsonUtil;
-import org.acme.models.Compra;
+import org.acme.models.*;
 import org.acme.models.DTO.CompraDTO;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.core.Response;
 import java.net.URI;
+import java.util.Arrays;
 
 @ApplicationScoped
 public class CompraService {
@@ -20,9 +21,19 @@ public class CompraService {
         try {
             CompraDTO compraDTO = gson.fromJson(json, CompraDTO.class);
             Compra compra = new Compra(compraDTO);
-            Compra compraDB = Compra.getEntityManager().merge(compra);
-            return Response.created(new URI("http://10.0.0.108:8080/compra/"+compraDB.getUuid())).build();
+            Compra.getEntityManager().merge(compra);
+
+            compra.setItens(compraDTO.getItens());
+            compra.setCondicoesArmazenamentoETransporte(compraDTO.getCondicoesArmazenamentoETransporte());
+            compra.setResponsavelPelaVenda(compraDTO.getResponsavelPelaVenda());
+            CondicoesArmazenamentoETransporte condicoesArmazenamentoETransporte = compra.getCondicoesArmazenamentoETransporte();
+            CondicoesArmazenamentoETransporte.persist(condicoesArmazenamentoETransporte);
+            condicoesArmazenamentoETransporte.setCompra(compra);
+            Compra.persist(compra);
+            Compra.flush();
+            return Response.created(new URI("/compra")).build();
         }catch (Throwable t){
+            t.printStackTrace();
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
 

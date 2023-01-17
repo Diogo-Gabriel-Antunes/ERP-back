@@ -14,17 +14,17 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-public class Request extends PanacheEntityBase implements Model{
+public class Request implements Model{
     @Id
     @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String uuid;
     private String numberRequest;
-    @OneToMany(mappedBy = "pedido")
+    @ManyToMany(mappedBy = "pedido")
     @Cascade(CascadeType.SAVE_UPDATE)
     private List<Itens> itens;
     @OneToOne
-    @Cascade(CascadeType.SAVE_UPDATE)
+    @Cascade(CascadeType.ALL)
     private Cliente cliente;
     private LocalDate createDate;
     private LocalDate finishDate;

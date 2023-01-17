@@ -15,7 +15,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-public class Imposto extends PanacheEntityBase implements Serializable {
+public class Imposto extends PanacheEntityBase {
     @Id
     @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")

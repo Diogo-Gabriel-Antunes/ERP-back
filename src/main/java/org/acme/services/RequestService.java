@@ -4,9 +4,11 @@ package org.acme.services;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import org.acme.Util.DateUtil;
 import org.acme.Util.FieldUtil;
+import org.acme.models.Cliente;
 import org.acme.models.DTO.RequestDTO;
 import org.acme.models.Request;
 import org.acme.models.StatusRequest;
+import org.acme.models.Storage;
 import org.bouncycastle.ocsp.Req;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -27,6 +29,8 @@ public class RequestService {
     FieldUtil fieldUtil;
     @Inject
     ClienteService clienteService;
+    @Inject
+    StorageService storageService;
     public List<Request> findAll() {
         return em.createQuery("SELECT r FROM Request r",Request.class)
                 .getResultList();
@@ -48,35 +52,43 @@ public class RequestService {
         request.setFinishDate(LocalDate.now());
 
         StatusRequest status = new StatusRequest();
-        status.setUuid("2");
-        request.setStatus(status);
+        status.setStatus("Inicializado");
+        StatusRequest statusRequest = em.merge(status);
+        request.setStatus(statusRequest);
         request.setNumberRequest(String.valueOf((long)(Math.random() * 1000000)));
 
 
         Request pedidoDoBanco = em.merge(request);
         requestDTO.getItens().forEach(item->{
-            item.setPedido(pedidoDoBanco);
+            item.getPedido().add(pedidoDoBanco);
             em.merge(item);
-            valor.updateAndGet(v -> (double) (v + item.getProduct().getValue() * item.getQuantidade()));
+            valor.updateAndGet(v -> (double) (v + item.getProduto().getPrecoUnitario() * item.getQuantidade()));
         });
         em.merge(pedidoDoBanco);
         pedidoDoBanco.setValue(valor.get());
+
         em.persist(pedidoDoBanco);
+        Cliente clienteBD = Cliente.getEntityManager().merge(requestDTO.getCliente());
+        pedidoDoBanco.setCliente(clienteBD);
+        em.persist(clienteBD);
         em.flush();
         return pedidoDoBanco;
     }
 
     public void update(String uuid, RequestDTO requestDTO) {
         Request request = findOne(uuid);
-        em.merge(request);
-        em.merge(requestDTO.getCliente());
+        Cliente clienteBD = em.merge(request.getCliente());
+        fieldUtil.updateFieldsDtoToModel(request,requestDTO);
         requestDTO.getItens().forEach(item->{
-            item.setPedido(request);
+            item.getPedido().add(request);
             em.merge(item);
         });
-        fieldUtil.updateFieldsDtoToModel(request,requestDTO);
         request.setFinishDate(LocalDate.now());
+        request.setCliente(clienteBD);
+        em.persist(request.getCliente());
         em.persist(request);
+
+        em.flush();
     }
 
     public List<Request> findMonth() {
@@ -122,10 +134,16 @@ public class RequestService {
 
     public Response updateFinish(String uuid) {
         try{
-            Request request = Request.findById(uuid);
+            Request request = findOne(uuid);
             request.setStatus(StatusRequest.findById("5"));
             request.setFinishDate(LocalDate.now());
-            Request.persist(request);
+            request.getItens().forEach(item ->{
+                Storage storageBD = storageService.findByProduct(item.getProduto());
+                Storage.persist(storageBD);
+                storageBD.setQuantidade(storageBD.getQuantidade() - item.getQuantidade());
+                Storage.persist(storageBD);
+            });
+            em.persist(request);
             return Response.ok().build();
         }catch (Throwable t){
             t.printStackTrace();

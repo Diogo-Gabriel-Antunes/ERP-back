@@ -2,14 +2,12 @@ package org.acme.services;
 
 import org.acme.Util.FieldUtil;
 import org.acme.models.*;
-import org.acme.models.DTO.ClienteDTO;
 import org.acme.models.DTO.OrdemDeProducaoDTO;
 import org.acme.models.enums.StatusDaProducao;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.ws.rs.core.Response;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,7 +18,7 @@ public class OrdemDeProducaoService {
     EntityManager em;
     private FieldUtil fieldUtil = new FieldUtil();
     @Inject
-    StorageService storageService;
+    ItensService storageService;
     public List<OrdemDeProducao> findAll(){
         return em.createQuery("SELECT o FROM OrdemDeProducao o", OrdemDeProducao.class).getResultList();
     }
@@ -72,11 +70,11 @@ public class OrdemDeProducaoService {
         OrdemDeProducao ordemDeProducao = findOne(uuid);
 
         em.merge(ordemDeProducao);
-        Storage storage = storageService.findByProduct(ordemDeProducao.getProduct().getUuid());
+        Itens itens = storageService.findByProduct(ordemDeProducao.getProduct().getUuid());
 
-        em.merge(storage);
-        storage.setAmount(storage.getAmount() + ordemDeProducao.getQuantidade());
-        storage.setLastUpdate(LocalDate.now());
+        em.merge(itens);
+        itens.setQuantidade(itens.getQuantidade() + ordemDeProducao.getQuantidade());
+        itens.setDataAtualizacao(LocalDate.now());
 
         ordemDeProducao.setFinalizadoEm(LocalDate.now());
         ordemDeProducao.setStatus(StatusDaProducao.FINALIZADO);
@@ -86,7 +84,7 @@ public class OrdemDeProducaoService {
         timesOrdemDeProducao.setOrdemDeProducao(ordemDeProducao);
         em.merge(timesOrdemDeProducao);
 
-        em.persist(storage);
+        em.persist(itens);
         em.persist(ordemDeProducao);
     }
 

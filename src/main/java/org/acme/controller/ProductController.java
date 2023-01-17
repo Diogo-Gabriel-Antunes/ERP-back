@@ -1,12 +1,11 @@
 package org.acme.controller;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.acme.Util.GsonUtil;
-import org.acme.Util.LocalDateAdapter;
 import org.acme.models.DTO.ProductDTO;
 import org.acme.models.Product;
 import org.acme.services.ProductServices;
+import org.acme.services.ItensService;
 import org.acme.services.StorageService;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -15,7 +14,6 @@ import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.time.LocalDate;
 import java.util.List;
 
 @Path("/product")
@@ -46,8 +44,8 @@ public class ProductController {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
-    public Response create(String product) {
-        Product productCreated = gson.fromJson(product, Product.class);
+    public Response create(String json) {
+        ProductDTO productCreated = gson.fromJson(json, ProductDTO.class);
 
         Product productInBase = productServices.createProduct(productCreated);
         storageService.create(productInBase);

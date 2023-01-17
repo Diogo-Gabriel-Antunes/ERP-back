@@ -15,6 +15,6 @@ import java.time.LocalDate;
 public class StorageDTO implements DTO{
     private String uuid;
     private Product product;
-    private Long amount;
+    private Long quantidade;
     private LocalDate lastUpdate;
 }

@@ -23,7 +23,7 @@ public class Storage extends PanacheEntityBase implements Model {
     private String uuid;
     @OneToOne
     @Cascade(CascadeType.SAVE_UPDATE)
-    private Product product;
-    private Long amount;
-    private LocalDate lastUpdate;
+    private Product produto;
+    private Long quantidade;
+    private LocalDate ultimaAtualizacao;
 }

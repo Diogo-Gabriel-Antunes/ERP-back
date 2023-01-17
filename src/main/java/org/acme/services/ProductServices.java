@@ -1,5 +1,6 @@
 package org.acme.services;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import org.acme.Util.FieldUtil;
 import org.acme.models.Category;
 import org.acme.models.DTO.ProductDTO;
@@ -28,10 +29,14 @@ public class ProductServices {
         return em.createQuery("SELECT p from Product p", Product.class).getResultList();
     }
 
-    public Product createProduct(Product product) {
-        product.setDateCreate(LocalDate.now());
-        product.setDataAlteracao(LocalDate.now());
-        product.setStatus(true);
+    public Product createProduct(ProductDTO productDTO) {
+        Product product = new Product();
+        productDTO.setDataCriacao(LocalDate.now());
+        productDTO.setDataAlteracao(LocalDate.now());
+        productDTO.setStatus(true);
+        Category category = Category.findById(productDTO.getCategoria().getUuid());
+        productDTO.setCategoria(category);
+        fieldUtil.updateFieldsDtoToModel(product,productDTO);
         Product productMerge = em.merge(product);
         product.getImposto().forEach(imposto -> {
             imposto.setProducts(productMerge);

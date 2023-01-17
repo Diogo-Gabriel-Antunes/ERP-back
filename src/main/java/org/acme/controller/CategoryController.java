@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
@@ -27,6 +28,13 @@ public class CategoryController {
     @Transactional
     public List<Category> listAll(){
         return categoryService.listAll();
+    }
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Transactional
+    @Path("{uuid}")
+    public Category listOne(@PathParam("uuid")String uuid){
+        return Category.findById(uuid);
     }
 
 }

@@ -23,17 +23,22 @@ public class Product extends PanacheEntityBase implements Model {
     @Id @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String uuid;
-    private String name;
-    private String codeBar;
-    private LocalDate dateCreate;
+    private String nome;
+    private String codigoDeBarras;
+    private LocalDate dataCriacao;
     private LocalDate dataAlteracao;
     private boolean status;
-    @OneToMany(mappedBy = "products",fetch = FetchType.EAGER)
-    @Cascade(CascadeType.SAVE_UPDATE)
+    @OneToMany(mappedBy = "products",cascade = javax.persistence.CascadeType.ALL,fetch = FetchType.LAZY)
+    @Cascade(CascadeType.ALL)
+    @JsonbTransient
     private List<Imposto> imposto;
-    @ManyToOne(targetEntity = Category.class)
-    private Category category;
-    private Double value;
-    @OneToMany(mappedBy = "produto")
+    @ManyToOne(targetEntity = Category.class,cascade = javax.persistence.CascadeType.ALL)
+    @Cascade(CascadeType.SAVE_UPDATE)
+    private Category categoria;
+    @OneToMany(mappedBy = "produto",fetch = FetchType.EAGER)
+    @JsonbTransient
     private List<Imagem> imagens;
+    private Double precoUnitario;
+    private Double precoForncedor;
+
 }

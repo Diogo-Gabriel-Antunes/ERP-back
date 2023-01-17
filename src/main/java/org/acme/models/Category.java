@@ -21,9 +21,9 @@ import java.util.Set;
 public class Category extends PanacheEntityBase {
     @Id @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
-    private String id;
+    private String uuid;
     private String nome;
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "categoria")
     @JsonbTransient
     private List<Product> product;
 

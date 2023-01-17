@@ -3,6 +3,8 @@ package org.acme.models;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Getter;
 import lombok.Setter;
+import org.acme.Util.FieldUtil;
+import org.acme.models.DTO.ClienteDTO;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.GenericGenerator;
@@ -35,4 +37,11 @@ public class Cliente extends PanacheEntityBase implements Model {
     private Endereco endereco;
     private LocalDate dataCriacao;
     private LocalDate ultimaAtualização;
+
+    public static Cliente ClienteCreator(ClienteDTO responsavelPelaVenda) {
+        Cliente cliente = new Cliente();
+        FieldUtil fieldUtil = new FieldUtil();
+        fieldUtil.updateFieldsDtoToModel(cliente,responsavelPelaVenda);
+        return cliente;
+    }
 }

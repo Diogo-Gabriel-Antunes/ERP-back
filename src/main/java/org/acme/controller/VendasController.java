@@ -1,15 +1,9 @@
 package org.acme.controller;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.acme.Util.GsonUtil;
-import org.acme.Util.LocalDateAdapter;
-import org.acme.models.DTO.ProductDTO;
 import org.acme.models.DTO.VendasDTO;
-import org.acme.models.Product;
 import org.acme.models.Venda;
-import org.acme.services.ProductServices;
-import org.acme.services.StorageService;
 import org.acme.services.VendasService;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -18,7 +12,6 @@ import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.time.LocalDate;
 import java.util.List;
 
 @Path("/vendas")

@@ -22,9 +22,9 @@ public class StorageService {
     FieldUtil fieldUtil;
     public Storage create(Product product){
         Storage storage = new Storage();
-        storage.setProduct(product);
-        storage.setLastUpdate(LocalDate.now());
-        storage.setAmount(0L);
+        storage.setProduto(product);
+        storage.setUltimaAtualizacao(LocalDate.now());
+        storage.setQuantidade(0L);
         return em.merge(storage);
     }
 
@@ -43,13 +43,13 @@ public class StorageService {
         Storage storage = findOne(uuid);
         Storage newStorage = em.merge(storage);
         fieldUtil.updateFieldsDtoToModel(newStorage,storageDTO);
-        newStorage.setLastUpdate(LocalDate.now());
+        newStorage.setUltimaAtualizacao(LocalDate.now());
         em.persist(newStorage);
         return newStorage;
     }
-    public Storage findByProduct(String productUuid){
-        return em.createQuery("SELECT e FROM Storage e WHERE e.product.uuid = :uuid", Storage.class)
-                .setParameter("uuid", productUuid).getSingleResult();
+    public Storage findByProduct(Product product){
+        return em.createQuery("SELECT e FROM Storage e WHERE e.produto.uuid = :uuid", Storage.class)
+                .setParameter("uuid", product.getUuid()).getSingleResult();
     }
 
     public List<Storage> findMonth() {

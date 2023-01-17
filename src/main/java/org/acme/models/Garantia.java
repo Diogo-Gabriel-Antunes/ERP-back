@@ -26,10 +26,10 @@ public class Garantia extends PanacheEntityBase {
     private String descricaoGarantia;
     private String contatoParaReivindicar;
     @OneToMany(mappedBy = "garantia")
-    @Cascade(CascadeType.SAVE_UPDATE)
+    @Cascade(CascadeType.ALL)
     private List<CondicoesDeGarantia> condicoesDeGarantia;
     @OneToMany(mappedBy = "garantia")
-    @Cascade(CascadeType.SAVE_UPDATE)
+    @Cascade(CascadeType.ALL)
     private List<DocumentosParaGarantia> documentosParaGarantias;
     private boolean contemExtencao;
 }
