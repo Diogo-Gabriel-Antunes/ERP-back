@@ -7,8 +7,10 @@ import org.acme.models.enums.Prioridade;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -29,7 +31,11 @@ public class Atividade extends PanacheEntityBase implements Model{
     private LocalDate dataDeFinalizacao;
     private String titulo;
     private int progressao;
-    @ManyToOne
+    @ManyToMany(mappedBy = "atividades")
     @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
-    private Funcionario funcionario;
+    @JsonbTransient
+    private List<Funcionario> funcionario;
+    @ManyToOne
+    @JsonbTransient
+    private Projeto projeto;
 }

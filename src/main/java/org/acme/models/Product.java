@@ -4,12 +4,13 @@ import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Getter;
 import lombok.Setter;
 import org.acme.models.enums.Status;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.Columns;
-import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.*;
 import org.hibernate.annotations.CascadeType;
+
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,15 @@ public class Product extends PanacheEntityBase implements Model {
     private String codigoDeBarras;
     private LocalDate dataCriacao;
     private LocalDate dataAlteracao;
+    private String codigo;
+    private String codigoBarrasTributavel;
+    @Column(length =1000000)
+    private String descricao;
+    private String ncm;
+    private String cest;
+    private String cfop;
     private boolean status;
+    private Tributos tributos;
     @OneToMany(mappedBy = "products",cascade = javax.persistence.CascadeType.ALL,fetch = FetchType.LAZY)
     @Cascade(CascadeType.ALL)
     @JsonbTransient

@@ -18,7 +18,7 @@ public class OrdemDeProducaoService {
     EntityManager em;
     private FieldUtil fieldUtil = new FieldUtil();
     @Inject
-    ItensService storageService;
+    StorageService storageService;
     public List<OrdemDeProducao> findAll(){
         return em.createQuery("SELECT o FROM OrdemDeProducao o", OrdemDeProducao.class).getResultList();
     }
@@ -70,11 +70,11 @@ public class OrdemDeProducaoService {
         OrdemDeProducao ordemDeProducao = findOne(uuid);
 
         em.merge(ordemDeProducao);
-        Itens itens = storageService.findByProduct(ordemDeProducao.getProduct().getUuid());
+        Storage storage = storageService.findByProduct(ordemDeProducao.getProduct());
 
-        em.merge(itens);
-        itens.setQuantidade(itens.getQuantidade() + ordemDeProducao.getQuantidade());
-        itens.setDataAtualizacao(LocalDate.now());
+        em.merge(storage);
+        storage.setQuantidade(storage.getQuantidade() + ordemDeProducao.getQuantidade());
+        storage.setUltimaAtualizacao(LocalDate.now());
 
         ordemDeProducao.setFinalizadoEm(LocalDate.now());
         ordemDeProducao.setStatus(StatusDaProducao.FINALIZADO);
@@ -84,7 +84,7 @@ public class OrdemDeProducaoService {
         timesOrdemDeProducao.setOrdemDeProducao(ordemDeProducao);
         em.merge(timesOrdemDeProducao);
 
-        em.persist(itens);
+        em.persist(storage);
         em.persist(ordemDeProducao);
     }
 

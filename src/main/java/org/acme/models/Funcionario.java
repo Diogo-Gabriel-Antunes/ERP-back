@@ -44,9 +44,10 @@ public class Funcionario extends PanacheEntityBase implements Model{
     private String naturalidade;
     private Double salario;
     private boolean ativo;
-    @OneToMany(mappedBy = "funcionario")
+    @ManyToMany
     @JsonbTransient
     @Cascade(CascadeType.SAVE_UPDATE)
+    @JoinTable(name = "funcionarios_atividade",joinColumns = {@JoinColumn(name = "funcionario_id")},inverseJoinColumns = {@JoinColumn(name = "atividade_id")})
     private List<Atividade> atividades;
 
     @ManyToMany

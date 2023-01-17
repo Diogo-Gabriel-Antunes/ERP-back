@@ -47,7 +47,7 @@ public class ItensService {
         return newItens;
     }
     public Itens findByProduct(String productUuid){
-        return em.createQuery("SELECT e FROM Itens e WHERE e.product.uuid = :uuid", Itens.class)
+        return em.createQuery("SELECT e FROM Itens e WHERE e.produto.uuid = :uuid", Itens.class)
                 .setParameter("uuid", productUuid).getSingleResult();
     }
 

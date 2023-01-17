@@ -57,12 +57,12 @@ public class StorageService {
         try{
             LocalDate umMesAtras = LocalDate.of(hoje.getYear(),hoje.getMonth().getValue() -1 , hoje.getDayOfMonth()-1);
             if(new DateUtil().validaData(hoje)){
-                return em.createQuery("SELECT s FROM Storage s WHERE s.lastUpdate <= :hoje AND s.lastUpdate >= :umMesAtras",Storage.class)
+                return em.createQuery("SELECT s FROM Storage s WHERE s.ultimaAtualizacao <= :hoje AND s.ultimaAtualizacao >= :umMesAtras",Storage.class)
                         .setParameter("hoje",hoje)
                         .setParameter("umMesAtras",umMesAtras)
                         .getResultList();
             }else{
-                return em.createQuery("SELECT s FROM Storage s WHERE s.lastUpdate <= :hoje AND s.lastUpdate >= :umMesAtras",Storage.class)
+                return em.createQuery("SELECT s FROM Storage s WHERE s.ultimaAtualizacao <= :hoje AND s.ultimaAtualizacao >= :umMesAtras",Storage.class)
                         .setParameter("hoje",hoje)
                         .setParameter("umMesAtras",umMesAtras)
                         .getResultList();
@@ -70,12 +70,12 @@ public class StorageService {
         }catch (DateTimeException e){
             LocalDate umMesAtras = LocalDate.of(hoje.getYear()-1,12 , hoje.getDayOfMonth()-1);
             if(new DateUtil().validaData(hoje)){
-                return em.createQuery("SELECT s FROM Storage s WHERE s.lastUpdate <= :hoje AND s.lastUpdate >= :umMesAtras",Storage.class)
+                return em.createQuery("SELECT s FROM Storage s WHERE s.ultimaAtualizacao <= :hoje AND s.ultimaAtualizacao >= :umMesAtras",Storage.class)
                         .setParameter("hoje",hoje)
                         .setParameter("umMesAtras",umMesAtras)
                         .getResultList();
             }else{
-                return em.createQuery("SELECT s FROM Storage s WHERE s.lastUpdate <= :hoje AND s.lastUpdate >= :umMesAtras",Storage.class)
+                return em.createQuery("SELECT s FROM Storage s WHERE s.ultimaAtualizacao <= :hoje AND s.ultimaAtualizacao >= :umMesAtras",Storage.class)
                         .setParameter("hoje",hoje)
                         .setParameter("umMesAtras",umMesAtras)
                         .getResultList();
