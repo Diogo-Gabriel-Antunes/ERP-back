@@ -2,6 +2,7 @@ package org.acme.models.Nota_fiscal_eletronica;
 
 import org.acme.models.Itens;
 
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -25,6 +26,35 @@ public class NFe {
     private Emitente emitente;
     private Destinatario destinatario;
     private List<Itens> itens;
+    private boolean compoeTotal;
+    private String nve;
+    private String indicadorEscalaRelevante;
+    private String cnpjFabricante;
+    private String codigoBeneficioFiscal;
+    private String exTipi;
+    private double valorFrete;
+    private double valorSeguro;
+    private double valorOutros;
+    private String numeroFci;
+    private Unidade unidade;
+    private ValorUnitario valorUnitario;
+    private List<Medicamentos> medicamentos;
+    private Veiculo veiculo;
+    private List<Armamento> armamentos;
+    private Combustivel combustivel;
+    private Total total;
+    private Transporte transporte;
+    private List<Pagamento> pagamentos;
+    private Cobranca cobranca;
+    private String informacoesComplementaresContribuinte;
+    private String informacoesComplementares;
+    private boolean enviarEmail;
+    private Local localEntrega;
+    private Local localRetirada;
+    private Exportacao exportacao;
+    private IntermediadorTransacao intermediadorTransacao;
+    private int intermediador;
+    private Local responsavelTenico;
 }
 
 enum Finalidade{
@@ -76,4 +106,14 @@ enum CodigoIdentificacaoDestino {
     public String getIdentificador() {
         return identificador;
     }
+}
+class Unidade{
+    private String comercial;
+    private String tributavel;
+    private long quantidade;
+    private double valor;
+}
+class ValorUnitario{
+    private String comercial;
+    private String tributavel;
 }

@@ -15,7 +15,3 @@ class SeloControle{
     private String codigo;
     private long quantidade;
 }
-class Unidade{
-    private long quantidade;
-    private double valor;
-}

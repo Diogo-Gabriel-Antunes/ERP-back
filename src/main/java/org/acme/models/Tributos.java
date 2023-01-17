@@ -1,9 +1,8 @@
 package org.acme.models;
 
-import org.acme.models.Nota_fiscal_eletronica.Cofins;
-import org.acme.models.Nota_fiscal_eletronica.ICMS;
-import org.acme.models.Nota_fiscal_eletronica.IPI;
-import org.acme.models.Nota_fiscal_eletronica.Pis;
+import org.acme.models.Nota_fiscal_eletronica.*;
+
+import java.util.List;
 
 public class Tributos {
     private String partilha;
@@ -11,4 +10,6 @@ public class Tributos {
     private IPI ipi;
     private Pis pis;
     private Cofins cofins;
+    private Issqn issqn;
+
 }

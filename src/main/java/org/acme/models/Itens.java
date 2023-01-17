@@ -3,6 +3,10 @@ package org.acme.models;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Getter;
 import lombok.Setter;
+import org.acme.models.Nota_fiscal_eletronica.ImportacaoDados;
+import org.acme.models.Nota_fiscal_eletronica.ImportacaoImposto;
+import org.acme.models.Nota_fiscal_eletronica.Medicamentos;
+import org.acme.models.Nota_fiscal_eletronica.Veiculo;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.GenericGenerator;
@@ -40,4 +44,17 @@ public class Itens extends PanacheEntityBase implements Model{
     private Set<Compra> compras = new HashSet<>();
     private LocalDate dataAtualizacao;
     private LocalDate dataCriacao;
+    //Informações NFE
+
+    private ImportacaoImposto importacao;
+    private List<ImportacaoDados> importacaoDados;
+    private Tributos tributos;
+    private String codigoBarrasTributavel;
+    @Column(length =1000000)
+    private String descricao;
+    private String ncm;
+    private String cest;
+    private String cfop;
+
 }
+
