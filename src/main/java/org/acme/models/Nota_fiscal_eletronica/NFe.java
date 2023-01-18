@@ -1,30 +1,47 @@
 package org.acme.models.Nota_fiscal_eletronica;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.acme.models.Itens;
+import org.hibernate.annotations.GenericGenerator;
 
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
-
+@Getter
+@Setter
+@Entity
 public class NFe {
+    @Id
+    @GeneratedValue(generator="system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
+    private String uuid;
 
     private String idIntegracao;
     private String versaoManual;
     private String codigo;
     private Integer serie;
+    @Enumerated(EnumType.STRING)
     private Finalidade finalidade;
     private String natureza;
-    private LocalDateTime dataEmissao;
-    private LocalDateTime dataSaidaEntrada;
+    private String dataEmissao;
+    private String dataSaidaEntrada;
     private boolean saida;
     private boolean presencial;
+    @Enumerated(EnumType.STRING)
     private TipoImpressao tipoImpressao;
+    @Enumerated(EnumType.STRING)
     private TipoEmissao tipoEmissao;
+    @Enumerated(EnumType.STRING)
     private CodigoIdentificacaoDestino codigoIdentificacaoDestino;
     private String codigoMunicipioFatoGerador;
     private boolean consumidorFinal;
+    @ManyToOne
     private Emitente emitente;
+    @ManyToOne
     private Destinatario destinatario;
+    @OneToMany
     private List<Itens> itens;
     private boolean compoeTotal;
     private String nve;
@@ -36,24 +53,39 @@ public class NFe {
     private double valorSeguro;
     private double valorOutros;
     private String numeroFci;
+    @OneToOne
     private Unidade unidade;
+    @ManyToOne
     private ValorUnitario valorUnitario;
+    @OneToMany
     private List<Medicamentos> medicamentos;
+    @ManyToOne
     private Veiculo veiculo;
+    @OneToMany
     private List<Armamento> armamentos;
+    @ManyToOne
     private Combustivel combustivel;
+    @OneToOne
     private Total total;
+    @OneToOne
     private Transporte transporte;
+    @OneToMany
     private List<Pagamento> pagamentos;
+    @ManyToOne
     private Cobranca cobranca;
     private String informacoesComplementaresContribuinte;
     private String informacoesComplementares;
     private boolean enviarEmail;
+    @OneToOne
     private Local localEntrega;
+    @OneToOne
     private Local localRetirada;
+    @OneToOne
     private Exportacao exportacao;
+    @OneToOne
     private IntermediadorTransacao intermediadorTransacao;
     private int intermediador;
+    @OneToOne
     private Local responsavelTenico;
 }
 
@@ -107,13 +139,25 @@ enum CodigoIdentificacaoDestino {
         return identificador;
     }
 }
+@Getter
+@Setter
+@Entity
 class Unidade{
+    @Id @GeneratedValue(generator="system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
+    private String uuid;
     private String comercial;
     private String tributavel;
     private long quantidade;
     private double valor;
 }
+@Getter
+@Setter
+@Entity
 class ValorUnitario{
+    @Id @GeneratedValue(generator="system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
+    private String uuid;
     private String comercial;
     private String tributavel;
 }

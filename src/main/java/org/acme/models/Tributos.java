@@ -5,7 +5,7 @@ import org.acme.models.Nota_fiscal_eletronica.*;
 import java.util.List;
 
 public class Tributos {
-    private String partilha;
+    private Partilha partilha;
     private ICMS icms;
     private IPI ipi;
     private Pis pis;

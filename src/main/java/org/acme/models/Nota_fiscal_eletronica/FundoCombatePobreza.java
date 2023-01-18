@@ -4,19 +4,22 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+
 @Getter
 @Setter
 @Entity
-public class RetencaoICMS {
+public class FundoCombatePobreza{
     @Id
     @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String uuid;
-    private double valorServico;
-    private double baseICMS;
     private double aliquota;
-    private double valorICMSRet;
+    @ManyToOne
+    private BaseCalculo baseCalculo;
+    private double valor;
+    @ManyToOne
+    private ICMS icms;
+    @ManyToOne
+    private SubstituicaoTributaria substituicaoTributaria;
 }

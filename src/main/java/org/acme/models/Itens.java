@@ -44,8 +44,9 @@ public class Itens extends PanacheEntityBase implements Model{
     private Set<Compra> compras = new HashSet<>();
     private LocalDate dataAtualizacao;
     private LocalDate dataCriacao;
-    //Informações NFE
 
+
+    //Informações NFE
     private ImportacaoImposto importacao;
     private List<ImportacaoDados> importacaoDados;
     private Tributos tributos;

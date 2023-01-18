@@ -1,10 +1,25 @@
 package org.acme.models.Nota_fiscal_eletronica;
 
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
+
+@Getter
+@Setter
+@Entity
 public class Pagamento {
+    @Id
+    @GeneratedValue(generator="system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
+    private String uuid;
     private boolean aVista;
+    @Enumerated(EnumType.STRING)
     private Meio meio;
     private String descricaoMeio;
     private double valor;
+    @ManyToOne
     private Cartao cartao;
 }
 enum Meio{
