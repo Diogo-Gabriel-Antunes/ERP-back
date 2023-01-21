@@ -27,7 +27,7 @@ public class Product extends PanacheEntityBase implements Model {
     private String codigo;
 
     private boolean status;
-    @OneToMany(mappedBy = "products",cascade = javax.persistence.CascadeType.ALL,fetch = FetchType.LAZY)
+    @ManyToMany
     @Cascade(CascadeType.ALL)
     @JsonbTransient
     private List<Imposto> imposto;

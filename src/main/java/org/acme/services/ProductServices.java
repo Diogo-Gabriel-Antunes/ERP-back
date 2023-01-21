@@ -39,8 +39,6 @@ public class ProductServices {
         fieldUtil.updateFieldsDtoToModel(product,productDTO);
         Product productMerge = em.merge(product);
         product.getImposto().forEach(imposto -> {
-            imposto.setProducts(productMerge);
-            em.merge(imposto);
         });
         return productMerge;
     }

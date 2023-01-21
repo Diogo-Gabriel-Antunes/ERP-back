@@ -2,6 +2,7 @@ package org.acme.models.Nota_fiscal_eletronica;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.acme.models.Imposto;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Entity;
@@ -12,15 +13,7 @@ import javax.persistence.ManyToOne;
 @Getter
 @Setter
 @Entity
-public class Issqn {
-    @Id
-    @GeneratedValue(generator="system-uuid")
-    @GenericGenerator(name="system-uuid", strategy = "uuid")
-    private String uuid;
-    private Double valor;
-    private double aliquota;
-    @ManyToOne
-    private BaseCalculo baseCalculo;
+public class Issqn extends Imposto {
     private String codigoServico;
     private String valorDeducao;
     private double valorOutros;

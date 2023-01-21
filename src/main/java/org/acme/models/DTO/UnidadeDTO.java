@@ -3,8 +3,7 @@ package org.acme.models.DTO;
 import lombok.Getter;
 import lombok.Setter;
 import org.acme.Util.FieldUtil;
-import org.acme.models.Pessoa;
-import org.acme.models.Transportadora;
+import org.acme.models.Nota_fiscal_eletronica.Pessoa;
 import org.acme.models.Unidade;
 
 import java.time.LocalDate;

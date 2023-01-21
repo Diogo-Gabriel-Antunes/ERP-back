@@ -4,9 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+
 @Getter
 @Setter
 @Entity
@@ -23,7 +22,8 @@ public class Total {
     private double valorIrrfRetido;
     private double valorFcpStRetido;
     private double valorIcmsDesonerado;
-    private double baseCalculoIcmsSt;
+    @ManyToOne
+    private BaseCalculo baseCalculoIcmsSt;
     private double valorIcmsSt;
     private double valorProdutosServicos;
     private double valorFrete;
@@ -40,6 +40,7 @@ public class Total {
     private double valorPisRetido;
     private double valorCofinsRetido;
     private double valorCsllRetido;
+    @OneToOne
     private Servico servico;
     private double baseCalculoRetencao;
     private double valorPrevidenciaRetido;

@@ -21,6 +21,7 @@ public class NFe {
     private String idIntegracao;
     private String versaoManual;
     private String codigo;
+    private String chave;
     private Integer serie;
     @Enumerated(EnumType.STRING)
     private Finalidade finalidade;
@@ -38,9 +39,9 @@ public class NFe {
     private String codigoMunicipioFatoGerador;
     private boolean consumidorFinal;
     @ManyToOne
-    private Emitente emitente;
+    private Pessoa emitente;
     @ManyToOne
-    private Destinatario destinatario;
+    private Pessoa destinatario;
     @OneToMany
     private List<Itens> itens;
     private boolean compoeTotal;
@@ -54,7 +55,7 @@ public class NFe {
     private double valorOutros;
     private String numeroFci;
     @OneToOne
-    private Unidade unidade;
+    private UnidadeNFE unidade;
     @ManyToOne
     private ValorUnitario valorUnitario;
     @OneToMany
@@ -139,25 +140,4 @@ enum CodigoIdentificacaoDestino {
         return identificador;
     }
 }
-@Getter
-@Setter
-@Entity
-class Unidade{
-    @Id @GeneratedValue(generator="system-uuid")
-    @GenericGenerator(name="system-uuid", strategy = "uuid")
-    private String uuid;
-    private String comercial;
-    private String tributavel;
-    private long quantidade;
-    private double valor;
-}
-@Getter
-@Setter
-@Entity
-class ValorUnitario{
-    @Id @GeneratedValue(generator="system-uuid")
-    @GenericGenerator(name="system-uuid", strategy = "uuid")
-    private String uuid;
-    private String comercial;
-    private String tributavel;
-}
+

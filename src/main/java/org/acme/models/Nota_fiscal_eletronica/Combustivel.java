@@ -2,6 +2,7 @@ package org.acme.models.Nota_fiscal_eletronica;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.acme.models.Imposto;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -24,22 +25,11 @@ public class Combustivel {
     private long faturamentoTemperaturaAmbiente;
     private String estadoConsumo;
     @OneToOne
-    private Cide cide;
+    private Imposto cide;
     @OneToOne
     private Encerrante encerrante;
 }
-@Getter
-@Setter
-@Entity
-class Cide{
-    @Id @GeneratedValue(generator="system-uuid")
-    @GenericGenerator(name="system-uuid", strategy = "uuid")
-    private String uuid;
-    @ManyToOne
-    private BaseCalculo baseCalculo;
-    private double aliquota;
-    private double valor;
-}
+
 @Getter
 @Setter
 @Entity

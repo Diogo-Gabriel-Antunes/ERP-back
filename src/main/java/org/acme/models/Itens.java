@@ -47,8 +47,11 @@ public class Itens extends PanacheEntityBase implements Model{
 
 
     //Informações NFE
+    @OneToOne
     private ImportacaoImposto importacao;
+    @OneToMany
     private List<ImportacaoDados> importacaoDados;
+    @OneToOne
     private Tributos tributos;
     private String codigoBarrasTributavel;
     @Column(length =1000000)

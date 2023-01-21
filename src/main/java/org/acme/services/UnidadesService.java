@@ -1,12 +1,8 @@
 package org.acme.services;
 
-import io.smallrye.mutiny.Uni;
 import org.acme.Util.FieldUtil;
-import org.acme.models.Cliente;
-import org.acme.models.DTO.ClienteDTO;
 import org.acme.models.DTO.UnidadeDTO;
-import org.acme.models.Endereco;
-import org.acme.models.Pessoa;
+import org.acme.models.Nota_fiscal_eletronica.Pessoa;
 import org.acme.models.Unidade;
 
 import javax.enterprise.context.ApplicationScoped;

@@ -2,6 +2,7 @@ package org.acme.models.Nota_fiscal_eletronica;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.acme.models.Imposto;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -9,20 +10,11 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-public class ICMS {
-    @Id @GeneratedValue(generator="system-uuid")
-    @GenericGenerator(name="system-uuid", strategy = "uuid")
-    private String uuid;
+public class ICMS extends Imposto {
     private String origem;
-    private String cst;
-    private double aliquota;
-    @ManyToOne
-    private BaseCalculo baseCalculo;
-    @ManyToOne
-    private SubstituicaoTributaria substituicaoTributaria;
+
     @ManyToOne
     private FundoCombatePobreza fundoCombatePobreza;
-    private double valor;
 }
 
 

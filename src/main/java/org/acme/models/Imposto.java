@@ -3,6 +3,8 @@ package org.acme.models;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Getter;
 import lombok.Setter;
+import org.acme.models.Nota_fiscal_eletronica.BaseCalculo;
+import org.acme.models.Nota_fiscal_eletronica.SubstituicaoTributaria;
 import org.acme.models.enums.TipoImposto;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
@@ -22,9 +24,11 @@ public class Imposto extends PanacheEntityBase {
     private String uuid;
     @Enumerated(EnumType.STRING)
     private TipoImposto tipoImposto;
-    private int aliquota;
+    private double valor;
+    private String cst;
+    private double aliquota;
     @ManyToOne
-    @JsonbTransient
-    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
-    private Product products;
+    private BaseCalculo baseCalculo;
+    @ManyToOne
+    private SubstituicaoTributaria substituicaoTributaria;
 }
