@@ -5,12 +5,8 @@ import lombok.Setter;
 import org.acme.Util.FieldUtil;
 import org.acme.models.Cliente;
 import org.acme.models.ContasAPagar;
-import org.acme.models.Transportadora;
 import org.acme.models.cobranca.BillingType;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.OneToOne;
 import java.time.LocalDate;
 
 @Getter

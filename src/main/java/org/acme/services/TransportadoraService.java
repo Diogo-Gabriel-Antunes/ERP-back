@@ -1,9 +1,9 @@
 package org.acme.services;
 
 import org.acme.Util.FieldUtil;
-import org.acme.models.DTO.TransportadoraDTO;
-import org.acme.models.Endereco;
-import org.acme.models.Transportadora;
+import org.acme.models.DTO.TransportadorDTO;
+import org.acme.models.Nota_fiscal_eletronica.EnderecoNFE;
+import org.acme.models.Nota_fiscal_eletronica.Transportador;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -17,36 +17,36 @@ public class TransportadoraService {
     private FieldUtil fieldUtil = new FieldUtil();
     @Inject
     EntityManager em;
-    public List<Transportadora> findAll() {
-        return em.createQuery("SELECT t FROM Transportadora t",Transportadora.class).getResultList();
+    public List<Transportador> findAll() {
+        return em.createQuery("SELECT t FROM Transportador t", Transportador.class).getResultList();
     }
-    public Transportadora findOne(String uuid){
-        return em.createQuery("SELECT t FROM Transportadora t WHERE uuid = :uuid",Transportadora.class)
+    public Transportador findOne(String uuid){
+        return em.createQuery("SELECT t FROM Transportador t WHERE uuid = :uuid",Transportador.class)
                 .setParameter("uuid",uuid)
                 .getSingleResult();
     }
 
-    public void create(TransportadoraDTO transportadoraDTO) {
-        Transportadora transportadora = new Transportadora();
-        fieldUtil.updateFieldsDtoToModel(transportadora,transportadoraDTO);
-        Endereco enderoNoBanco = em.merge(transportadora.getEndereco());
-        transportadora.setEndereco(enderoNoBanco);
-        em.merge(transportadora);
+    public void create(TransportadorDTO transportadorDTO) {
+        Transportador transportador = new Transportador();
+        fieldUtil.updateFieldsDtoToModel(transportador,transportadorDTO);
+        EnderecoNFE enderoNoBanco = em.merge(transportador.getEndereco());
+        transportador.setEndereco(enderoNoBanco);
+        em.merge(transportador);
     }
 
-    public void update(String uuid, TransportadoraDTO transportadoraDTO) {
-        Transportadora transportadora = findOne(uuid);
-        em.merge(transportadora);
-        em.merge(transportadora.getEndereco());
-        fieldUtil.updateFieldsDtoToModel(transportadora,transportadoraDTO);
-        em.persist(transportadora.getEndereco());
-        em.persist(transportadora);
+    public void update(String uuid, TransportadorDTO transportadorDTO) {
+        Transportador transportador = findOne(uuid);
+        em.merge(transportador);
+        em.merge(transportador.getEndereco());
+        fieldUtil.updateFieldsDtoToModel(transportador,transportadorDTO);
+        em.persist(transportador.getEndereco());
+        em.persist(transportador);
     }
 
     public Response delete(String uuid) {
         try{
-            Transportadora transportadora = findOne(uuid);
-            em.remove(transportadora);
+            Transportador transportador = findOne(uuid);
+            em.remove(transportador);
             return Response.ok().build();
         }catch (Throwable t){
             t.printStackTrace();

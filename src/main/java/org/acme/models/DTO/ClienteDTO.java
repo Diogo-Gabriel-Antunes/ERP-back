@@ -4,9 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.acme.Util.FieldUtil;
 import org.acme.models.Cliente;
-import org.acme.models.Endereco;
+import org.acme.models.Nota_fiscal_eletronica.EnderecoNFE;
 
-import javax.persistence.OneToOne;
 import java.time.LocalDate;
 
 @Getter
@@ -21,7 +20,7 @@ public class ClienteDTO implements DTO {
     private String isuf;
     private String im;
     private String email;
-    private Endereco endereco;
+    private EnderecoNFE endereco;
     private LocalDate dataCriacao;
     private LocalDate ultimaAtualização;
     public static ClienteDTO convert(Cliente cliente) {

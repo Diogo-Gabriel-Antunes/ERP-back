@@ -1,13 +1,11 @@
 package org.acme.services;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import org.acme.Util.FieldUtil;
 import org.acme.models.DTO.FuncionarioDTO;
-import org.acme.models.Endereco;
 import org.acme.models.Funcionario;
+import org.acme.models.Nota_fiscal_eletronica.EnderecoNFE;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.ws.rs.core.Response;
 
@@ -21,7 +19,7 @@ public class FuncionarioService {
             Funcionario funcionario = new Funcionario();
 
 
-            Endereco enderecoBD = em.merge(funcionarioDTO.getEndereco());
+            EnderecoNFE enderecoBD = em.merge(funcionarioDTO.getEndereco());
 
             fieldUtil.updateFieldsDtoToModel(funcionario,funcionarioDTO);
             funcionario.setEndereco(enderecoBD);
@@ -38,7 +36,7 @@ public class FuncionarioService {
 
     public Response update(String uuid, FuncionarioDTO funcionarioDTO) {
         try{
-            Endereco endereco = null;
+            EnderecoNFE endereco = null;
             Funcionario funcionario = Funcionario.findById(uuid);
             if(funcionarioDTO.getEndereco() != null){
                 endereco = em.merge(funcionarioDTO.getEndereco());

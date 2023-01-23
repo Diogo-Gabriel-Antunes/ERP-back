@@ -7,6 +7,8 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
 @Getter
 @Setter
 @Entity
@@ -20,8 +22,8 @@ public class Veiculo {
     private String placa;
     private String uf;
     private String rntc;
-    private String codigoCor;
-    private String descricaoCor;
+    @OneToOne
+    private Cor cor;
     private long potenciaMotor;
     private long pesoBruto;
     private String numeroSerie;

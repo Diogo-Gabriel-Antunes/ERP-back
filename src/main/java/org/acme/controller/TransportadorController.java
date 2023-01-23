@@ -2,9 +2,8 @@ package org.acme.controller;
 
 import com.google.gson.Gson;
 import org.acme.Util.GsonUtil;
-import org.acme.models.DTO.TransportadoraDTO;
-import org.acme.models.Endereco;
-import org.acme.models.Transportadora;
+import org.acme.models.DTO.TransportadorDTO;
+import org.acme.models.Nota_fiscal_eletronica.Transportador;
 import org.acme.services.TransportadoraService;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -13,19 +12,18 @@ import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.lang.reflect.Array;
 import java.util.List;
 
-@Path("transportadora")
+@Path("transportador")
 @ApplicationScoped
-public class TransportadoraController {
+public class TransportadorController {
 
     @Inject
     TransportadoraService transportadoraService;
     private Gson gson = new GsonUtil().parser;
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Transportadora> listAll(){
+    public List<Transportador> listAll(){
         return transportadoraService.findAll();
 //        Transportadora transportadora = new Transportadora();
 //        transportadora.setIe("123123123");
@@ -43,23 +41,23 @@ public class TransportadoraController {
     @GET
     @Path("{uuid}")
     @Produces(MediaType.APPLICATION_JSON)
-    public TransportadoraDTO listOne(@PathParam("uuid")String uuid){
-        Transportadora transportadora = transportadoraService.findOne(uuid);
+    public TransportadorDTO listOne(@PathParam("uuid")String uuid){
+        Transportador transportador = transportadoraService.findOne(uuid);
 
-        return TransportadoraDTO.convert(transportadora);
+        return TransportadorDTO.convert(transportador);
     }
     @POST
     @Transactional
-    public TransportadoraDTO create(String json){
-        TransportadoraDTO transportadoraDTO = gson.fromJson(json, TransportadoraDTO.class);
-        transportadoraService.create(transportadoraDTO);
-        return transportadoraDTO;
+    public TransportadorDTO create(String json){
+        TransportadorDTO transportadorDTO = gson.fromJson(json, TransportadorDTO.class);
+        transportadoraService.create(transportadorDTO);
+        return transportadorDTO;
     }
     @PUT
     @Path("{uuid}")
     @Transactional
-    public TransportadoraDTO update(@PathParam("uuid")String uuid, String json){
-        TransportadoraDTO transportadoraDTO = gson.fromJson(json, TransportadoraDTO.class);
+    public TransportadorDTO update(@PathParam("uuid")String uuid, String json){
+        TransportadorDTO transportadoraDTO = gson.fromJson(json, TransportadorDTO.class);
         transportadoraService.update(uuid,transportadoraDTO);
         return transportadoraDTO;
     }

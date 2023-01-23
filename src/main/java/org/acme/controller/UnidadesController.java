@@ -2,11 +2,8 @@ package org.acme.controller;
 
 import com.google.gson.Gson;
 import org.acme.Util.GsonUtil;
-import org.acme.models.DTO.TransportadoraDTO;
 import org.acme.models.DTO.UnidadeDTO;
-import org.acme.models.Transportadora;
 import org.acme.models.Unidade;
-import org.acme.services.TransportadoraService;
 import org.acme.services.UnidadesService;
 
 import javax.inject.Inject;

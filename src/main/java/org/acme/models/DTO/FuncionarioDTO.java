@@ -3,21 +3,17 @@ package org.acme.models.DTO;
 import lombok.Getter;
 import lombok.Setter;
 import org.acme.models.Beneficios;
-import org.acme.models.Endereco;
+import org.acme.models.Nota_fiscal_eletronica.EnderecoNFE;
 import org.acme.models.enums.NivelDeEscolaridade;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.OneToOne;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Set;
 
 @Getter
 @Setter
 public class FuncionarioDTO implements DTO {
     private String nome;
-    private Endereco endereco;
+    private EnderecoNFE endereco;
     private String pis;
     private NivelDeEscolaridade nivelDeEscolaridade;
     private String cpf;

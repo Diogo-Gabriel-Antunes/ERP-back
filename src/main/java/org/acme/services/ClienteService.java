@@ -3,7 +3,7 @@ package org.acme.services;
 import org.acme.Util.FieldUtil;
 import org.acme.models.Cliente;
 import org.acme.models.DTO.ClienteDTO;
-import org.acme.models.Endereco;
+import org.acme.models.Nota_fiscal_eletronica.EnderecoNFE;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -24,7 +24,7 @@ public class ClienteService {
 
     public void create(ClienteDTO clienteDTO) {
         Cliente cliente = new Cliente();
-        Endereco enderecoSalvo = em.merge(clienteDTO.getEndereco());
+        EnderecoNFE enderecoSalvo = em.merge(clienteDTO.getEndereco());
         fieldUtil.updateFieldsDtoToModel(cliente,clienteDTO);
         cliente.setEndereco(enderecoSalvo);
         cliente.setDataCriacao(LocalDate.now());

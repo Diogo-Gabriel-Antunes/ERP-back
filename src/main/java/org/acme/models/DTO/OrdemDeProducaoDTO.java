@@ -5,12 +5,8 @@ import lombok.Setter;
 import org.acme.Util.FieldUtil;
 import org.acme.models.OrdemDeProducao;
 import org.acme.models.Product;
-import org.acme.models.TimesOrdemDeProducao;
-import org.acme.models.Transportadora;
 import org.acme.models.enums.StatusDaProducao;
-import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 

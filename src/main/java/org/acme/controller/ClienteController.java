@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import org.acme.Util.GsonUtil;
 import org.acme.models.Cliente;
 import org.acme.models.DTO.ClienteDTO;
-import org.acme.models.Endereco;
 import org.acme.services.ClienteService;
 
 import javax.enterprise.context.ApplicationScoped;

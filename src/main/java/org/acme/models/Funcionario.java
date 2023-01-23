@@ -3,6 +3,7 @@ package org.acme.models;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Getter;
 import lombok.Setter;
+import org.acme.models.Nota_fiscal_eletronica.EnderecoNFE;
 import org.acme.models.enums.NivelDeEscolaridade;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
@@ -26,7 +27,7 @@ public class Funcionario extends PanacheEntityBase implements Model{
     private String nome;
     @OneToOne
     @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
-    private Endereco endereco;
+    private EnderecoNFE endereco;
     private String pis;
     @Enumerated(EnumType.STRING)
     private NivelDeEscolaridade nivelDeEscolaridade;
