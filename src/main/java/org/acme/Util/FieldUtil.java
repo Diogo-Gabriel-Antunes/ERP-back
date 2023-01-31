@@ -2,18 +2,17 @@ package org.acme.Util;
 
 
 import org.acme.models.DTO.DTO;
-import org.acme.models.DTO.ProductDTO;
 import org.acme.models.Model;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.lang.reflect.Field;
-import java.util.Arrays;
+import java.util.HashMap;
 
 @ApplicationScoped
 public class FieldUtil {
 
-    public String updateStringToGetorSet(Field attribute){
-        return attribute.getName().replaceFirst(attribute.getName().substring(0,1),attribute.getName().substring(0,1).toUpperCase());
+    public String updateStringToGetorSet(Field attribute) {
+        return attribute.getName().replaceFirst(attribute.getName().substring(0, 1), attribute.getName().substring(0, 1).toUpperCase());
     }
 
     public void updateFieldsDtoToModel(Model oldObject, DTO newObject){
@@ -21,8 +20,25 @@ public class FieldUtil {
         for (Field attribute : attributes) {
             try {
                 attribute.setAccessible(true);
-                if(attribute.get(newObject) != null){
-                    oldObject.getClass().getDeclaredMethod("set"+updateStringToGetorSet(attribute),attribute.getType()).invoke(oldObject,attribute.get(newObject));
+                if (attribute.get(newObject) != null) {
+                    oldObject.getClass().getDeclaredMethod("set" + updateStringToGetorSet(attribute), attribute.getType()).invoke(oldObject, attribute.get(newObject));
+                }else{
+                    oldObject.getClass().getDeclaredMethod("set" + updateStringToGetorSet(attribute), attribute.getType()).invoke(oldObject, (Object) null);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new RuntimeException();
+            }
+        }
+    }
+
+    public void updateFieldsModelToDTO(Model model, DTO dto) {
+        Field[] attributes = model.getClass().getDeclaredFields();
+        for (int i = 0; i < attributes.length - 5; i++) {
+            try {
+                attributes[i].setAccessible(true);
+                if (attributes[i].get(model) != null) {
+                    dto.getClass().getDeclaredMethod("set" + updateStringToGetorSet(attributes[i]), attributes[i].getType()).invoke(dto, attributes[i].get(model));
                 }
             } catch (Exception e) {
                 throw new RuntimeException();
@@ -30,17 +46,21 @@ public class FieldUtil {
         }
     }
 
-    public void updateFieldsModelToDTO(Model model, DTO dto){
-        Field[] attributes = model.getClass().getDeclaredFields();
-        for (int i = 0;i<attributes.length - 5;i++) {
+    public HashMap createHashMap(Model model, DTO dto) {
+        Field[] attributes = dto.getClass().getDeclaredFields();
+        HashMap hashMap = new HashMap();
+        for (Field field : attributes) {
             try {
-                attributes[i].setAccessible(true);
-                if(attributes[i].get(model) != null){
-                    dto.getClass().getDeclaredMethod("set"+updateStringToGetorSet(attributes[i]), attributes[i].getType()).invoke(dto, attributes[i].get(model));
+
+                field.setAccessible(true);
+                if (field.get(dto) != null) {
+                    hashMap.put(field.getName(),field.get(dto));
                 }
-            } catch (Exception e) {
+            } catch (Throwable t) {
                 throw new RuntimeException();
             }
         }
+        return hashMap;
+
     }
 }

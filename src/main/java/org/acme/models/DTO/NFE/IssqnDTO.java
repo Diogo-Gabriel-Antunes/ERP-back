@@ -1,18 +1,11 @@
-package org.acme.models.Nota_fiscal_eletronica;
+package org.acme.models.DTO.NFE;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.acme.models.Imposto;
-import org.acme.models.enums.Estado;
-import org.acme.models.enums.TipoImposto;
-import org.hibernate.annotations.GenericGenerator;
-
-import javax.persistence.*;
 
 @Getter
 @Setter
-@Entity
-public class Issqn extends Imposto {
+public class IssqnDTO extends ImpostoDTO {
     private String codigoServico;
     private String valorDeducao;
     private double valorOutros;

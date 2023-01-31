@@ -40,7 +40,7 @@ public class TransporteController {
 
                 proximoJson = String.valueOf(gson.toJson(proximoHashMap.get(campos.get(i))));
 
-                return Response.ok( String.valueOf(proximoJson)).build();
+                return Response.ok(proximoJson).build();
             }else{
                 proximoHashMap = gson.fromJson(proximoJson, HashMap.class);
 

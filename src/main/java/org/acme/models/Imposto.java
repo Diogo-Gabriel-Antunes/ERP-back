@@ -4,20 +4,19 @@ import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Getter;
 import lombok.Setter;
 import org.acme.models.Nota_fiscal_eletronica.BaseCalculo;
+import org.acme.models.Nota_fiscal_eletronica.FundoCombatePobreza;
 import org.acme.models.Nota_fiscal_eletronica.SubstituicaoTributaria;
+import org.acme.models.enums.Estado;
 import org.acme.models.enums.TipoImposto;
-import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Set;
+
 
 @Getter
 @Setter
 @Entity
-public class Imposto extends PanacheEntityBase {
+public class Imposto extends PanacheEntityBase implements Model {
     @Id
     @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
@@ -27,8 +26,12 @@ public class Imposto extends PanacheEntityBase {
     private double valor;
     private String cst;
     private double aliquota;
-    @ManyToOne
+    @OneToOne
     private BaseCalculo baseCalculo;
-    @ManyToOne
+    @OneToOne
     private SubstituicaoTributaria substituicaoTributaria;
+    @OneToOne
+    private FundoCombatePobreza fundoCombatePobreza;
+    @Enumerated(EnumType.STRING)
+    private Estado estado;
 }
