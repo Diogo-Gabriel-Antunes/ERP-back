@@ -208,7 +208,6 @@ public class ImpostoService {
             unidadeNFE.setComercial(unidadeDTO.getComercial() != null ? unidadeDTO.getComercial() : null);
             unidadeNFE.setQuantidade(unidadeDTO.getQuantidade() != 0 ? unidadeDTO.getQuantidade() : 0);
             unidadeNFE.setTributavel(unidadeDTO.getTributavel() != null ? unidadeDTO.getTributavel() : null);
-            unidadeNFE.setValor(unidadeDTO.getValor() != 0 ? unidadeDTO.getValor() : 0);
         } else {
             unidadeNFE = null;
         }

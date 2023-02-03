@@ -22,5 +22,4 @@ public class UnidadeNFE implements Model {
     private String comercial;
     private String tributavel;
     private long quantidade;
-    private double valor;
 }

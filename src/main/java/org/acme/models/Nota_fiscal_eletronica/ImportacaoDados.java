@@ -2,14 +2,16 @@ package org.acme.models.Nota_fiscal_eletronica;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.acme.models.Model;
 import org.hibernate.annotations.GenericGenerator;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import java.util.List;
 @Getter
 @Setter
 @Entity
-public class ImportacaoDados {
+public class ImportacaoDados implements Model {
     @Id
     @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
@@ -26,21 +28,7 @@ public class ImportacaoDados {
     @ManyToOne
     private Adquirente adquirente;
     @OneToMany(mappedBy = "importacaoDados")
+    @JsonbTransient
     private List<Adicoes> adicoes;
 }
 
-enum ViaTransporte{
-    MARITIMA(1), FLUVIAL(2), LACUSTRE(3), AEREA(4), POSTAL(5),
-    FERROVIARIA(6), RODOVIARIA(7), CONDUTO_REDE_TRANSMISSAO(8), MEIOS_PROPRIOS(9),
-    ENTRADA_SAIDA_FICTA(10), COURIER(11), HANDCARRY(12);
-
-    private final int valor;
-
-    ViaTransporte(int valor) {
-        this.valor = valor;
-    }
-
-    public int getValue() {
-        return valor;
-    }
-}
