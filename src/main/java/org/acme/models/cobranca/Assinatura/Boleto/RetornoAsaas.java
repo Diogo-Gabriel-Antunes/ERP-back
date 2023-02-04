@@ -1,13 +1,11 @@
-package org.acme.models.boleto.asaas;
+package org.acme.models.cobranca.Assinatura.Boleto;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
-import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Getter
 @Setter

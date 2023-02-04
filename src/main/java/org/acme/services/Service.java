@@ -7,6 +7,7 @@ import org.acme.Util.GsonUtil;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import java.time.format.DateTimeFormatter;
 
 @ApplicationScoped
 public class Service {
@@ -14,4 +15,5 @@ public class Service {
     protected EntityManager em;
     protected Gson gson = new GsonUtil().parser;
     protected FieldUtil fieldUtil = new FieldUtil();
+    protected DateTimeFormatter formatadorData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 }

@@ -10,11 +10,9 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -24,8 +22,7 @@ public class Cliente extends PanacheEntityBase implements Model {
     @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String uuid;
-    private String cnpj;
-    private String cpf;
+    private String cpfCnpj;
     private String idEstrangeiro;
     private String xNome;
     private String indIEDest;
@@ -33,16 +30,28 @@ public class Cliente extends PanacheEntityBase implements Model {
     private String isuf;
     private String im;
     private String email;
+    private String telefone;
+    private String observacao;
+    private boolean receberNotificacao;
     @OneToOne
     @Cascade(CascadeType.SAVE_UPDATE)
     private EnderecoNFE endereco;
     private LocalDate dataCriacao;
     private LocalDate ultimaAtualização;
 
-    public static Cliente ClienteCreator(ClienteDTO responsavelPelaVenda) {
-        Cliente cliente = new Cliente();
-        FieldUtil fieldUtil = new FieldUtil();
-        fieldUtil.updateFieldsDtoToModel(cliente,responsavelPelaVenda);
-        return cliente;
+    @PrePersist
+    public void prePersist(){
+        EntityManager em = getEntityManager();
+        em.persist(endereco);
+        dataCriacao = LocalDate.now();
+        ultimaAtualização = LocalDate.now();
     }
+    @PreUpdate
+    public void preUpdate(){
+        EntityManager em = getEntityManager();
+        em.persist(endereco);
+        ultimaAtualização = LocalDate.now();
+    }
+
+
 }

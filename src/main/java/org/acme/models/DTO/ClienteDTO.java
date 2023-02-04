@@ -2,6 +2,7 @@ package org.acme.models.DTO;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.acme.Anotacao.Type;
 import org.acme.Util.FieldUtil;
 import org.acme.models.Cliente;
 import org.acme.models.Nota_fiscal_eletronica.EnderecoNFE;
@@ -11,8 +12,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class ClienteDTO implements DTO {
-    private String cnpj;
-    private String cpf;
+    private String cpfCnpj;
     private String idEstrangeiro;
     private String xNome;
     private String indIEDest;
@@ -20,7 +20,8 @@ public class ClienteDTO implements DTO {
     private String isuf;
     private String im;
     private String email;
-    private EnderecoNFE endereco;
+    @Type(EnderecoNFE.class)
+    private EnderecoNFEDTO endereco;
     private LocalDate dataCriacao;
     private LocalDate ultimaAtualização;
     public static ClienteDTO convert(Cliente cliente) {

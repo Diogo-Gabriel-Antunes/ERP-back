@@ -1,16 +1,11 @@
 package org.acme.services;
 
-import com.google.gson.Gson;
 import org.acme.Util.DateUtil;
-import org.acme.Util.FieldUtil;
-import org.acme.Util.GsonUtil;
-import org.acme.models.boleto.asaas.BoletoAsaas;
-import org.acme.models.boleto.asaas.BoletoAsaasDTO;
-import org.acme.models.boleto.asaas.RetornoAsaas;
+import org.acme.models.cobranca.Assinatura.Boleto.BoletoAsaas;
+import org.acme.models.cobranca.Assinatura.Boleto.BoletoAsaasDTO;
+import org.acme.models.cobranca.Assinatura.Boleto.RetornoAsaas;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;

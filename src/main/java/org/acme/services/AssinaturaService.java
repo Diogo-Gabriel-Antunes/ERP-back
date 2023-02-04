@@ -11,6 +11,9 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import javax.ws.rs.core.Response;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @ApplicationScoped
@@ -31,9 +34,14 @@ public class AssinaturaService extends Service{
         }
     }
 
+
+
     private void convertDTOS(Assinatura assinatura, AssinaturaDTO assinaturaDTO) {
 
-        fieldUtil.updateFieldsDtoToModel(assinatura.getSplit(),assinaturaDTO.getSplit());
+        if(assinaturaDTO.getSplit() != null){
+
+            fieldUtil.updateFieldsDtoToModel(assinatura.getSplit(),assinaturaDTO.getSplit());
+        }
         fieldUtil.updateFieldsDtoToModel(assinatura.getFine(),assinaturaDTO.getFine());
         fieldUtil.updateFieldsDtoToModel(assinatura.getDiscount(),assinaturaDTO.getDiscount());
         fieldUtil.updateFieldsDtoToModel(assinatura.getInterest(),assinaturaDTO.getInterest());

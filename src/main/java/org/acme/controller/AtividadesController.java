@@ -1,15 +1,9 @@
 package org.acme.controller;
 
 import com.google.gson.Gson;
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import org.acme.Util.FieldUtil;
 import org.acme.Util.GsonUtil;
 import org.acme.models.Atividade;
-import org.acme.models.DTO.AtividadeDTO;
-import org.acme.models.boleto.asaas.BoletoAsaas;
-import org.acme.models.boleto.asaas.BoletoAsaasDTO;
 import org.acme.services.AtividadeService;
-import org.acme.services.BoletoService;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;

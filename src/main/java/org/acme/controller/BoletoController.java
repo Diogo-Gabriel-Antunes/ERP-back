@@ -2,20 +2,15 @@ package org.acme.controller;
 
 import com.google.gson.Gson;
 import org.acme.Util.GsonUtil;
-import org.acme.models.boleto.asaas.BoletoAsaas;
-import org.acme.models.boleto.asaas.BoletoAsaasDTO;
+import org.acme.models.cobranca.Assinatura.Boleto.BoletoAsaas;
+import org.acme.models.cobranca.Assinatura.Boleto.BoletoAsaasDTO;
 import org.acme.services.BoletoService;
-import org.jboss.resteasy.annotations.Body;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.List;
 
 @Path("/boleto")

@@ -7,12 +7,8 @@ import org.acme.models.DTO.Financas.DiscountDTO;
 import org.acme.models.DTO.Financas.FineDTO;
 import org.acme.models.DTO.Financas.InterestDTO;
 import org.acme.models.DTO.Financas.SplitDTO;
-import org.acme.models.Model;
-import org.acme.models.boleto.asaas.SubscriptionCycle;
+import org.acme.models.cobranca.SubscriptionCycle;
 import org.acme.models.cobranca.*;
-
-
-import java.util.List;
 
 @Getter
 @Setter

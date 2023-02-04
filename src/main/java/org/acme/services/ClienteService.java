@@ -22,12 +22,13 @@ public class ClienteService extends Service {
 
     public void create(ClienteDTO clienteDTO) {
         Cliente cliente = new Cliente();
-        EnderecoNFE enderecoSalvo = em.merge(clienteDTO.getEndereco());
+        cliente.setEndereco(new EnderecoNFE());
+        fieldUtil.updateFieldsDtoToModel(cliente.getEndereco(),clienteDTO.getEndereco());
+        clienteDTO.setEndereco(null);
         fieldUtil.updateFieldsDtoToModel(cliente,clienteDTO);
-        cliente.setEndereco(enderecoSalvo);
         cliente.setDataCriacao(LocalDate.now());
         cliente.setUltimaAtualização(LocalDate.now());
-        em.merge(cliente);
+        em.persist(cliente);
     }
 
     public Cliente findOne(String uuid) {
@@ -40,13 +41,10 @@ public class ClienteService extends Service {
         Cliente cliente= findOne(uuid);
 
         em.merge(cliente);
-        em.merge(clienteDTO.getEndereco());
         fieldUtil.updateFieldsDtoToModel(cliente,clienteDTO);
-        em.persist(cliente.getEndereco());
         cliente.setUltimaAtualização(LocalDate.now());
         clienteDTO.setUltimaAtualização(LocalDate.now());
         em.persist(cliente);
-        em.flush();
     }
 
     public Response delete(String uuid) {
