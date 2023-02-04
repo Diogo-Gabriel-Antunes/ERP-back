@@ -25,7 +25,6 @@ public class FieldUtil {
                     oldObject.getClass().getDeclaredMethod("set" + updateStringToGetorSet(attribute), attribute.getType()).invoke(oldObject, attribute.get(newObject));
                 }else if(attribute.getAnnotation(Type.class) != null && attribute.get(newObject) != null) {
                     oldObject.getClass().getDeclaredMethod("set" + updateStringToGetorSet(attribute), attribute.getAnnotation(Type.class).value()).invoke(oldObject, (Object) null);
-//                }else if(verificaTipoPrimitivo(attribute.getType())) {
                 }else if(attribute.getAnnotation(Type.class) == null) {
                     oldObject.getClass().getDeclaredMethod("set" + updateStringToGetorSet(attribute), attribute.getType()).invoke(oldObject, (Object) null);
                 }
