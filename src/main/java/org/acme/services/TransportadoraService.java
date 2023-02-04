@@ -12,11 +12,9 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 @ApplicationScoped
-public class TransportadoraService {
+public class TransportadoraService extends Service{
 
-    private FieldUtil fieldUtil = new FieldUtil();
-    @Inject
-    EntityManager em;
+
     public List<Transportador> findAll() {
         return em.createQuery("SELECT t FROM Transportador t", Transportador.class).getResultList();
     }

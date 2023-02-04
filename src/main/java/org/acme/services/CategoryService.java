@@ -9,10 +9,8 @@ import javax.persistence.EntityManager;
 import java.util.List;
 
 @ApplicationScoped
-public class CategoryService {
+public class CategoryService extends Service {
 
-    @Inject
-    EntityManager em;
 
     public List<Category> listAll(){
         return em.createQuery("SELECT c FROM Category c",Category.class).getResultList();

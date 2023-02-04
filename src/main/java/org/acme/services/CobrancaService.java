@@ -16,11 +16,9 @@ import java.net.http.HttpResponse;
 import java.util.List;
 
 @ApplicationScoped
-public class CobrancaService {
+public class CobrancaService extends Service {
 
-    @Inject
-    EntityManager em;
-    Gson gson = new GsonUtil().parser;
+
 
     public List<CobrancaParcelada> getAll(){
         return em.createQuery("SELECT c FROM CobrancaParcelada c",CobrancaParcelada.class).getResultList();

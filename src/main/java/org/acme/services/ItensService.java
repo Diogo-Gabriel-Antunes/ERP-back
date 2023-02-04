@@ -14,12 +14,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 @ApplicationScoped
-public class ItensService {
+public class ItensService extends Service {
 
-    @Inject
-    EntityManager em;
-    @Inject
-    FieldUtil fieldUtil;
+
     public Itens create(Product product){
         Itens itens = new Itens();
         itens.setProduto(product);

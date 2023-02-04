@@ -9,10 +9,9 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 @ApplicationScoped
-public class VeiculoService {
+public class VeiculoService extends Service{
 
-    @Inject
-    EntityManager em;
+
     public Response listAll(){
         try{
             List<Veiculo> veiculos = em.createQuery("select v from Veiculo v", Veiculo.class)

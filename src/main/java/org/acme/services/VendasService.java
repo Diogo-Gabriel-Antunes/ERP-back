@@ -9,9 +9,9 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.core.Response;
 
 @ApplicationScoped
-public class VendasService {
+public class VendasService extends Service{
 
-    private FieldUtil fieldUtil = new FieldUtil();
+
 
     public Response update(String uuid, VendasDTO vendasDTO){
         try{

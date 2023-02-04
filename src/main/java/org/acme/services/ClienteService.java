@@ -13,10 +13,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 @ApplicationScoped
-public class ClienteService {
-    @Inject
-    EntityManager em;
-    private FieldUtil fieldUtil = new FieldUtil();
+public class ClienteService extends Service {
+
 
     public List<Cliente> findAll(){
         return em.createQuery("SELECT c FROM Cliente c",Cliente.class).getResultList();

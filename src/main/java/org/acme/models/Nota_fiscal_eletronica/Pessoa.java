@@ -2,6 +2,7 @@ package org.acme.models.Nota_fiscal_eletronica;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.acme.models.enums.RegimeTributario;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Entity;
@@ -29,7 +30,7 @@ public class Pessoa {
     private  String nomeFantasia;
     private String razaoSocial;
     // 1 = Simples nacional, 2 = Simples nacional - Excesso, 3 = regime normal
-    private Integer regimeTributario;
+    private RegimeTributario regimeTributario;
     private RegimeTributaraioEspecial regimeTributarioEspecial;
     private boolean simplesNacional;
     @OneToOne
@@ -37,12 +38,4 @@ public class Pessoa {
     private boolean orgaoPublico;
     private Integer indicadorInscricaoEstadual;
     private String codigoEstrangeiro;
-}
-enum RegimeTributaraioEspecial{
-    SEMREGIME(0),MICROEMPRESAMUNICIPAL(1),ESTIMATIVA(2),SOCIEDADEPROFISSIONAIS(3),COOPERATIVA(4),MEI(5),MEEPP(6);
-
-    private int codigo;
-    RegimeTributaraioEspecial (int codigo){
-        this.codigo = codigo;
-    }
 }

@@ -11,10 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
-public class CorService {
+public class CorService extends Service{
 
-    @Inject
-    EntityManager em;
+
     public Response setupCores(){
         List<Cor> cores = Cor.listAll();
 

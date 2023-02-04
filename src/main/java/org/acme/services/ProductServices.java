@@ -18,13 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
-public class ProductServices {
-    @Inject
-    EntityManager em;
-    @Inject
-    CategoryService categoryService;
-    @Inject
-    FieldUtil fieldUtil;
+public class ProductServices extends Service{
+
+
     public List<Product> listAll() {
         return em.createQuery("SELECT p from Product p", Product.class).getResultList();
     }

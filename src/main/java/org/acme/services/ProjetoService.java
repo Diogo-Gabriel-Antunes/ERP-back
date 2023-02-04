@@ -18,12 +18,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @ApplicationScoped
-public class ProjetoService {
-    private Gson gson = new GsonUtil().parser;
+public class ProjetoService extends Service{
 
-    private FieldUtil fieldUtil = new FieldUtil();
-    @Inject
-    EntityManager em;
 
     public Response create(String json) {
         try {

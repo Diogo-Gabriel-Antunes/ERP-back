@@ -20,11 +20,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 @ApplicationScoped
-public class BoletoService {
-    @Inject
-    private EntityManager em;
-    private Gson gson = new GsonUtil().parser;
-    private FieldUtil fieldUtil = new FieldUtil();
+public class BoletoService extends Service{
+
 
     public List<BoletoAsaas> listAll() {
         return em.createQuery("SELECT b FROM BoletoAsaas b", BoletoAsaas.class).getResultList();

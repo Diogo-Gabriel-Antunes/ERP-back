@@ -10,10 +10,9 @@ import javax.persistence.EntityManager;
 import javax.ws.rs.core.Response;
 
 @ApplicationScoped
-public class FuncionarioService {
+public class FuncionarioService  extends Service{
 
-    private EntityManager em = Funcionario.getEntityManager();
-    private FieldUtil fieldUtil = new FieldUtil();
+
     public Response create(FuncionarioDTO funcionarioDTO){
         try{
             Funcionario funcionario = new Funcionario();

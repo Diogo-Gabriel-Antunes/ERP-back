@@ -2,26 +2,30 @@ package org.acme.models.cobranca;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.acme.models.cobranca.Assinatura.Assinatura;
+import org.acme.models.Model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.json.bind.annotation.JsonbTransient;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
-public class Fine {
+public class Fine implements Model {
     @Id
     @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String uuid;
     private double fine;
-    @OneToOne
+    @OneToMany(mappedBy = "fine")
     @JsonbTransient
-    private CobrancaParcelada cobrancaParcelada;
-    @OneToOne
+    private List<CobrancaParcelada> cobrancaParcelada;
+    @OneToMany(mappedBy = "FineObject")
     @JsonbTransient
-    private CobrancaParceladaRetorno cobrancaParceladaRetorno;
+    private List<CobrancaParceladaRetorno> cobrancaParceladaRetorno;
+    @JsonbTransient
+    @OneToMany(mappedBy = "fine")
+    private List<Assinatura> assinatura;
 }

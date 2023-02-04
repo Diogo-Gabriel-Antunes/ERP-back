@@ -14,12 +14,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 @ApplicationScoped
-public class StorageService {
+public class StorageService extends Service{
 
-    @Inject
-    EntityManager em;
-    @Inject
-    FieldUtil fieldUtil;
+
     public Storage create(Product product){
         Storage storage = new Storage();
         storage.setProduto(product);

@@ -3,11 +3,13 @@ package org.acme.models.cobranca;
 import lombok.Getter;
 import lombok.Setter;
 import org.acme.models.Model;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -26,15 +28,19 @@ public class CobrancaParcelada implements Model {
     private String externalReference;
     private Integer installmentCount;
     private Double installmentValue;
-    @OneToOne(mappedBy = "cobrancaParcelada")
+    @ManyToOne
     private Discount discount;
-    @OneToOne(mappedBy = "cobrancaParcelada")
+    @ManyToOne
     private Interest interest;
-    @OneToOne(mappedBy = "cobrancaParcelada")
+    @ManyToOne
     private Fine fine;
     private boolean postalService;
-    @OneToMany(mappedBy = "cobrancaParcelada")
-    private List<Split> splits;
+    @ManyToMany
+    @JoinTable(name="splits_parcelas", joinColumns=
+            {@JoinColumn(name="cobranca_parcelada_id")}, inverseJoinColumns=
+            {@JoinColumn(name="split_id")})
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private Set<Split> splits;
     @OneToOne
     private CobrancaParceladaRetorno cobrancaParceladaRetorno;
 }

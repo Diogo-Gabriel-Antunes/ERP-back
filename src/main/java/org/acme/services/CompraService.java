@@ -13,10 +13,8 @@ import java.net.URI;
 import java.util.Arrays;
 
 @ApplicationScoped
-public class CompraService {
-    private Gson gson = new GsonUtil().parser;
+public class CompraService extends Service {
 
-    private FieldUtil fieldUtil = new FieldUtil();
     public Response create(String json) {
         try {
             CompraDTO compraDTO = gson.fromJson(json, CompraDTO.class);

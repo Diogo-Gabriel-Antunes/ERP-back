@@ -14,11 +14,8 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 @ApplicationScoped
-public class ImportacaoService {
-    @Inject
-    EntityManager em;
-    private Gson gson = new GsonUtil().parser;
-    private FieldUtil fieldUtil = new FieldUtil();
+public class ImportacaoService extends Service {
+
 
     @Transactional
     public Response listAll() {

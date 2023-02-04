@@ -2,17 +2,19 @@ package org.acme.models.cobranca;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.acme.models.cobranca.Assinatura.Assinatura;
+import org.acme.models.Model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.json.bind.annotation.JsonbTransient;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
+
 @Getter
 @Setter
 @Entity
-public class Split {
+public class Split implements Model {
     @Id
     @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
@@ -21,9 +23,13 @@ public class Split {
     private double fixedValue;
     private double percentualValue;
     @JsonbTransient
-    @ManyToOne
-    private CobrancaParcelada cobrancaParcelada;
+    @ManyToMany(mappedBy = "splits")
+    private Set<CobrancaParcelada> cobrancaParcelada;
     @JsonbTransient
-    @ManyToOne
-    private CobrancaParceladaRetorno cobrancaParceladaRetorno;
+    @ManyToMany
+    private Set<CobrancaParceladaRetorno> cobrancaParceladaRetorno;
+    @JsonbTransient
+    @OneToMany(mappedBy = "split")
+    private List<Assinatura> assinatura;
+
 }

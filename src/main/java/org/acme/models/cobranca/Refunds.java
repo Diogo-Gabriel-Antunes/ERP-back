@@ -6,6 +6,8 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -21,7 +23,7 @@ public class Refunds {
     private String description;
     private String transactionReceiptUrl;
     @JsonbTransient
-    @ManyToOne
-    private CobrancaParceladaRetorno cobrancaParceladaRetorno;
+    @OneToMany(mappedBy = "refunds")
+    private List<CobrancaParceladaRetorno> cobrancaParceladaRetorno;
 
 }

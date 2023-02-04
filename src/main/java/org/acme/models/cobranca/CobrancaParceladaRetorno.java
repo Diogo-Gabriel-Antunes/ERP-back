@@ -47,15 +47,15 @@ public class CobrancaParceladaRetorno {
     private String lastInvoiceViewedDate;
     private boolean postalService;
     private String lastBankSlipViewedDate;
-    @OneToOne(mappedBy = "cobrancaParceladaRetorno")
+    @ManyToOne
     private Discount DiscountObject;
-    @OneToOne(mappedBy = "cobrancaParceladaRetorno")
+    @ManyToOne
     private Fine FineObject;
-    @OneToOne(mappedBy = "cobrancaParceladaRetorno")
+    @ManyToOne
     private Interest InterestObject;
-    @OneToMany(mappedBy = "cobrancaParceladaRetorno")
-    private List<Refunds> refunds;
-    @OneToOne(mappedBy = "cobrancaParceladaRetorno")
+    @ManyToOne
+    private Refunds refunds;
+    @ManyToOne
     @JsonbTransient
     private CobrancaParcelada cobrancaParcelada;
 }

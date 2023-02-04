@@ -8,10 +8,9 @@ import javax.persistence.EntityManager;
 import java.util.List;
 
 @ApplicationScoped
-public class CobrancaRetornoService {
+public class CobrancaRetornoService extends Service {
 
-    @Inject
-    EntityManager em;
+
 
     public List<CobrancaParceladaRetorno> getAll(){
         return em.createQuery("SELECT cpr FROM CobrancaParceladaRetorno cpr",CobrancaParceladaRetorno.class).getResultList();

@@ -21,14 +21,9 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 @ApplicationScoped
-public class RequestService {
+public class RequestService extends Service {
 
-    @Inject
-    EntityManager em;
-    @Inject
-    FieldUtil fieldUtil;
-    @Inject
-    ClienteService clienteService;
+
     @Inject
     StorageService storageService;
     public List<Request> findAll() {

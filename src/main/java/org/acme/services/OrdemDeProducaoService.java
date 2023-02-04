@@ -13,10 +13,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @ApplicationScoped
-public class OrdemDeProducaoService {
-    @Inject
-    EntityManager em;
-    private FieldUtil fieldUtil = new FieldUtil();
+public class OrdemDeProducaoService extends Service {
+
     @Inject
     StorageService storageService;
     public List<OrdemDeProducao> findAll(){

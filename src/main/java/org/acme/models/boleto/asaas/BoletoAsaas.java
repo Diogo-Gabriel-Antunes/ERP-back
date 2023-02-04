@@ -42,9 +42,3 @@ public class BoletoAsaas extends PanacheEntityBase implements Model {
 }
 
 
-enum ChargeType{
-    DETACHED,RECURRENT,INSTALLMENT;
-}
-enum SubscriptionCycle{
-    WEEKLY,BIWEEKLY,MONTHLY,QUARTERLY,SEMIANNUALLY,YEARLY;
-}

@@ -13,12 +13,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 @ApplicationScoped
-public class ContasAPagarService {
-    @Inject
-    EntityManager em;
+public class ContasAPagarService extends Service {
 
-    @Inject
-    FieldUtil fieldUtil;
     public List<ContasAPagar> listAll() {
         return em.createQuery("SELECT c from ContasAPagar c", ContasAPagar.class).getResultList();
     }

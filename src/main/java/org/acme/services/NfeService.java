@@ -14,12 +14,9 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 @ApplicationScoped
-public class NfeService {
+public class NfeService extends Service{
 
-    @Inject
-    EntityManager em;
-    private Gson gson = new GsonUtil().parser;
-    private FieldUtil fieldUtil = new FieldUtil();
+
 
     public Response listAll() {
         List<NFe> nfeList = em.createQuery("Select nfe from NFe nfe", NFe.class).getResultList();

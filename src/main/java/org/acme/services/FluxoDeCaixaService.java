@@ -11,10 +11,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 @ApplicationScoped
-public class FluxoDeCaixaService {
+public class FluxoDeCaixaService extends Service {
 
-    @Inject
-    EntityManager em;
+
 
 
     public Double getFluxoDeCaixa() {
