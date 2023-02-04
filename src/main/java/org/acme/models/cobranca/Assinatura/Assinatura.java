@@ -20,21 +20,14 @@ public class Assinatura extends PanacheEntityBase implements Model,ICobranca {
     @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String uuid;
-    @Type(String.class)
     private String customer;
     @Enumerated(EnumType.STRING)
     private BillingType billingType;
-    @Type(double.class)
     private double value;
-    @Type(String.class)
     private String nextDueDate;
-    @Type(String.class)
     private String description;
-    @Type(String.class)
     private String endDate;
-    @Type(String.class)
     private String maxPayments;
-    @Type(String.class)
     private String externalReference;
     @ManyToOne
     private Split split;

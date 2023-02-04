@@ -14,13 +14,7 @@ import javax.ws.rs.core.Response;
 import java.util.Optional;
 
 @ApplicationScoped
-public class AssinaturaService {
-    private Gson gson = new GsonUtil().parser;
-    private FieldUtil fieldUtil = new FieldUtil();
-    @Inject
-    EntityManager em;
-
-
+public class AssinaturaService extends Service{
 
     @Transactional
     public Response create(String json) {

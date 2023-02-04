@@ -35,11 +35,6 @@ public class FieldUtil {
         }
     }
 
-    private boolean verificaTipoPrimitivo(Class<?> type) {
-        return type == String.class ||type == Long.class ||type == Float.class ||type == Integer.class ||type == Double.class ||type == Boolean.class
-                || type.isPrimitive();
-     }
-
     public void updateFieldsModelToDTO(Model model, DTO dto) {
         Field[] attributes = model.getClass().getDeclaredFields();
         for (int i = 0; i < attributes.length - 5; i++) {
