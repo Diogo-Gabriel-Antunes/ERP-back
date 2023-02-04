@@ -4,10 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.lang.annotation.Target;
 
 @Getter
 @Setter
@@ -18,6 +16,7 @@ public class CondicoesDeGarantia {
     @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String uuid;
+
     private String condicao;
     @ManyToOne
     private Garantia garantia;

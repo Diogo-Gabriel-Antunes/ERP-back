@@ -9,6 +9,7 @@ import org.acme.models.DTO.AssinaturaDTO;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import javax.ws.rs.core.Response;
 import java.util.Optional;
 
@@ -21,11 +22,12 @@ public class AssinaturaService {
 
 
 
+    @Transactional
     public Response create(String json) {
         try{
             AssinaturaDTO assinaturaDTO = gson.fromJson(json, AssinaturaDTO.class);
             Assinatura assinatura = new Assinatura();
-
+            convertDTOS(assinatura,assinaturaDTO);
             fieldUtil.updateFieldsDtoToModel(assinatura,assinaturaDTO);
             em.persist(assinatura);
             return Response.status(Response.Status.CREATED).entity(assinatura).build();
@@ -35,7 +37,23 @@ public class AssinaturaService {
         }
     }
 
+    private void convertDTOS(Assinatura assinatura, AssinaturaDTO assinaturaDTO) {
 
+        fieldUtil.updateFieldsDtoToModel(assinatura.getSplit(),assinaturaDTO.getSplit());
+        fieldUtil.updateFieldsDtoToModel(assinatura.getFine(),assinaturaDTO.getFine());
+        fieldUtil.updateFieldsDtoToModel(assinatura.getDiscount(),assinaturaDTO.getDiscount());
+        fieldUtil.updateFieldsDtoToModel(assinatura.getInterest(),assinaturaDTO.getInterest());
+        assinaturaDTO.setFine(null);
+        assinaturaDTO.setSplit(null);
+        assinaturaDTO.setDiscount(null);
+        assinaturaDTO.setInterest(null);
+        em.persist(assinatura.getSplit());
+        em.persist(assinatura.getFine());
+        em.persist(assinatura.getDiscount());
+        em.persist(assinatura.getInterest());
+    }
+
+    @Transactional
     public Assinatura update(String uuid, String json) {
         try{
             Optional<Assinatura> assinatura = Assinatura.findByIdOptional(uuid);
@@ -44,7 +62,7 @@ public class AssinaturaService {
             }
             em.merge(assinatura.get());
             AssinaturaDTO assinaturaDTO = gson.fromJson(json, AssinaturaDTO.class);
-            updateAtributos(assinatura.get(),assinaturaDTO);
+            convertDTOS(assinatura.get(),assinaturaDTO);
             fieldUtil.updateFieldsDtoToModel(assinatura.get(),assinaturaDTO);
             em.persist(assinatura.get());
             return assinatura.get();
@@ -55,17 +73,5 @@ public class AssinaturaService {
         }
     }
 
-    private void updateAtributos(Assinatura assinatura, AssinaturaDTO assinaturaDTO) {
-        fieldUtil.updateFieldsDtoToModel(assinatura.getInterest(),assinaturaDTO.getInterest());
-        em.persist(assinatura.getInterest());
 
-        fieldUtil.updateFieldsDtoToModel(assinatura.getDiscount(),assinaturaDTO.getDiscount());
-        em.persist(assinatura.getDiscount());
-
-        fieldUtil.updateFieldsDtoToModel(assinatura.getFine(),assinaturaDTO.getFine());
-        em.persist(assinatura.getFine());
-
-        fieldUtil.updateFieldsDtoToModel(assinatura.getSplit(),assinaturaDTO.getSplit());
-        em.persist(assinatura.getSplit());
-    }
 }

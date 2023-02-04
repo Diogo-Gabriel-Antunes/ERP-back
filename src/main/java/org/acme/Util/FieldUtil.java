@@ -1,6 +1,7 @@
 package org.acme.Util;
 
 
+import org.acme.Anotacao.Type;
 import org.acme.models.DTO.DTO;
 import org.acme.models.Model;
 
@@ -15,14 +16,17 @@ public class FieldUtil {
         return attribute.getName().replaceFirst(attribute.getName().substring(0, 1), attribute.getName().substring(0, 1).toUpperCase());
     }
 
-    public void updateFieldsDtoToModel(Model oldObject, DTO newObject){
+    public void updateFieldsDtoToModel(Model oldObject, DTO newObject) {
         Field[] attributes = newObject.getClass().getDeclaredFields();
         for (Field attribute : attributes) {
             try {
                 attribute.setAccessible(true);
                 if (attribute.get(newObject) != null) {
                     oldObject.getClass().getDeclaredMethod("set" + updateStringToGetorSet(attribute), attribute.getType()).invoke(oldObject, attribute.get(newObject));
-                }else{
+                }else if(attribute.getAnnotation(Type.class) != null && attribute.get(newObject) != null) {
+                    oldObject.getClass().getDeclaredMethod("set" + updateStringToGetorSet(attribute), attribute.getAnnotation(Type.class).value()).invoke(oldObject, (Object) null);
+//                }else if(verificaTipoPrimitivo(attribute.getType())) {
+                }else if(attribute.getAnnotation(Type.class) == null) {
                     oldObject.getClass().getDeclaredMethod("set" + updateStringToGetorSet(attribute), attribute.getType()).invoke(oldObject, (Object) null);
                 }
             } catch (Exception e) {
@@ -31,6 +35,11 @@ public class FieldUtil {
             }
         }
     }
+
+    private boolean verificaTipoPrimitivo(Class<?> type) {
+        return type == String.class ||type == Long.class ||type == Float.class ||type == Integer.class ||type == Double.class ||type == Boolean.class
+                || type.isPrimitive();
+     }
 
     public void updateFieldsModelToDTO(Model model, DTO dto) {
         Field[] attributes = model.getClass().getDeclaredFields();
@@ -54,7 +63,7 @@ public class FieldUtil {
 
                 field.setAccessible(true);
                 if (field.get(dto) != null) {
-                    hashMap.put(field.getName(),field.get(dto));
+                    hashMap.put(field.getName(), field.get(dto));
                 }
             } catch (Throwable t) {
                 throw new RuntimeException();
