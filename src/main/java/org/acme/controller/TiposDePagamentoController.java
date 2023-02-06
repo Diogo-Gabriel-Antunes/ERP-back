@@ -1,6 +1,6 @@
 package org.acme.controller;
 
-import org.acme.models.cobranca.BillingType;
+import org.acme.models.asaas.BillingType;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

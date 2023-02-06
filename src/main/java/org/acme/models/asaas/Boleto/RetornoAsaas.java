@@ -1,4 +1,4 @@
-package org.acme.models.cobranca.Assinatura.Boleto;
+package org.acme.models.asaas.Boleto;
 
 import lombok.Getter;
 import lombok.Setter;

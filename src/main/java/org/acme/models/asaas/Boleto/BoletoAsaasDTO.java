@@ -1,11 +1,11 @@
-package org.acme.models.cobranca.Assinatura.Boleto;
+package org.acme.models.asaas.Boleto;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.acme.models.DTO.DTO;
-import org.acme.models.cobranca.ChargeType;
-import org.acme.models.cobranca.SubscriptionCycle;
-import org.acme.models.cobranca.BillingType;
+import org.acme.models.asaas.ChargeType;
+import org.acme.models.asaas.SubscriptionCycle;
+import org.acme.models.asaas.BillingType;
 
 @Getter
 @Setter

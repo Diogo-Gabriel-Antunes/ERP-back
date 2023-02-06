@@ -2,8 +2,8 @@ package org.acme.controller;
 
 import com.google.gson.Gson;
 import org.acme.Util.GsonUtil;
-import org.acme.models.cobranca.Assinatura.Boleto.BoletoAsaas;
-import org.acme.models.cobranca.Assinatura.Boleto.BoletoAsaasDTO;
+import org.acme.models.asaas.Boleto.BoletoAsaas;
+import org.acme.models.asaas.Boleto.BoletoAsaasDTO;
 import org.acme.services.BoletoService;
 
 import javax.enterprise.context.ApplicationScoped;

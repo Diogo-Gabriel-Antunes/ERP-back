@@ -1,8 +1,8 @@
-package org.acme.models.cobranca;
+package org.acme.models.asaas;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.acme.models.cobranca.Assinatura.Assinatura;
+import org.acme.models.asaas.Assinatura.Assinatura;
 import org.acme.models.Model;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -13,19 +13,22 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-public class Fine implements Model {
+public class Discount implements Model {
     @Id
     @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String uuid;
-    private double fine;
-    @OneToMany(mappedBy = "fine")
+    private double value;
+    private long dueDateLimitDays;
+    @Enumerated(EnumType.STRING)
+    private DescontType descontType;
+    @OneToMany(mappedBy = "discount")
     @JsonbTransient
     private List<CobrancaParcelada> cobrancaParcelada;
-    @OneToMany(mappedBy = "FineObject")
+    @OneToMany(mappedBy = "DiscountObject")
     @JsonbTransient
     private List<CobrancaParceladaRetorno> cobrancaParceladaRetorno;
     @JsonbTransient
-    @OneToMany(mappedBy = "fine")
+    @OneToMany(mappedBy = "discount")
     private List<Assinatura> assinatura;
 }

@@ -1,6 +1,6 @@
 package org.acme.controller;
 
-import org.acme.models.cobranca.CobrancaParceladaRetorno;
+import org.acme.models.asaas.CobrancaParceladaRetorno;
 import org.acme.services.CobrancaRetornoService;
 
 import javax.inject.Inject;

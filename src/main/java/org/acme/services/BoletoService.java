@@ -1,9 +1,9 @@
 package org.acme.services;
 
 import org.acme.Util.DateUtil;
-import org.acme.models.cobranca.Assinatura.Boleto.BoletoAsaas;
-import org.acme.models.cobranca.Assinatura.Boleto.BoletoAsaasDTO;
-import org.acme.models.cobranca.Assinatura.Boleto.RetornoAsaas;
+import org.acme.models.asaas.Boleto.BoletoAsaas;
+import org.acme.models.asaas.Boleto.BoletoAsaasDTO;
+import org.acme.models.asaas.Boleto.RetornoAsaas;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.net.URI;

@@ -1,23 +1,17 @@
 package org.acme.models;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Getter;
 import lombok.Setter;
-import org.acme.models.CondicoesArmazenamentoETransporte;
 import org.acme.models.DTO.CompraDTO;
-import org.acme.models.Itens;
-import org.acme.models.cobranca.BillingType;
+import org.acme.models.asaas.BillingType;
 import org.acme.models.enums.StatusCompra;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter

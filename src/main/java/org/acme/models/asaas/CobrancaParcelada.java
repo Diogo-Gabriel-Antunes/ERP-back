@@ -1,4 +1,4 @@
-package org.acme.models.cobranca;
+package org.acme.models.asaas;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,9 +6,7 @@ import org.acme.models.Model;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Getter

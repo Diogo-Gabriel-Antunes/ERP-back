@@ -1,11 +1,9 @@
 package org.acme.services;
 
-import org.acme.models.ContasAPagar;
+import org.acme.models.asaas.ContasApagar.ContasAPagar;
 import org.acme.models.Request;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.List;

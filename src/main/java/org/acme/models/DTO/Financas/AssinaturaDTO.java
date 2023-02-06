@@ -1,14 +1,11 @@
-package org.acme.models.DTO;
+package org.acme.models.DTO.Financas;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.acme.Anotacao.Type;
-import org.acme.models.DTO.Financas.DiscountDTO;
-import org.acme.models.DTO.Financas.FineDTO;
-import org.acme.models.DTO.Financas.InterestDTO;
-import org.acme.models.DTO.Financas.SplitDTO;
-import org.acme.models.cobranca.SubscriptionCycle;
-import org.acme.models.cobranca.*;
+import org.acme.models.DTO.DTO;
+import org.acme.models.asaas.SubscriptionCycle;
+import org.acme.models.asaas.*;
 
 @Getter
 @Setter

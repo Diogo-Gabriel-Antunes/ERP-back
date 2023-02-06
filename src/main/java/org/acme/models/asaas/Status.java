@@ -1,4 +1,4 @@
-package org.acme.models.cobranca;
+package org.acme.models.asaas;
 
 public enum Status {
         PENDING,CONFIRMED,RECEIVED,RECEIVED_IN_CASH,OVERDUE,REFUND_REQUESTED

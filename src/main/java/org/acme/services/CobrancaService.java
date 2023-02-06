@@ -1,14 +1,8 @@
 package org.acme.services;
 
-import com.google.gson.Gson;
-import org.acme.Util.GsonUtil;
-import org.acme.models.cobranca.*;
+import org.acme.models.asaas.*;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
-import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;

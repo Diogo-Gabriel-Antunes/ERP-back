@@ -1,15 +1,9 @@
 package org.acme.services;
 
-import org.acme.Util.FieldUtil;
-import org.acme.models.ContasAPagar;
-import org.acme.models.DTO.ContasAPagarDTO;
-import org.acme.models.DTO.ProductDTO;
-import org.acme.models.Product;
+import org.acme.models.asaas.ContasApagar.ContasAPagar;
+import org.acme.models.DTO.Financas.ContasAPagarDTO;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import java.time.LocalDate;
 import java.util.List;
 
 @ApplicationScoped
@@ -19,11 +13,11 @@ public class ContasAPagarService extends Service {
         return em.createQuery("SELECT c from ContasAPagar c", ContasAPagar.class).getResultList();
     }
 
-    public ContasAPagarDTO create(ContasAPagarDTO contasAPagarDTO) {
+    public ContasAPagar create(ContasAPagarDTO contasAPagarDTO) {
         ContasAPagar contasAPagar = new ContasAPagar();
         fieldUtil.updateFieldsDtoToModel(contasAPagar,contasAPagarDTO);
         em.merge(contasAPagar);
-        return contasAPagarDTO;
+        return contasAPagar;
     }
 
     public ContasAPagar getOne(String uuid) {
@@ -32,7 +26,7 @@ public class ContasAPagarService extends Service {
                 .getSingleResult();
     }
 
-    public ContasAPagarDTO update(String id, ContasAPagarDTO contasAPagarDTO) {
+    public ContasAPagar update(String id, ContasAPagarDTO contasAPagarDTO) {
         ContasAPagar contasAPagar = getOne(id);
 
         em.merge(contasAPagar);
@@ -40,7 +34,7 @@ public class ContasAPagarService extends Service {
         fieldUtil.updateFieldsDtoToModel(contasAPagar,contasAPagarDTO);
 
         em.persist(contasAPagar);
-        return contasAPagarDTO;
+        return contasAPagar;
     }
 
 

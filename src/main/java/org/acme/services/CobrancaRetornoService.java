@@ -1,10 +1,8 @@
 package org.acme.services;
 
-import org.acme.models.cobranca.CobrancaParceladaRetorno;
+import org.acme.models.asaas.CobrancaParceladaRetorno;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import java.util.List;
 
 @ApplicationScoped

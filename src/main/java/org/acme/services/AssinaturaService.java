@@ -1,19 +1,15 @@
 package org.acme.services;
 
-import com.google.gson.Gson;
-import org.acme.Util.FieldUtil;
-import org.acme.Util.GsonUtil;
-import org.acme.models.cobranca.Assinatura.Assinatura;
-import org.acme.models.DTO.AssinaturaDTO;
+import org.acme.models.asaas.Assinatura.Assinatura;
+import org.acme.models.DTO.Financas.AssinaturaDTO;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import javax.ws.rs.core.Response;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.Optional;
 
 @ApplicationScoped
@@ -22,12 +18,24 @@ public class AssinaturaService extends Service{
     @Transactional
     public Response create(String json) {
         try{
-            AssinaturaDTO assinaturaDTO = gson.fromJson(json, AssinaturaDTO.class);
-            Assinatura assinatura = new Assinatura();
-            convertDTOS(assinatura,assinaturaDTO);
-            fieldUtil.updateFieldsDtoToModel(assinatura,assinaturaDTO);
-            em.persist(assinatura);
-            return Response.status(Response.Status.CREATED).entity(assinatura).build();
+            HttpClient httpClient = HttpClient.newBuilder().build();
+            HttpRequest httpRequest = HttpRequest.newBuilder()
+                    .POST(HttpRequest.BodyPublishers.ofString(json))
+                    .header("access_token", "$aact_YTU5YTE0M2M2N2I4MTliNzk0YTI5N2U5MzdjNWZmNDQ6OjAwMDAwMDAwMDAwMDAwNDU1NTg6OiRhYWNoXzU5ZTZmNjlkLWFkZmItNGU4YS1iN2FkLTEyOTQxNjEyYzcyYg==")
+                    .header("Content-Type", "application/json")
+                    .uri(new URI("https://private-anon-22990467ef-asaasv3.apiary-mock.com/api/v3/subscriptions"))
+                    .build();
+            HttpResponse<String> resposta = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+            if(resposta.statusCode() == 200){
+
+                AssinaturaDTO assinaturaDTO = gson.fromJson(json, AssinaturaDTO.class);
+                Assinatura assinatura = new Assinatura();
+                convertDTOS(assinatura,assinaturaDTO);
+                fieldUtil.updateFieldsDtoToModel(assinatura,assinaturaDTO);
+                em.persist(assinatura);
+                return Response.status(Response.Status.CREATED).entity(assinatura).build();
+            }
+            throw new RuntimeException("Erro na inserção da assinatura");
         }catch (Throwable t){
             t.printStackTrace();
             return Response.status(Response.Status.BAD_REQUEST).build();

@@ -1,12 +1,10 @@
-package org.acme.models.cobranca;
+package org.acme.models.asaas;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.acme.Util.FieldUtil;
 import org.acme.models.DTO.DTO;
-import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
 import java.util.List;
 
 @Getter

@@ -1,6 +1,6 @@
 package org.acme.controller;
 
-import org.acme.models.cobranca.Assinatura.Assinatura;
+import org.acme.models.asaas.Assinatura.Assinatura;
 import org.acme.services.AssinaturaService;
 
 import javax.inject.Inject;

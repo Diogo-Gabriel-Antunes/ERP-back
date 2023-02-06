@@ -2,12 +2,9 @@ package org.acme.controller;
 
 import com.google.gson.Gson;
 import org.acme.Util.GsonUtil;
-import org.acme.models.ContasAPagar;
-import org.acme.models.DTO.ContasAPagarDTO;
-import org.acme.models.DTO.UnidadeDTO;
-import org.acme.models.Unidade;
+import org.acme.models.asaas.ContasApagar.ContasAPagar;
+import org.acme.models.DTO.Financas.ContasAPagarDTO;
 import org.acme.services.ContasAPagarService;
-import org.acme.services.UnidadesService;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -32,17 +29,17 @@ public class ContasAPagarController {
     @GET
     @Path("{uuid}")
     @Produces(MediaType.APPLICATION_JSON)
-    public ContasAPagarDTO listOne(@PathParam("uuid")String uuid){
+    public ContasAPagar listOne(@PathParam("uuid")String uuid){
         ContasAPagar contasAPagar = contasAPagarService.getOne(uuid);
 
-        return ContasAPagarDTO.convert(contasAPagar);
+        return contasAPagar;
     }
     @POST
     @Transactional
-    public ContasAPagarDTO create(String json){
+    public ContasAPagar create(String json){
         ContasAPagarDTO contasAPagarDTO = gson.fromJson(json, ContasAPagarDTO.class);
-        contasAPagarService.create(contasAPagarDTO);
-        return contasAPagarDTO;
+        ContasAPagar contasAPagar = contasAPagarService.create(contasAPagarDTO);
+        return contasAPagar;
     }
 
     @PUT

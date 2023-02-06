@@ -1,4 +1,4 @@
-package org.acme.models.cobranca;
+package org.acme.models.asaas;
 
 public enum SubscriptionCycle {
     WEEKLY, BIWEEKLY, MONTHLY, QUARTERLY, SEMIANNUALLY, YEARLY;

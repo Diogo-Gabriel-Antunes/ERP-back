@@ -1,4 +1,4 @@
-package org.acme.models.cobranca;
+package org.acme.models.asaas;
 
 
 import lombok.Getter;
@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
-import java.util.List;
 
 @Getter
 @Setter

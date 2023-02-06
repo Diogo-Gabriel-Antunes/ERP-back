@@ -2,9 +2,8 @@ package org.acme.controller;
 
 import com.google.gson.Gson;
 import org.acme.Util.GsonUtil;
-import org.acme.models.cobranca.CobrancaParcelada;
-import org.acme.models.cobranca.CobrancaParceladaDTO;
-import org.acme.models.cobranca.CobrancaParceladaRetorno;
+import org.acme.models.asaas.CobrancaParcelada;
+import org.acme.models.asaas.CobrancaParceladaDTO;
 import org.acme.services.CobrancaService;
 
 import javax.enterprise.context.ApplicationScoped;
