@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @ApplicationScoped
@@ -20,7 +21,6 @@ public class StorageService extends Service{
     public Storage create(Product product){
         Storage storage = new Storage();
         storage.setProduto(product);
-        storage.setUltimaAtualizacao(LocalDate.now());
         storage.setQuantidade(0L);
         return em.merge(storage);
     }
@@ -40,7 +40,6 @@ public class StorageService extends Service{
         Storage storage = findOne(uuid);
         Storage newStorage = em.merge(storage);
         fieldUtil.updateFieldsDtoToModel(newStorage,storageDTO);
-        newStorage.setUltimaAtualizacao(LocalDate.now());
         em.persist(newStorage);
         return newStorage;
     }

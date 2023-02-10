@@ -21,7 +21,7 @@ public class FieldUtil {
         for (Field attribute : attributes) {
             try {
                 attribute.setAccessible(true);
-                if (attribute.get(newObject) != null) {
+                if (attribute.get(newObject) != null && attribute.getAnnotation(Type.class) == null) {
                     oldObject.getClass().getDeclaredMethod("set" + updateStringToGetorSet(attribute), attribute.getType()).invoke(oldObject, attribute.get(newObject));
                 }else if(attribute.getAnnotation(Type.class) != null && attribute.get(newObject) != null) {
                     oldObject.getClass().getDeclaredMethod("set" + updateStringToGetorSet(attribute), attribute.getAnnotation(Type.class).value()).invoke(oldObject, (Object) null);

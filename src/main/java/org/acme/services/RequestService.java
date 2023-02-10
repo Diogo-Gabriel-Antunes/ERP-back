@@ -17,6 +17,7 @@ import javax.persistence.EntityManager;
 import javax.ws.rs.core.Response;
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -43,9 +44,8 @@ public class RequestService extends Service {
 
         fieldUtil.updateFieldsDtoToModel(request,requestDTO);
 
-        request.setCreateDate(LocalDate.now());
+        request.setDataCriacao(LocalDateTime.now());
         request.setFinishDate(LocalDate.now());
-
         StatusRequest status = new StatusRequest();
         status.setUuid("1");
         request.setStatus(status);

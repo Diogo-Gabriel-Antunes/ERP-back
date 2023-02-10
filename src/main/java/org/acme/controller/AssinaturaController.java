@@ -1,5 +1,6 @@
 package org.acme.controller;
 
+import io.quarkus.panache.common.Sort;
 import org.acme.models.asaas.Assinatura.Assinatura;
 import org.acme.services.AssinaturaService;
 
@@ -16,7 +17,7 @@ public class AssinaturaController {
     AssinaturaService assinaturaService;
     @GET
     public List<Assinatura> listAll(){
-        return Assinatura.listAll();
+        return Assinatura.listAll(Sort.ascending("uuid"));
     }
     @GET
     @Path("{uuid}")
@@ -35,11 +36,9 @@ public class AssinaturaController {
     @PUT
     @Path("{uuid}")
     public Response update(@PathParam("uuid") String uuid,String json){
-        Assinatura assinatura = assinaturaService.update(uuid,json);
-        if(assinatura == null){
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        }
-        return Response.ok(assinatura).build();
+
+
+        return assinaturaService.update(uuid,json);
     }
 
     @DELETE
@@ -52,4 +51,6 @@ public class AssinaturaController {
         }
         return Response.status(Response.Status.BAD_REQUEST).build();
     }
+
+
 }

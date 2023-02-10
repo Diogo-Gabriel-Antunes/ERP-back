@@ -11,6 +11,8 @@ import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -43,6 +45,8 @@ public class Compra extends PanacheEntityBase implements Model {
     private CondicoesArmazenamentoETransporte condicoesArmazenamentoETransporte;
     @Enumerated(EnumType.STRING)
     private StatusCompra statusCompra;
+    private LocalDateTime dataCriacao;
+    private LocalDateTime ultimaAtualização;
 
     public Compra(CompraDTO compraDTO) {
         this.dataCompra = compraDTO.getDataCompra();
@@ -55,5 +59,14 @@ public class Compra extends PanacheEntityBase implements Model {
     }
 
     public Compra() {
+    }
+    @PrePersist
+    public void prePersist(){
+        dataCriacao = LocalDateTime.now();
+        ultimaAtualização = LocalDateTime.now();
+    }
+    @PreUpdate
+    public void preUpdate(){
+        ultimaAtualização = LocalDateTime.now();
     }
 }

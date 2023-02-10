@@ -11,6 +11,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -39,10 +40,12 @@ public class Itens extends PanacheEntityBase implements Model{
     @ManyToMany(mappedBy = "itens")
     @JsonbTransient
     private Set<Compra> compras = new HashSet<>();
-    private LocalDate dataAtualizacao;
-    private LocalDate dataCriacao;
-
-
+    private LocalDateTime ultimaAtualização;
+    private LocalDateTime dataCriacao;
+    @ManyToOne
+    @JoinColumn(nullable = true)
+    @JsonbTransient
+    private Loja loja;
     //Informações NFE
     @OneToOne
     private ImportacaoImposto importacao;
@@ -56,8 +59,14 @@ public class Itens extends PanacheEntityBase implements Model{
     private String ncm;
     private String cest;
     private String cfop;
-    @OneToOne
-    private SeloControle seloControle;
-
+    @PrePersist
+    public void prePersist(){
+        dataCriacao = LocalDateTime.now();
+        ultimaAtualização = LocalDateTime.now();
+    }
+    @PreUpdate
+    public void preUpdate(){
+        ultimaAtualização = LocalDateTime.now();
+    }
 }
 

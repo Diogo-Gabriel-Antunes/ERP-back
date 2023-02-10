@@ -72,7 +72,6 @@ public class OrdemDeProducaoService extends Service {
 
         em.merge(storage);
         storage.setQuantidade(storage.getQuantidade() + ordemDeProducao.getQuantidade());
-        storage.setUltimaAtualizacao(LocalDate.now());
 
         ordemDeProducao.setFinalizadoEm(LocalDate.now());
         ordemDeProducao.setStatus(StatusDaProducao.FINALIZADO);
@@ -81,7 +80,6 @@ public class OrdemDeProducaoService extends Service {
         timesOrdemDeProducao.setTime(LocalDateTime.now());
         timesOrdemDeProducao.setOrdemDeProducao(ordemDeProducao);
         em.merge(timesOrdemDeProducao);
-
         em.persist(storage);
         em.persist(ordemDeProducao);
     }

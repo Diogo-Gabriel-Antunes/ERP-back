@@ -1,12 +1,11 @@
-package org.acme.models.asaas;
+package org.acme.models;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Getter;
 import lombok.Setter;
-import org.acme.models.asaas.Assinatura.Assinatura;
-import org.acme.models.Model;
+import org.acme.models.Nota_fiscal_eletronica.EnderecoNFE;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,21 +13,22 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-public class Interest implements Model {
+public class Loja extends PanacheEntityBase implements Model {
     @Id
     @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String uuid;
-    private double value;
-    @OneToMany(mappedBy = "interest")
-    @JsonbTransient
-    private List<CobrancaParcelada> cobrancaParcelada;
-    @OneToMany(mappedBy = "InterestObject")
-    @JsonbTransient
-    private List<CobrancaParceladaRetorno> cobrancaParceladaRetorno;
-    @JsonbTransient
-    @OneToMany(mappedBy = "interest")
-    private List<Assinatura> assinatura;
+    private String nomeLoja;
+    private String cnpj;
+    private String razaoSocial;
+    @OneToOne
+    private EnderecoNFE endereco;
+    @OneToOne
+    private Contato contato;
+    @OneToMany(mappedBy = "loja")
+    private List<Itens> itens;
+    @OneToMany(mappedBy = "loja")
+    private List<Funcionario> funcionarios;
     private LocalDateTime dataCriacao;
     private LocalDateTime ultimaAtualização;
     @PrePersist

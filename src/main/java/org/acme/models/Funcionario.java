@@ -45,6 +45,11 @@ public class Funcionario extends PanacheEntityBase implements Model{
     private String naturalidade;
     private Double salario;
     private boolean ativo;
+    private LocalDateTime dataCriacao;
+    private LocalDateTime ultimaAtualização;
+    @ManyToOne
+    @JoinColumn(nullable = true)
+    private Loja loja;
     @ManyToMany
     @JsonbTransient
     @Cascade(CascadeType.SAVE_UPDATE)
@@ -57,6 +62,15 @@ public class Funcionario extends PanacheEntityBase implements Model{
             {@JoinColumn(name="funcionario_id")}, inverseJoinColumns=
             {@JoinColumn(name="beneficio_id")})
     private Set<Beneficios> beneficios;
+    @PrePersist
+    public void prePersist(){
+        dataCriacao = LocalDateTime.now();
+        ultimaAtualização = LocalDateTime.now();
+    }
+    @PreUpdate
+    public void preUpdate(){
+        ultimaAtualização = LocalDateTime.now();
+    }
 }
 
 

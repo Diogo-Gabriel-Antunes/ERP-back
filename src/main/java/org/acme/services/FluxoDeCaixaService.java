@@ -12,8 +12,6 @@ import java.util.List;
 public class FluxoDeCaixaService extends Service {
 
 
-
-
     public Double getFluxoDeCaixa() {
         LocalDate hoje = LocalDate.now();
         LocalDate umMesAtras = null;
@@ -43,7 +41,7 @@ public class FluxoDeCaixaService extends Service {
                  value= requests.get(i).getValue();
             }
             if(contasAPagar.size() > i){
-                valor = contasAPagar.get(i).getValor();
+                valor = contasAPagar.get(i).getValue();
 
             }
 

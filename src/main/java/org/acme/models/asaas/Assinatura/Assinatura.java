@@ -8,6 +8,7 @@ import org.acme.models.asaas.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -36,11 +37,22 @@ public class Assinatura extends PanacheEntityBase implements Model,ICobranca {
     private Fine fine;
     @Enumerated(EnumType.STRING)
     private SubscriptionCycle cycle;
-
+    private LocalDateTime dataCriacao;
+    private LocalDateTime ultimaAtualização;
     public Assinatura() {
         this.split = new Split();
         this.discount = new Discount();
         this.interest = new Interest();
         this.fine = new Fine();
+    }
+
+    @PrePersist
+    public void prePersist(){
+        dataCriacao = LocalDateTime.now();
+        ultimaAtualização = LocalDateTime.now();
+    }
+    @PreUpdate
+    public void preUpdate(){
+        ultimaAtualização = LocalDateTime.now();
     }
 }

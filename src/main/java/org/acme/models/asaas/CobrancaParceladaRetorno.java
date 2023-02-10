@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -57,4 +58,15 @@ public class CobrancaParceladaRetorno {
     @ManyToOne
     @JsonbTransient
     private CobrancaParcelada cobrancaParcelada;
+    private LocalDateTime dataCriacao;
+    private LocalDateTime ultimaAtualização;
+    @PrePersist
+    public void prePersist(){
+        dataCriacao = LocalDateTime.now();
+        ultimaAtualização = LocalDateTime.now();
+    }
+    @PreUpdate
+    public void preUpdate(){
+        ultimaAtualização = LocalDateTime.now();
+    }
 }

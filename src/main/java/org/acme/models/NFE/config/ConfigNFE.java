@@ -12,7 +12,7 @@ import br.com.swconsultoria.nfe.util.ConstantesUtil;
 import br.com.swconsultoria.nfe.util.XmlNfeUtil;
 import lombok.Getter;
 import lombok.Setter;
-import org.acme.exceptions.NFEException;
+import org.acme.exceptions.ValidacaoException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -273,7 +273,7 @@ public class ConfigNFE {
             return configuracoesNfe;
         }catch (Throwable t){
             t.printStackTrace();
-            throw new NFEException("Erro na configuração do certificado");
+            throw new ValidacaoException("Erro na configuração do certificado");
         }
 
     }
@@ -283,7 +283,7 @@ public class ConfigNFE {
             return Nfe.montaNfe(configNFE(), NFEMontada, false);
         }catch (Throwable t){
             t.printStackTrace();
-            throw new NFEException("Erro na montagem da NFE");
+            throw new ValidacaoException("Erro na montagem da NFE");
         }
     }
 }

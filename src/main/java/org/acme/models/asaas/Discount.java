@@ -8,6 +8,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -31,4 +32,15 @@ public class Discount implements Model {
     @JsonbTransient
     @OneToMany(mappedBy = "discount")
     private List<Assinatura> assinatura;
+    private LocalDateTime dataCriacao;
+    private LocalDateTime ultimaAtualização;
+    @PrePersist
+    public void prePersist(){
+        dataCriacao = LocalDateTime.now();
+        ultimaAtualização = LocalDateTime.now();
+    }
+    @PreUpdate
+    public void preUpdate(){
+        ultimaAtualização = LocalDateTime.now();
+    }
 }

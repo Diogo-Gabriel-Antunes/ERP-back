@@ -10,6 +10,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -32,4 +33,15 @@ public class OrdemDeProducao extends PanacheEntityBase implements Model{
     private List<TimesOrdemDeProducao> atualizadoEm;
     private LocalDate inicioDaProducao;
     private LocalDate finalizadoEm;
+    private LocalDateTime dataCriacao;
+    private LocalDateTime ultimaAtualização;
+    @PrePersist
+    public void prePersist(){
+        dataCriacao = LocalDateTime.now();
+        ultimaAtualização = LocalDateTime.now();
+    }
+    @PreUpdate
+    public void preUpdate(){
+        ultimaAtualização = LocalDateTime.now();
+    }
 }

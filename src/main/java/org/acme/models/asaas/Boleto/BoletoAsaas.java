@@ -4,24 +4,23 @@ import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Getter;
 import lombok.Setter;
 import org.acme.models.Model;
+import org.acme.models.asaas.BillingType;
 import org.acme.models.asaas.ChargeType;
 import org.acme.models.asaas.SubscriptionCycle;
-import org.acme.models.asaas.BillingType;
-
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
 public class BoletoAsaas extends PanacheEntityBase implements Model {
     @Id
-    @GeneratedValue(generator="system-uuid")
-    @GenericGenerator(name="system-uuid", strategy = "uuid")
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String uuid;
     private String name;
     private String description;
@@ -40,6 +39,17 @@ public class BoletoAsaas extends PanacheEntityBase implements Model {
     @Cascade(CascadeType.SAVE_UPDATE)
     private RetornoAsaas retornoAsaas;
     private String atualizadoEm;
+    private LocalDateTime dataCriacao;
+    private LocalDateTime ultimaAtualização;
+    @PrePersist
+    public void prePersist(){
+        dataCriacao = LocalDateTime.now();
+        ultimaAtualização = LocalDateTime.now();
+    }
+    @PreUpdate
+    public void preUpdate(){
+        ultimaAtualização = LocalDateTime.now();
+    }
 }
 
 

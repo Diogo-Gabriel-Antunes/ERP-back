@@ -6,6 +6,8 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.lang.annotation.Target;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -20,4 +22,15 @@ public class CondicoesDeGarantia {
     private String condicao;
     @ManyToOne
     private Garantia garantia;
+    private LocalDateTime dataCriacao;
+    private LocalDateTime ultimaAtualização;
+    @PrePersist
+    public void prePersist(){
+        dataCriacao = LocalDateTime.now();
+        ultimaAtualização = LocalDateTime.now();
+    }
+    @PreUpdate
+    public void preUpdate(){
+        ultimaAtualização = LocalDateTime.now();
+    }
 }

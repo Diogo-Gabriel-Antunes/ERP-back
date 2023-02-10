@@ -27,6 +27,17 @@ public class TimesOrdemDeProducao extends PanacheEntityBase {
     @JsonbTransient
     @Cascade(CascadeType.SAVE_UPDATE)
     private OrdemDeProducao ordemDeProducao;
+    private LocalDateTime dataCriacao;
+    private LocalDateTime ultimaAtualização;
+    @PrePersist
+    public void prePersist(){
+        dataCriacao = LocalDateTime.now();
+        ultimaAtualização = LocalDateTime.now();
+    }
+    @PreUpdate
+    public void preUpdate(){
+        ultimaAtualização = LocalDateTime.now();
+    }
 
 }
 

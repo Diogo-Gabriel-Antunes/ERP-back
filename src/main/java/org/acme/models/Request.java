@@ -8,6 +8,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.CascadeType;
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -26,10 +27,20 @@ public class Request implements Model{
     @OneToOne
     @Cascade(CascadeType.ALL)
     private Cliente cliente;
-    private LocalDate createDate;
     private LocalDate finishDate;
     @ManyToOne
     @Cascade(CascadeType.SAVE_UPDATE)
     private StatusRequest status;
     private Double value;
+    private LocalDateTime dataCriacao;
+    private LocalDateTime ultimaAtualização;
+    @PrePersist
+    public void prePersist(){
+        dataCriacao = LocalDateTime.now();
+        ultimaAtualização = LocalDateTime.now();
+    }
+    @PreUpdate
+    public void preUpdate(){
+        ultimaAtualização = LocalDateTime.now();
+    }
 }

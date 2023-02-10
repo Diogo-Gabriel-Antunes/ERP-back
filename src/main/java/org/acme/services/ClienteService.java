@@ -26,8 +26,7 @@ public class ClienteService extends Service {
         fieldUtil.updateFieldsDtoToModel(cliente.getEndereco(),clienteDTO.getEndereco());
         clienteDTO.setEndereco(null);
         fieldUtil.updateFieldsDtoToModel(cliente,clienteDTO);
-        cliente.setDataCriacao(LocalDate.now());
-        cliente.setUltimaAtualização(LocalDate.now());
+
         em.persist(cliente);
     }
 
@@ -42,8 +41,7 @@ public class ClienteService extends Service {
 
         em.merge(cliente);
         fieldUtil.updateFieldsDtoToModel(cliente,clienteDTO);
-        cliente.setUltimaAtualização(LocalDate.now());
-        clienteDTO.setUltimaAtualização(LocalDate.now());
+    ;
         em.persist(cliente);
     }
 

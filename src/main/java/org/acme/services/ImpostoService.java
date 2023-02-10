@@ -1,16 +1,11 @@
 package org.acme.services;
 
-import com.google.gson.Gson;
-import org.acme.Util.FieldUtil;
-import org.acme.Util.GsonUtil;
-import org.acme.exceptions.NFEException;
+import org.acme.exceptions.ValidacaoException;
 import org.acme.models.DTO.NFE.*;
 import org.acme.models.Imposto;
 import org.acme.models.Nota_fiscal_eletronica.*;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import javax.ws.rs.core.Response;
 import java.util.Optional;
@@ -38,9 +33,9 @@ public class ImpostoService extends Service {
             Cofins cofins = montaCofins(cofinsDTO);
             Cofins.persist(cofins);
             return Response.ok(cofins).build();
-        } catch (NFEException n) {
-            n.printStackTrace();
-            return Response.status(Response.Status.BAD_REQUEST).entity(n.retorno()).build();
+        } catch (ValidacaoException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getValidacoes()).build();
         }
     }
 
@@ -50,9 +45,9 @@ public class ImpostoService extends Service {
             Pis cofins = montaPis(pisDTO);
             Pis.persist(cofins);
             return Response.ok(cofins).build();
-        } catch (NFEException n) {
-            n.printStackTrace();
-            return Response.status(Response.Status.BAD_REQUEST).entity(n.retorno()).build();
+        }catch (ValidacaoException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getValidacoes()).build();
         }
     }
 
@@ -62,9 +57,9 @@ public class ImpostoService extends Service {
             ICMS icms = montaICMS(icmsdto);
             ICMS.persist(icms);
             return Response.ok(icms).build();
-        } catch (NFEException n) {
-            n.printStackTrace();
-            return Response.status(Response.Status.BAD_REQUEST).entity(n.retorno()).build();
+        }catch (ValidacaoException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getValidacoes()).build();
         }
 
     }
@@ -75,9 +70,9 @@ public class ImpostoService extends Service {
             Issqn issqn = montaIssqn(issqnDTO);
             Issqn.persist(issqn);
             return Response.ok(issqn).build();
-        } catch (NFEException n) {
-            n.printStackTrace();
-            return Response.status(Response.Status.BAD_REQUEST).entity(n.retorno()).build();
+        } catch (ValidacaoException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getValidacoes()).build();
         }
 
     }
@@ -88,9 +83,9 @@ public class ImpostoService extends Service {
             IPI ipi = montaIpi(ipidto);
             IPI.persist(ipi);
             return Response.ok(ipi).build();
-        } catch (NFEException n) {
-            n.printStackTrace();
-            return Response.status(Response.Status.BAD_REQUEST).entity(n.retorno()).build();
+        }catch (ValidacaoException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getValidacoes()).build();
         }
 
     }
@@ -267,7 +262,7 @@ public class ImpostoService extends Service {
 
             icms.setTipoImposto(icmsdto.getTipoImposto() != null ? icmsdto.getTipoImposto() : null);
         } else {
-            throw new NFEException("Informar um json valido");
+            throw new ValidacaoException("Informar um json valido");
         }
 
         em.persist(icms.getBaseCalculo());

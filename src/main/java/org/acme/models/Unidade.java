@@ -7,12 +7,11 @@ import org.acme.models.Nota_fiscal_eletronica.Pessoa;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import org.hibernate.annotations.CascadeType;
 
 @Getter
@@ -26,6 +25,15 @@ public class Unidade extends PanacheEntityBase implements Model{
     @OneToOne
     @Cascade(CascadeType.SAVE_UPDATE)
     private Pessoa pessoa;
-    private LocalDate criadoEm;
-    private LocalDate atualizadoEm;
+    private LocalDateTime dataCriacao;
+    private LocalDateTime ultimaAtualização;
+    @PrePersist
+    public void prePersist(){
+        dataCriacao = LocalDateTime.now();
+        ultimaAtualização = LocalDateTime.now();
+    }
+    @PreUpdate
+    public void preUpdate(){
+        ultimaAtualização = LocalDateTime.now();
+    }
 }

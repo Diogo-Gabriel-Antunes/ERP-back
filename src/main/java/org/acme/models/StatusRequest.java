@@ -8,6 +8,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.hibernate.annotations.CascadeType;
 
@@ -24,4 +25,15 @@ public class StatusRequest extends PanacheEntityBase {
     @JsonbTransient
     @Cascade(CascadeType.SAVE_UPDATE)
     private List<Request> requests;
+    private LocalDateTime dataCriacao;
+    private LocalDateTime ultimaAtualização;
+    @PrePersist
+    public void prePersist(){
+        dataCriacao = LocalDateTime.now();
+        ultimaAtualização = LocalDateTime.now();
+    }
+    @PreUpdate
+    public void preUpdate(){
+        ultimaAtualização = LocalDateTime.now();
+    }
 }

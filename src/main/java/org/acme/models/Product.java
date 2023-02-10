@@ -10,6 +10,7 @@ import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import javax.persistence.Entity;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -21,11 +22,9 @@ public class Product extends PanacheEntityBase implements Model {
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String uuid;
     private String nome;
-    private String codigoDeBarras;
-    private LocalDate dataCriacao;
-    private LocalDate dataAlteracao;
+    private LocalDateTime dataCriacao;
+    private LocalDateTime dataAlteracao;
     private String codigo;
-
     private boolean status;
     @ManyToMany
     @Cascade(CascadeType.ALL)
@@ -39,8 +38,14 @@ public class Product extends PanacheEntityBase implements Model {
     private List<Imagem> imagens;
     private Double precoUnitario;
     private Double precoForncedor;
-
-
-
+    @PrePersist
+    public void prePersist(){
+        dataCriacao = LocalDateTime.now();
+        dataAlteracao = LocalDateTime.now();
+    }
+    @PreUpdate
+    public void preUpdate(){
+        dataAlteracao = LocalDateTime.now();
+    }
 }
 

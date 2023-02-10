@@ -9,6 +9,7 @@ import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Getter
@@ -34,7 +35,17 @@ public class Venda extends PanacheEntityBase implements Model {
     private Cliente cliente;
     private Double desconto;
     private Double impostosTotal;
-
+    private LocalDateTime dataCriacao;
+    private LocalDateTime ultimaAtualização;
+    @PrePersist
+    public void prePersist(){
+        dataCriacao = LocalDateTime.now();
+        ultimaAtualização = LocalDateTime.now();
+    }
+    @PreUpdate
+    public void preUpdate(){
+        ultimaAtualização = LocalDateTime.now();
+    }
 }
 
 enum MetodoDePagamento{

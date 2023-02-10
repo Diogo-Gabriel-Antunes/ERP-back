@@ -23,8 +23,6 @@ public class UnidadesService extends Service{
     public void create(UnidadeDTO unidadeDTO) {
         Unidade unidade = new Unidade();
         fieldUtil.updateFieldsDtoToModel(unidade,unidadeDTO);
-        unidade.setCriadoEm(LocalDate.now());
-        unidade.setAtualizadoEm(LocalDate.now());
         Pessoa pessoaMerged = em.merge(unidade.getPessoa());
         unidade.setPessoa(pessoaMerged);
         em.merge(unidade);
@@ -42,7 +40,6 @@ public class UnidadesService extends Service{
         em.merge(unidade);
         fieldUtil.updateFieldsDtoToModel(unidade,unidadeDTO);
 
-        unidade.setAtualizadoEm(LocalDate.now());
         unidadeDTO.setAtualizadoEm(LocalDate.now());
         em.persist(unidade.getPessoa());
         em.persist(unidade);

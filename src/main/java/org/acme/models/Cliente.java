@@ -12,6 +12,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -24,6 +25,7 @@ public class Cliente extends PanacheEntityBase implements Model {
     private String uuid;
     private String cpfCnpj;
     private String idEstrangeiro;
+    private String asaasId;
     private String xNome;
     private String indIEDest;
     private String ie;
@@ -33,24 +35,26 @@ public class Cliente extends PanacheEntityBase implements Model {
     private String telefone;
     private String observacao;
     private boolean receberNotificacao;
+
+
     @OneToOne
     @Cascade(CascadeType.SAVE_UPDATE)
     private EnderecoNFE endereco;
-    private LocalDate dataCriacao;
-    private LocalDate ultimaAtualização;
+    private LocalDateTime dataCriacao;
+    private LocalDateTime ultimaAtualização;
 
     @PrePersist
     public void prePersist(){
         EntityManager em = getEntityManager();
         em.persist(endereco);
-        dataCriacao = LocalDate.now();
-        ultimaAtualização = LocalDate.now();
+        dataCriacao = LocalDateTime.now().now();
+        ultimaAtualização = LocalDateTime.now();
     }
     @PreUpdate
     public void preUpdate(){
         EntityManager em = getEntityManager();
         em.persist(endereco);
-        ultimaAtualização = LocalDate.now();
+        ultimaAtualização = LocalDateTime.now();
     }
 
 

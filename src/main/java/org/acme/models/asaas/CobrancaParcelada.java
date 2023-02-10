@@ -2,11 +2,13 @@ package org.acme.models.asaas;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.acme.models.Cliente;
 import org.acme.models.Model;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Getter
@@ -17,7 +19,9 @@ public class CobrancaParcelada implements Model {
     @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String uuid;
-    private String customer;
+    @ManyToOne
+    @JoinColumn(name = "customer_uuid")
+    private Cliente customer;
     @Enumerated(EnumType.STRING)
     private BillingType billingType;
     private double value;
@@ -41,6 +45,17 @@ public class CobrancaParcelada implements Model {
     private Set<Split> splits;
     @OneToOne
     private CobrancaParceladaRetorno cobrancaParceladaRetorno;
+    private LocalDateTime dataCriacao;
+    private LocalDateTime ultimaAtualização;
+    @PrePersist
+    public void prePersist(){
+        dataCriacao = LocalDateTime.now();
+        ultimaAtualização = LocalDateTime.now();
+    }
+    @PreUpdate
+    public void preUpdate(){
+        ultimaAtualização = LocalDateTime.now();
+    }
 }
 
 

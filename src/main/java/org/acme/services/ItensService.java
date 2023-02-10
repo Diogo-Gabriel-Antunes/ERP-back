@@ -11,6 +11,8 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
@@ -39,7 +41,7 @@ public class ItensService extends Service {
         Itens itens = findOne(uuid);
         Itens newItens = em.merge(itens);
         fieldUtil.updateFieldsDtoToModel(newItens,itensDTO);
-        newItens.setDataAtualizacao(LocalDate.now());
+        newItens.setUltimaAtualização(LocalDateTime.now());
         em.persist(newItens);
         return newItens;
     }
@@ -81,5 +83,15 @@ public class ItensService extends Service {
 
     }
 
+    public void convertDtoToModel(List<Itens> itens, ItensDTO itensDTO){
+        if(itens == null){
+            itens = new ArrayList<Itens>();
+        }
+        Itens itensModel = new Itens();
+
+        fieldUtil.updateFieldsDtoToModel(itensModel,itensDTO);
+        itens.add(itensModel);
+        em.persist(itensModel);
+    }
 
 }

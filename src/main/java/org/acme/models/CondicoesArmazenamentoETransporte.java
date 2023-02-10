@@ -9,6 +9,8 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -29,5 +31,15 @@ public class CondicoesArmazenamentoETransporte extends PanacheEntityBase impleme
     @Cascade(org.hibernate.annotations.CascadeType.MERGE)
     @JsonbTransient
     private Compra compra;
-
+    private LocalDateTime dataCriacao;
+    private LocalDateTime ultimaAtualização;
+    @PrePersist
+    public void prePersist(){
+        dataCriacao = LocalDateTime.now();
+        ultimaAtualização = LocalDateTime.now();
+    }
+    @PreUpdate
+    public void preUpdate(){
+        ultimaAtualização = LocalDateTime.now();
+    }
 }

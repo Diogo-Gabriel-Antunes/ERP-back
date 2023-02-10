@@ -23,7 +23,7 @@ public class EnderecoNFE implements Model {
     private String codigoCidade;
     @Enumerated(EnumType.STRING)
     private Estado estado;
-    private  String logradouro;
+    private String logradouro;
     private String numero;
     @Enumerated(EnumType.STRING)
     private TipoLogradouro tipoLogradouro;
