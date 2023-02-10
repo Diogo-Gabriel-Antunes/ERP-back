@@ -41,7 +41,7 @@ public class ItensService extends Service {
         Itens itens = findOne(uuid);
         Itens newItens = em.merge(itens);
         fieldUtil.updateFieldsDtoToModel(newItens,itensDTO);
-        newItens.setUltimaAtualização(LocalDateTime.now());
+
         em.persist(newItens);
         return newItens;
     }

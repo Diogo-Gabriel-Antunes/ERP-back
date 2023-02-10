@@ -1,11 +1,16 @@
 package org.acme.services;
 
 import org.acme.Util.DateUtil;
+import org.acme.Util.StringUtil;
+import org.acme.exceptions.ResponseBuilder;
+import org.acme.exceptions.ValidacaoException;
 import org.acme.models.asaas.Boleto.BoletoAsaas;
 import org.acme.models.asaas.Boleto.BoletoAsaasDTO;
 import org.acme.models.asaas.Boleto.RetornoAsaas;
+import org.acme.services.Service;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -15,7 +20,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @ApplicationScoped
-public class BoletoService extends Service{
+public class BoletoService extends Service {
 
 
     public List<BoletoAsaas> listAll() {
@@ -27,8 +32,11 @@ public class BoletoService extends Service{
         return em.createQuery("SELECT b from BoletoAsaas b WHERE uuid = :uuid", BoletoAsaas.class).setParameter("uuid", uuid).getSingleResult();
     }
 
-    public BoletoAsaas create(String boletoAsaasJson) {
+    public Response create(String boletoAsaasJson) {
         try {
+            BoletoAsaasDTO boletoAsaasDTO = gson.fromJson(boletoAsaasJson, BoletoAsaasDTO.class);
+
+            validaBoleto(boletoAsaasDTO);
             HttpClient httpClient = HttpClient.newBuilder().build();
             HttpRequest httpRequest = HttpRequest.newBuilder()
                     .POST(HttpRequest.BodyPublishers.ofString(boletoAsaasJson))
@@ -38,33 +46,45 @@ public class BoletoService extends Service{
                     .build();
             HttpResponse<String> resposta = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
             if (resposta.statusCode() == 200) {
-                BoletoAsaas boletoAsaas = gson.fromJson(boletoAsaasJson,BoletoAsaas.class);
+                BoletoAsaas boletoAsaas = new BoletoAsaas();
+                fieldUtil.updateFieldsDtoToModel(boletoAsaas,boletoAsaasDTO);
                 RetornoAsaas retornoAsaas = gson.fromJson(resposta.body(), RetornoAsaas.class);
-
                 retornoAsaas.setAtualizadoEm(LocalDate.now().toString());
                 RetornoAsaas retornoAsaasBD = em.merge(retornoAsaas);
                 boletoAsaas.setRetornoAsaas(retornoAsaasBD);
                 em.merge(boletoAsaas);
                 em.flush();
 
-                return boletoAsaas;
+                return Response.ok(boletoAsaas).build();
             }
             throw new RuntimeException();
-        } catch (Throwable t) {
-            t.printStackTrace();
-            return null;
+        } catch (ValidacaoException e) {
+            return ResponseBuilder.returnResponse(e);
+        }catch (Throwable t) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
 
     }
 
 
-    public BoletoAsaas update(String uuid, BoletoAsaasDTO boletoAsaasDTO) {
-        BoletoAsaas boletoAsaas = listOne(uuid);
 
-        em.merge(boletoAsaas);
-        fieldUtil.updateFieldsDtoToModel(boletoAsaas, boletoAsaasDTO);
-        em.persist(boletoAsaas);
-        return boletoAsaas;
+
+    public Response update(String uuid, String json) {
+        try{
+            BoletoAsaas boletoAsaas = listOne(uuid);
+            BoletoAsaasDTO boletoAsaasDTO = gson.fromJson(json,BoletoAsaasDTO.class);
+            validaBoleto(boletoAsaasDTO);
+            em.merge(boletoAsaas);
+            fieldUtil.updateFieldsDtoToModel(boletoAsaas, boletoAsaasDTO);
+            em.persist(boletoAsaas);
+
+            return Response.ok(boletoAsaas).build();
+        }catch (ValidacaoException e){
+           return ResponseBuilder.returnResponse(e);
+        }catch (Throwable t){
+
+            return ResponseBuilder.returnResponse();
+        }
     }
 
     public List<BoletoAsaas> listByMonth() {
@@ -98,5 +118,20 @@ public class BoletoService extends Service{
                         .getResultList();
             }
         }
+    }
+
+    private void validaBoleto(BoletoAsaasDTO boletoAsaas) {
+        ValidacaoException validacoes = new ValidacaoException();
+
+        if (!StringUtil.stringValida(boletoAsaas.getName())) {
+            validacoes.add("Campo nome esta invalido ou vazio");
+        }
+        if (boletoAsaas.getBillingType() == null) {
+            validacoes.add("Tipo de pagamento esta vazio");
+        }
+        if (boletoAsaas.getChargeType() == null) {
+            validacoes.add("Forma de cobrança esta vazio");
+        }
+        validacoes.lancaErro();
     }
 }

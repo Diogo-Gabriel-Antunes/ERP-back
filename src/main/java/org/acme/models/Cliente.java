@@ -41,20 +41,15 @@ public class Cliente extends PanacheEntityBase implements Model {
     @Cascade(CascadeType.SAVE_UPDATE)
     private EnderecoNFE endereco;
     private LocalDateTime dataCriacao;
-    private LocalDateTime ultimaAtualização;
-
+    private LocalDateTime ultimaAtualizacao;
     @PrePersist
     public void prePersist(){
-        EntityManager em = getEntityManager();
-        em.persist(endereco);
-        dataCriacao = LocalDateTime.now().now();
-        ultimaAtualização = LocalDateTime.now();
+        dataCriacao = LocalDateTime.now();
+        ultimaAtualizacao = LocalDateTime.now();
     }
     @PreUpdate
     public void preUpdate(){
-        EntityManager em = getEntityManager();
-        em.persist(endereco);
-        ultimaAtualização = LocalDateTime.now();
+        ultimaAtualizacao = LocalDateTime.now();
     }
 
 

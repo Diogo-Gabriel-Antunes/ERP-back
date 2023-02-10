@@ -33,14 +33,14 @@ public class Request implements Model{
     private StatusRequest status;
     private Double value;
     private LocalDateTime dataCriacao;
-    private LocalDateTime ultimaAtualização;
+    private LocalDateTime ultimaAtualizacao;
     @PrePersist
     public void prePersist(){
         dataCriacao = LocalDateTime.now();
-        ultimaAtualização = LocalDateTime.now();
+        ultimaAtualizacao = LocalDateTime.now();
     }
     @PreUpdate
     public void preUpdate(){
-        ultimaAtualização = LocalDateTime.now();
+        ultimaAtualizacao = LocalDateTime.now();
     }
 }

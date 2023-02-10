@@ -20,10 +20,11 @@ public class ClienteDTO implements DTO {
     private String isuf;
     private String im;
     private String email;
+    private String asaasId;
+
     @Type(EnderecoNFE.class)
     private EnderecoNFEDTO endereco;
-    private LocalDate dataCriacao;
-    private LocalDate ultimaAtualização;
+
     public static ClienteDTO convert(Cliente cliente) {
         ClienteDTO clienteDTO = new ClienteDTO();
         FieldUtil fieldUtil = new FieldUtil();

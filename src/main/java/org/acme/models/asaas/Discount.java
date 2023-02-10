@@ -33,14 +33,14 @@ public class Discount implements Model {
     @OneToMany(mappedBy = "discount")
     private List<Assinatura> assinatura;
     private LocalDateTime dataCriacao;
-    private LocalDateTime ultimaAtualização;
+    private LocalDateTime ultimaAtualizacao;
     @PrePersist
     public void prePersist(){
         dataCriacao = LocalDateTime.now();
-        ultimaAtualização = LocalDateTime.now();
+        ultimaAtualizacao = LocalDateTime.now();
     }
     @PreUpdate
     public void preUpdate(){
-        ultimaAtualização = LocalDateTime.now();
+        ultimaAtualizacao = LocalDateTime.now();
     }
 }

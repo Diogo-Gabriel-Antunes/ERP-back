@@ -40,15 +40,15 @@ public class BoletoAsaas extends PanacheEntityBase implements Model {
     private RetornoAsaas retornoAsaas;
     private String atualizadoEm;
     private LocalDateTime dataCriacao;
-    private LocalDateTime ultimaAtualização;
+    private LocalDateTime ultimaAtualizacao;
     @PrePersist
     public void prePersist(){
         dataCriacao = LocalDateTime.now();
-        ultimaAtualização = LocalDateTime.now();
+        ultimaAtualizacao = LocalDateTime.now();
     }
     @PreUpdate
     public void preUpdate(){
-        ultimaAtualização = LocalDateTime.now();
+        ultimaAtualizacao = LocalDateTime.now();
     }
 }
 

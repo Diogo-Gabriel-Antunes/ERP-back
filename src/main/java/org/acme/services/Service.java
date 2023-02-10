@@ -3,6 +3,7 @@ package org.acme.services;
 import com.google.gson.Gson;
 import org.acme.Util.FieldUtil;
 import org.acme.Util.GsonUtil;
+import org.acme.Util.StringUtil;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -16,4 +17,5 @@ public class Service {
     protected Gson gson = new GsonUtil().parser;
     protected FieldUtil fieldUtil = new FieldUtil();
     protected DateTimeFormatter formatadorData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
 }

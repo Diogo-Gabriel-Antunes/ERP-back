@@ -38,21 +38,21 @@ public class Assinatura extends PanacheEntityBase implements Model,ICobranca {
     @Enumerated(EnumType.STRING)
     private SubscriptionCycle cycle;
     private LocalDateTime dataCriacao;
-    private LocalDateTime ultimaAtualização;
+    private LocalDateTime ultimaAtualizacao;
+
     public Assinatura() {
         this.split = new Split();
         this.discount = new Discount();
         this.interest = new Interest();
         this.fine = new Fine();
     }
-
     @PrePersist
     public void prePersist(){
         dataCriacao = LocalDateTime.now();
-        ultimaAtualização = LocalDateTime.now();
+        ultimaAtualizacao = LocalDateTime.now();
     }
     @PreUpdate
     public void preUpdate(){
-        ultimaAtualização = LocalDateTime.now();
+        ultimaAtualizacao = LocalDateTime.now();
     }
 }

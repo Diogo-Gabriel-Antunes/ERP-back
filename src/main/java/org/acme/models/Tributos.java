@@ -1,5 +1,6 @@
 package org.acme.models;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Getter;
 import lombok.Setter;
 import org.acme.models.Nota_fiscal_eletronica.*;
@@ -7,15 +8,14 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Setter
 @Entity
-public class Tributos {
+public class Tributos extends PanacheEntityBase {
     @Id
-    @GeneratedValue(generator="system-uuid")
-    @GenericGenerator(name="system-uuid", strategy = "uuid")
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String uuid;
     @ManyToOne
     private Partilha partilha;
@@ -30,15 +30,32 @@ public class Tributos {
     @ManyToOne
     private Issqn issqn;
     private LocalDateTime dataCriacao;
-    private LocalDateTime ultimaAtualização;
+    private LocalDateTime ultimaAtualizacao;
+
     @PrePersist
-    public void prePersist(){
+    public void prePersist() {
+        if (icms != null) {
+            icms.setUuid(getEntityManager().merge(icms).getUuid());
+        }
+        if (ipi != null) {
+            ipi.setUuid(getEntityManager().merge(ipi).getUuid());
+        }
+        if (pis != null) {
+            pis.setUuid(getEntityManager().merge(pis).getUuid());
+        }
+        if (cofins != null) {
+            cofins.setUuid(getEntityManager().merge(cofins).getUuid());
+        }
+        if (issqn != null) {
+            issqn.setUuid(getEntityManager().merge(issqn).getUuid());
+        }
         dataCriacao = LocalDateTime.now();
-        ultimaAtualização = LocalDateTime.now();
+        ultimaAtualizacao = LocalDateTime.now();
     }
+
     @PreUpdate
-    public void preUpdate(){
-        ultimaAtualização = LocalDateTime.now();
+    public void preUpdate() {
+        ultimaAtualizacao = LocalDateTime.now();
     }
 
 }

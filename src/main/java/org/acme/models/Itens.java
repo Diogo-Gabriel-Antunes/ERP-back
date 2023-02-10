@@ -40,7 +40,7 @@ public class Itens extends PanacheEntityBase implements Model{
     @ManyToMany(mappedBy = "itens")
     @JsonbTransient
     private Set<Compra> compras = new HashSet<>();
-    private LocalDateTime ultimaAtualização;
+    private LocalDateTime ultimaAtualizacao;
     private LocalDateTime dataCriacao;
     @ManyToOne
     @JoinColumn(nullable = true)
@@ -62,11 +62,11 @@ public class Itens extends PanacheEntityBase implements Model{
     @PrePersist
     public void prePersist(){
         dataCriacao = LocalDateTime.now();
-        ultimaAtualização = LocalDateTime.now();
+        ultimaAtualizacao = LocalDateTime.now();
     }
     @PreUpdate
     public void preUpdate(){
-        ultimaAtualização = LocalDateTime.now();
+        ultimaAtualizacao = LocalDateTime.now();
     }
 }
 

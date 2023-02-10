@@ -10,6 +10,7 @@ import org.hibernate.annotations.CascadeType;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -36,15 +37,26 @@ public class Venda extends PanacheEntityBase implements Model {
     private Double desconto;
     private Double impostosTotal;
     private LocalDateTime dataCriacao;
-    private LocalDateTime ultimaAtualização;
+    private LocalDateTime ultimaAtualizacao;
     @PrePersist
     public void prePersist(){
+        if(cliente != null){
+            getCliente().setUuid(getEntityManager().merge(cliente).getUuid());
+        }
+        if(!products.isEmpty()){
+            Set<Product> newProducts = new HashSet<>();
+            products.forEach((product) ->{
+                Product productMerged = getEntityManager().merge(product);
+                newProducts.add(productMerged);
+            });
+            setProducts(newProducts);
+        }
         dataCriacao = LocalDateTime.now();
-        ultimaAtualização = LocalDateTime.now();
+        ultimaAtualizacao = LocalDateTime.now();
     }
     @PreUpdate
     public void preUpdate(){
-        ultimaAtualização = LocalDateTime.now();
+        ultimaAtualizacao = LocalDateTime.now();
     }
 }
 

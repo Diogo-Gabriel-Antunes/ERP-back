@@ -26,14 +26,17 @@ public class Unidade extends PanacheEntityBase implements Model{
     @Cascade(CascadeType.SAVE_UPDATE)
     private Pessoa pessoa;
     private LocalDateTime dataCriacao;
-    private LocalDateTime ultimaAtualização;
+    private LocalDateTime ultimaAtualizacao;
     @PrePersist
     public void prePersist(){
+        if(pessoa != null){
+            getPessoa().setUuid(getEntityManager().merge(pessoa).getUuid());
+        }
         dataCriacao = LocalDateTime.now();
-        ultimaAtualização = LocalDateTime.now();
+        ultimaAtualizacao = LocalDateTime.now();
     }
     @PreUpdate
     public void preUpdate(){
-        ultimaAtualização = LocalDateTime.now();
+        ultimaAtualizacao = LocalDateTime.now();
     }
 }

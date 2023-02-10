@@ -38,6 +38,9 @@ public class Product extends PanacheEntityBase implements Model {
     private List<Imagem> imagens;
     private Double precoUnitario;
     private Double precoForncedor;
+    private Double pesoBruto;
+    private Double pesoOriginal;
+
     @PrePersist
     public void prePersist(){
         dataCriacao = LocalDateTime.now();

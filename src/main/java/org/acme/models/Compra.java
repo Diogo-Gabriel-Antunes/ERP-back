@@ -46,7 +46,16 @@ public class Compra extends PanacheEntityBase implements Model {
     @Enumerated(EnumType.STRING)
     private StatusCompra statusCompra;
     private LocalDateTime dataCriacao;
-    private LocalDateTime ultimaAtualização;
+    private LocalDateTime ultimaAtualizacao;
+    @PrePersist
+    public void prePersist(){
+        dataCriacao = LocalDateTime.now();
+        ultimaAtualizacao = LocalDateTime.now();
+    }
+    @PreUpdate
+    public void preUpdate(){
+        ultimaAtualizacao = LocalDateTime.now();
+    }
 
     public Compra(CompraDTO compraDTO) {
         this.dataCompra = compraDTO.getDataCompra();
@@ -60,13 +69,5 @@ public class Compra extends PanacheEntityBase implements Model {
 
     public Compra() {
     }
-    @PrePersist
-    public void prePersist(){
-        dataCriacao = LocalDateTime.now();
-        ultimaAtualização = LocalDateTime.now();
-    }
-    @PreUpdate
-    public void preUpdate(){
-        ultimaAtualização = LocalDateTime.now();
-    }
+
 }

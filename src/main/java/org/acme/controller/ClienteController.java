@@ -17,13 +17,12 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Path("/clientes")
+@Path("/cliente")
 @ApplicationScoped
 public class ClienteController {
 
     @Inject
     private ClienteService clienteService;
-    private Gson gson = new GsonUtil().parser;
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Cliente> listAll(){
@@ -60,25 +59,22 @@ public class ClienteController {
     @POST
     @Transactional
     @Produces(MediaType.APPLICATION_JSON)
-    public ClienteDTO create(String json){
-        ClienteDTO clienteDTO = gson.fromJson(json, ClienteDTO.class);
-        clienteService.create(clienteDTO);
-        return clienteDTO;
+    public Response create(String json){
+
+
+        return clienteService.create(json);
     }
 
     @PUT
     @Path("{uuid}")
     @Transactional
-    public ClienteDTO update(@PathParam("uuid")String uuid,String json){
-        ClienteDTO clienteDTO = gson.fromJson(json, ClienteDTO.class);
-        clienteService.update(uuid,clienteDTO);
-        return clienteDTO;
+    public Response update(@PathParam("uuid")String uuid,String json){
+        return clienteService.update(uuid,json);
     }
     @DELETE
     @Path("{uuid}")
     @Transactional
     public Response delete(@PathParam("uuid")String uuid){
-
         return clienteService.delete(uuid);
     }
 }

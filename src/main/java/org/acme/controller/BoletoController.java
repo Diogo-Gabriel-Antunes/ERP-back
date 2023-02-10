@@ -19,7 +19,7 @@ public class BoletoController {
 
     @Inject
     BoletoService boletoService;
-    private Gson gson = new GsonUtil().parser;
+
     @GET
     public List<BoletoAsaas> listAll(){
         return boletoService.listAll();
@@ -41,7 +41,7 @@ public class BoletoController {
     }
     @POST
     @Transactional
-    public BoletoAsaas create( String json) throws Exception{
+    public Response create( String json) throws Exception{
 
 
         return boletoService.create(json);
@@ -50,9 +50,8 @@ public class BoletoController {
     @Transactional
     @Path("{uuid}")
     public Response update(@PathParam("uuid")String uuid,String json){
-        BoletoAsaasDTO boletoAsaasDTO = gson.fromJson(json, BoletoAsaasDTO.class);
-        BoletoAsaas newBoletoAsaas = boletoService.update(uuid, boletoAsaasDTO);
-        return Response.ok(newBoletoAsaas).build();
+
+        return  boletoService.update(uuid, json);
     }
 
 }
