@@ -1,5 +1,6 @@
 package org.acme.models.asaas;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Getter;
 import lombok.Setter;
 import org.acme.models.Cliente;
@@ -14,7 +15,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-public class CobrancaParcelada implements Model {
+public class CobrancaParcelada extends PanacheEntityBase implements Model {
     @Id
     @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")

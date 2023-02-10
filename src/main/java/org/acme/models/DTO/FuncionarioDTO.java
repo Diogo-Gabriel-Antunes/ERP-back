@@ -13,7 +13,7 @@ import java.util.Set;
 @Setter
 public class FuncionarioDTO implements DTO {
     private String nome;
-    private EnderecoNFE endereco;
+    private EnderecoNFEDTO endereco;
     private String pis;
     private NivelDeEscolaridade nivelDeEscolaridade;
     private String cpf;

@@ -1,6 +1,10 @@
 package org.acme.services;
 
+import jdk.jshell.execution.Util;
 import org.acme.Util.FieldUtil;
+import org.acme.Util.StringUtil;
+import org.acme.exceptions.ResponseBuilder;
+import org.acme.exceptions.ValidacaoException;
 import org.acme.models.*;
 import org.acme.models.DTO.OrdemDeProducaoDTO;
 import org.acme.models.enums.StatusDaProducao;
@@ -8,6 +12,7 @@ import org.acme.models.enums.StatusDaProducao;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.ws.rs.core.Response;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,20 +26,54 @@ public class OrdemDeProducaoService extends Service {
         return em.createQuery("SELECT o FROM OrdemDeProducao o", OrdemDeProducao.class).getResultList();
     }
 
-    public void create(OrdemDeProducaoDTO ordemDeProducaoDTO) {
-        OrdemDeProducao ordemDeProducao = new OrdemDeProducao();
+    public Response create(String json) {
+        try {
+           OrdemDeProducaoDTO ordemDeProducaoDTO = gson.fromJson(json, OrdemDeProducaoDTO.class);
+            validaOrdemDeProducao(ordemDeProducaoDTO);
+            OrdemDeProducao ordemDeProducao = new OrdemDeProducao();
 
-        fieldUtil.updateFieldsDtoToModel(ordemDeProducao,ordemDeProducaoDTO);
+            fieldUtil.updateFieldsDtoToModel(ordemDeProducao, ordemDeProducaoDTO);
 
-        TimesOrdemDeProducao timesOrdemDeProducao = new TimesOrdemDeProducao();
-        timesOrdemDeProducao.setTime(LocalDateTime.now());
-        timesOrdemDeProducao.setStatusDaProducao(ordemDeProducaoDTO.getStatus());
-        ordemDeProducao.setInicioDaProducao(LocalDate.now());
+            TimesOrdemDeProducao timesOrdemDeProducao = new TimesOrdemDeProducao();
+            timesOrdemDeProducao.setTime(LocalDateTime.now());
+            timesOrdemDeProducao.setStatusDaProducao(ordemDeProducaoDTO.getStatus());
+            ordemDeProducao.setInicioDaProducao(LocalDate.now());
 
-        OrdemDeProducao ordemDeProducaoDB = em.merge(ordemDeProducao);
-        timesOrdemDeProducao.setOrdemDeProducao(ordemDeProducaoDB);
-        em.merge(timesOrdemDeProducao);
+            OrdemDeProducao ordemDeProducaoDB = em.merge(ordemDeProducao);
+            timesOrdemDeProducao.setOrdemDeProducao(ordemDeProducaoDB);
+            em.merge(timesOrdemDeProducao);
+            return ResponseBuilder.responseOk(ordemDeProducaoDB);
+        } catch (ValidacaoException e) {
+            return ResponseBuilder.returnResponse(e);
+        } catch (Throwable t) {
+            t.printStackTrace();
+            return ResponseBuilder.returnResponse();
+        }
 
+    }
+
+    private void validaOrdemDeProducao(OrdemDeProducaoDTO ordemDeProducaoDTO) {
+        ValidacaoException validacao = new ValidacaoException();
+
+        if(ordemDeProducaoDTO.getStatus() == null){
+            validacao.add("Campo status invalido");
+        }
+        if(ordemDeProducaoDTO.getQuantidade() != null){
+            if(ordemDeProducaoDTO.getQuantidade() == 0 ){
+                validacao.add("Campo quantidade invalido");
+            }
+        }else{
+            validacao.add("Campo quantidade invalido");
+        }
+        if(!StringUtil.stringValida(ordemDeProducaoDTO.getDescricao())){
+            validacao.add("Campo descrição invalido");
+        }
+        if(ordemDeProducaoDTO.getProduct() == null){
+            validacao.add("É necessario adicionar um produto");
+        }
+
+
+        validacao.lancaErro();
     }
 
     public OrdemDeProducao findOne(String uuid) {
@@ -43,7 +82,8 @@ public class OrdemDeProducaoService extends Service {
                 .getSingleResult();
     }
 
-    public void update(String uuid, OrdemDeProducaoDTO ordemDeProducaoDTO) {
+    public Response update(String uuid, String json) {
+        OrdemDeProducaoDTO ordemDeProducaoDTO = gson.fromJson(json, OrdemDeProducaoDTO.class);
         OrdemDeProducao ordemDeProducao= findOne(uuid);
         TimesOrdemDeProducao timesOrdemDeProducao = new TimesOrdemDeProducao();
         timesOrdemDeProducao.setStatusDaProducao(ordemDeProducaoDTO.getStatus());
@@ -56,6 +96,7 @@ public class OrdemDeProducaoService extends Service {
         ordemDeProducao.setInicioDaProducao(LocalDate.now());
         em.persist(ordemDeProducao);
         em.flush();
+        return ResponseBuilder.responseOk(ordemDeProducao);
     }
 
     public void delete(String uuid) {

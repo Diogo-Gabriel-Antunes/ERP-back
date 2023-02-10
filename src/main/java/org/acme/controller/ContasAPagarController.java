@@ -29,33 +29,31 @@ public class ContasAPagarController {
     @GET
     @Path("{uuid}")
     @Produces(MediaType.APPLICATION_JSON)
-    public ContasAPagar listOne(@PathParam("uuid")String uuid){
-        ContasAPagar contasAPagar = contasAPagarService.getOne(uuid);
+    public Response listOne(@PathParam("uuid")String uuid){
 
-        return contasAPagar;
+
+        return  contasAPagarService.getOne(uuid);
     }
     @POST
     @Transactional
-    public ContasAPagar create(String json){
-        ContasAPagarDTO contasAPagarDTO = gson.fromJson(json, ContasAPagarDTO.class);
-        ContasAPagar contasAPagar = contasAPagarService.create(contasAPagarDTO);
-        return contasAPagar;
+    public Response create(String json){
+
+        return contasAPagarService.create(json);
     }
 
     @PUT
     @Path("{uuid}")
     @Transactional
-    public ContasAPagarDTO update(@PathParam("uuid")String uuid, String json){
-        ContasAPagarDTO contasAPagarDTO = gson.fromJson(json, ContasAPagarDTO.class);
-        contasAPagarService.update(uuid,contasAPagarDTO);
-        return contasAPagarDTO;
+    public Response update(@PathParam("uuid")String uuid, String json){
+
+        return contasAPagarService.update(uuid,json);
     }
 
     @Path("{uuid}")
     @DELETE
     @Transactional
     public Response delete(@PathParam("uuid")String uuid){
-        contasAPagarService.delete(uuid);
-        return Response.ok(String.format("Conta de id %s deletado com sucesso",uuid)).build();
+
+        return contasAPagarService.delete(uuid);
     }
 }

@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import org.acme.Util.FieldUtil;
 import org.acme.Util.GsonUtil;
+import org.acme.exceptions.ResponseBuilder;
+import org.acme.exceptions.ValidacaoException;
 import org.acme.models.*;
 import org.acme.models.DTO.CompraDTO;
 
@@ -18,29 +20,38 @@ public class CompraService extends Service {
     public Response create(String json) {
         try {
             CompraDTO compraDTO = gson.fromJson(json, CompraDTO.class);
-            Compra compra = new Compra(compraDTO);
+            validaCompra(compraDTO);
+            Compra compra = new Compra();
             Compra.getEntityManager().merge(compra);
-
-            compra.setItens(compraDTO.getItens());
-            compra.setCondicoesArmazenamentoETransporte(compraDTO.getCondicoesArmazenamentoETransporte());
-            compra.setResponsavelPelaVenda(compraDTO.getResponsavelPelaVenda());
-            CondicoesArmazenamentoETransporte condicoesArmazenamentoETransporte = compra.getCondicoesArmazenamentoETransporte();
-            CondicoesArmazenamentoETransporte.persist(condicoesArmazenamentoETransporte);
-            condicoesArmazenamentoETransporte.setCompra(compra);
-            Compra.persist(compra);
+            fieldUtil.updateFieldsDtoToModel(compra,compraDTO);
+            Compra.getEntityManager().persist(compra);
             Compra.flush();
-            return Response.created(new URI("/compra")).build();
+            return ResponseBuilder.responseOk(compra);
+        }catch (ValidacaoException e){
+            return ResponseBuilder.returnResponse(e);
         }catch (Throwable t){
             t.printStackTrace();
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            return ResponseBuilder.returnResponse();
         }
 
     }
 
-    public Response update(String uuid, String json) {
-        Compra compra = Compra.findById(uuid);
-        CompraDTO compraDTO = gson.fromJson(json, CompraDTO.class);
+    private void validaCompra(CompraDTO compraDTO) {
+        ValidacaoException validacao = new ValidacaoException();
 
+        if(compraDTO.getItens().isEmpty()){
+            validacao.add("Voce precisa adicionar itens");
+        }
+        if(compraDTO.getResponsavelPelaVenda() == null){
+            validacao.add("É necessario adicionar o responsavel pela venda");
+        }
+        validacao.lancaErro();
+    }
+
+    public Response update(String uuid, String json) {
+        CompraDTO compraDTO = gson.fromJson(json, CompraDTO.class);
+        validaCompra(compraDTO);
+        Compra compra = Compra.findById(uuid);
         fieldUtil.updateFieldsDtoToModel(compra,compraDTO);
         Compra.persist(compra);
         return Response.ok(compra).build();

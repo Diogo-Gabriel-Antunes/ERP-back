@@ -15,7 +15,6 @@ import java.util.List;
 public class CompraDTO implements DTO{
 
     private List<Itens> itens;
-    private String dataCompra;
     private BillingType formaDePagamento;
     private Long numeroDaFatura;
     private Long reciboCompra;

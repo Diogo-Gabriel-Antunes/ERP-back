@@ -29,7 +29,6 @@ public class Compra extends PanacheEntityBase implements Model {
             {@JoinColumn(name="itens_id")})
     @Cascade(CascadeType.ALL)
     private List<Itens> itens ;
-    private String dataCompra;
     @Enumerated(EnumType.STRING)
     private BillingType formaDePagamento;
     private Long numeroDaFatura;
@@ -57,15 +56,7 @@ public class Compra extends PanacheEntityBase implements Model {
         ultimaAtualizacao = LocalDateTime.now();
     }
 
-    public Compra(CompraDTO compraDTO) {
-        this.dataCompra = compraDTO.getDataCompra();
-        this.formaDePagamento = compraDTO.getFormaDePagamento();
-        this.numeroDaFatura = compraDTO.getNumeroDaFatura();
-        this.reciboCompra = compraDTO.getReciboCompra();
-        this.garantia = compraDTO.getGarantia();
-        this.responsavelPelaVenda = compraDTO.getResponsavelPelaVenda();
-        this.condicoesArmazenamentoETransporte = compraDTO.getCondicoesArmazenamentoETransporte();
-    }
+
 
     public Compra() {
     }

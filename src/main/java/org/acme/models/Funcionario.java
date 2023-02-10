@@ -64,6 +64,9 @@ public class Funcionario extends PanacheEntityBase implements Model{
 
     @PrePersist
     public void prePersist(){
+        if(endereco != null){
+            this.endereco.setUuid(getEntityManager().merge(endereco).getUuid());
+        }
         dataCriacao = LocalDateTime.now();
         ultimaAtualizacao = LocalDateTime.now();
     }

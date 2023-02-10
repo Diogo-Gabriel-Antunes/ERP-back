@@ -17,5 +17,6 @@ public class Service {
     protected Gson gson = new GsonUtil().parser;
     protected FieldUtil fieldUtil = new FieldUtil();
     protected DateTimeFormatter formatadorData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
+    @Inject
+    protected EnderecoService enderecoService;
 }

@@ -1,6 +1,9 @@
 package org.acme.services;
 
 
+import org.acme.Util.StringUtil;
+import org.acme.exceptions.ResponseBuilder;
+import org.acme.exceptions.ValidacaoException;
 import org.acme.models.Contato;
 import org.acme.models.DTO.LojaDTO;
 import org.acme.models.Loja;
@@ -14,21 +17,29 @@ import java.util.Optional;
 @ApplicationScoped
 public class LojaService extends Service {
     @Inject
-    private EnderecoService enderecoService;
+    EnderecoService enderecoService;
     @Inject
-    private ContatoService contatoService;
-    @Inject
-    private ItensService itensService;
+    ContatoService contatoService;
 
-    public Loja create(String json) {
-        Loja loja = new Loja();
-        transfereDadosDtoToModel(json, loja);
-        em.persist(loja);
-        return loja;
+    public Response create(String json) {
+        try{
+
+            Loja loja = new Loja();
+            transfereDadosDtoToModel(json, loja);
+            em.persist(loja);
+            return ResponseBuilder.responseOk(loja);
+        }catch (ValidacaoException e){
+            return ResponseBuilder.returnResponse(e);
+        }catch (Throwable t){
+            t.printStackTrace();
+            return ResponseBuilder.returnResponse();
+        }
     }
 
     private void transfereDadosDtoToModel(String json, Loja loja) {
+
         LojaDTO lojaDTO = gson.fromJson(json, LojaDTO.class);
+        validaLoja(lojaDTO);
         EnderecoNFE enderecoNFE = em.merge(enderecoService.convertDtoToModel(loja.getEndereco(), lojaDTO.getEndereco()));
         Contato contato = em.merge(contatoService.convertDtoToModel(loja.getContato(), lojaDTO.getContato()));
 
@@ -37,6 +48,26 @@ public class LojaService extends Service {
         loja.setContato(contato);
         em.persist(loja);
         em.flush();
+
+
+    }
+
+    private void validaLoja(LojaDTO lojaDTO) {
+        ValidacaoException validacao = new ValidacaoException();
+
+        enderecoService.validaEndereco(validacao, lojaDTO.getEndereco(), true);
+        if (!StringUtil.stringValida(lojaDTO.getNomeLoja())) {
+            validacao.add("Campo nome loja invalido");
+        }
+        if (!StringUtil.stringValida(lojaDTO.getCnpj())) {
+            validacao.add("Campo CNPJ invalido");
+        }
+        if (!StringUtil.stringValida(lojaDTO.getRazaoSocial())) {
+            validacao.add("Campo Razão social invalido");
+        }
+        contatoService.validaContato(validacao, lojaDTO.getContato(), true);
+
+        validacao.lancaErro();
     }
 
     public Loja update(String uuid, String json) {

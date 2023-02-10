@@ -42,6 +42,10 @@ public class Cliente extends PanacheEntityBase implements Model {
     private EnderecoNFE endereco;
     private LocalDateTime dataCriacao;
     private LocalDateTime ultimaAtualizacao;
+
+    public Cliente(){
+        this.endereco = new EnderecoNFE();
+    }
     @PrePersist
     public void prePersist(){
         dataCriacao = LocalDateTime.now();

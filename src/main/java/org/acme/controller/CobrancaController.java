@@ -4,14 +4,15 @@ import com.google.gson.Gson;
 import org.acme.Util.GsonUtil;
 import org.acme.models.asaas.CobrancaParcelada;
 import org.acme.models.asaas.CobrancaParceladaDTO;
+import org.acme.models.asaas.CobrancaParceladaRetorno;
+import org.acme.services.CobrancaRetornoService;
 import org.acme.services.CobrancaService;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 @ApplicationScoped
@@ -21,15 +22,32 @@ public class CobrancaController {
     private Gson gson = new GsonUtil().parser;
     @Inject
     CobrancaService cobrancaService;
+    @Inject
+    CobrancaRetornoService cobrancaRetornoService;
     @GET
     public List<CobrancaParcelada> listAll(){
         return cobrancaService.getAll();
     }
+    @GET
+    @Path("{uuid}")
+    public Response listOne(@PathParam("uuid")String uuid){
+        return cobrancaService.listOne(uuid);
+    }
 
     @POST
     @Transactional
-    public CobrancaParcelada create(String json){
-        CobrancaParceladaDTO cobrancaParceladaDTO = gson.fromJson(json, CobrancaParceladaDTO.class);
-        return cobrancaService.create(cobrancaParceladaDTO);
+    public Response create(String json){
+        return cobrancaService.create(json);
+    }
+    @PUT
+    @Transactional
+    @Path("{uuid}")
+    public Response update(@PathParam("uuid") String uuid, String json){
+        return cobrancaService.update(uuid,json);
+    }
+    @GET
+    @Path("retorno")
+    public List<CobrancaParceladaRetorno> listAllRetorno(){
+        return cobrancaRetornoService.getAll();
     }
 }

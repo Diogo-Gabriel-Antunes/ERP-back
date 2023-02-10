@@ -1,62 +1,104 @@
 package org.acme.services;
 
-import org.acme.Util.FieldUtil;
+import org.acme.Util.StringUtil;
+import org.acme.exceptions.ResponseBuilder;
+import org.acme.exceptions.ValidacaoException;
 import org.acme.models.DTO.FuncionarioDTO;
 import org.acme.models.Funcionario;
 import org.acme.models.Nota_fiscal_eletronica.EnderecoNFE;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.persistence.EntityManager;
 import javax.ws.rs.core.Response;
 
 @ApplicationScoped
-public class FuncionarioService  extends Service{
+public class FuncionarioService extends Service {
 
 
-    public Response create(FuncionarioDTO funcionarioDTO){
-        try{
+    public Response create(String json) {
+        try {
+            FuncionarioDTO funcionarioDTO = gson.fromJson(json, FuncionarioDTO.class);
+
+            validaFuncionario(funcionarioDTO);
             Funcionario funcionario = new Funcionario();
-
-
-            EnderecoNFE enderecoBD = em.merge(funcionarioDTO.getEndereco());
-
+            fieldUtil.updateFieldsDtoToModel(funcionario.getEndereco(),funcionarioDTO.getEndereco());
             fieldUtil.updateFieldsDtoToModel(funcionario,funcionarioDTO);
-            funcionario.setEndereco(enderecoBD);
-            em.persist(enderecoBD);
+            em.persist(funcionario);
 
-            em.merge(funcionario);
-
-            return Response.ok(funcionario).build();
-        }catch (Throwable t){
+            em.flush();
+            return ResponseBuilder.responseOk(funcionario);
+        }  catch (ValidacaoException e) {
+            return ResponseBuilder.returnResponse(e);
+        }catch (Throwable t) {
             t.printStackTrace();
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            return ResponseBuilder.returnResponse();
         }
     }
 
-    public Response update(String uuid, FuncionarioDTO funcionarioDTO) {
-        try{
-            EnderecoNFE endereco = null;
-            Funcionario funcionario = Funcionario.findById(uuid);
-            if(funcionarioDTO.getEndereco() != null){
-                endereco = em.merge(funcionarioDTO.getEndereco());
-            }
-            funcionarioDTO.setEndereco(endereco);
-            funcionarioDTO.getBeneficios().addAll(funcionario.getBeneficios());
+    public Response update(String uuid, String json) {
+        try {
+            FuncionarioDTO funcionarioDTO = gson.fromJson(json, FuncionarioDTO.class);
+            validaFuncionario(funcionarioDTO);
 
-            fieldUtil.updateFieldsDtoToModel(funcionario,funcionarioDTO);
+            Funcionario funcionario = Funcionario.findById(uuid);
+
+            funcionarioDTO.getBeneficios().addAll(funcionario.getBeneficios());
+            fieldUtil.updateFieldsDtoToModel(funcionario.getEndereco(),funcionarioDTO.getEndereco());
+            fieldUtil.updateFieldsDtoToModel(funcionario, funcionarioDTO);
+
             Funcionario.persist(funcionario);
-            return Response.ok(funcionario).build();
-        }catch (Throwable t){
+            return ResponseBuilder.responseOk(funcionario);
+        } catch (ValidacaoException e) {
+            return ResponseBuilder.returnResponse(e);
+        } catch (Throwable t) {
             t.printStackTrace();
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            return ResponseBuilder.returnResponse();
         }
+    }
+
+    private void validaFuncionario(FuncionarioDTO funcionarioDTO) {
+        ValidacaoException validacao = new ValidacaoException();
+
+        enderecoService.validaEndereco(validacao, funcionarioDTO.getEndereco(), true);
+
+        if (!StringUtil.stringValida(funcionarioDTO.getNome())) {
+            validacao.add("Campo nome invalido");
+        }
+        if (!StringUtil.stringValida(funcionarioDTO.getPis())) {
+            validacao.add("Campo pis invalido");
+        }
+        if (!StringUtil.stringValida(funcionarioDTO.getCpf())) {
+            validacao.add("Campo cpf invalido");
+        }
+        if (!StringUtil.stringValida(funcionarioDTO.getRg())) {
+            validacao.add("Campo rg invalido");
+        }
+        if (!StringUtil.stringValida(funcionarioDTO.getTituloDeEleitor())) {
+            validacao.add("Campo titulo de eleito invalido");
+        }
+        if (!StringUtil.stringValida(funcionarioDTO.getCargo())) {
+            validacao.add("Campo Cargo invalido");
+        }
+        if (funcionarioDTO.getDataAdmissao() == null) {
+            validacao.add("Campo data de admissão invalido");
+        }
+        if (funcionarioDTO.getDataNascimento() == null) {
+            validacao.add("Campo data de nascimento invalido");
+        }
+        if (funcionarioDTO.getNacionalidade() == null) {
+            validacao.add("Campo nacionalidade invalido");
+        }
+        if (funcionarioDTO.getSalario() == 0.0 || funcionarioDTO.getSalario() == null) {
+            validacao.add("Campo salario invalido");
+        }
+
+        validacao.lancaErro();
     }
 
     public Response delete(String uuid) {
-        try{
-            Funcionario.delete("uuid",uuid);
+        try {
+            Funcionario.delete("uuid", uuid);
             return Response.ok().build();
-        }catch (Throwable t){
+        } catch (Throwable t) {
             t.printStackTrace();
             return Response.status(Response.Status.BAD_REQUEST).build();
         }

@@ -4,6 +4,10 @@ import lombok.Getter;
 import lombok.Setter;
 import org.acme.Util.FieldUtil;
 import org.acme.models.DTO.DTO;
+import org.acme.models.DTO.Financas.DiscountDTO;
+import org.acme.models.DTO.Financas.FineDTO;
+import org.acme.models.DTO.Financas.InterestDTO;
+import org.acme.models.DTO.Financas.SplitDTO;
 
 import java.util.List;
 
@@ -19,11 +23,11 @@ public class CobrancaParceladaDTO implements DTO {
     private String externalReference;
     private Integer installmentCount;
     private Double installmentValue;
-    private Discount discount;
-    private Interest interest;
-    private Fine fine;
+    private DiscountDTO discount;
+    private InterestDTO interest;
+    private FineDTO fine;
     private boolean postalService;
-    private List<Split> splits;
+    private List<SplitDTO> splits;
     private CobrancaParceladaRetorno cobrancaParceladaRetorno;
 
     public CobrancaParcelada convertToModel() {

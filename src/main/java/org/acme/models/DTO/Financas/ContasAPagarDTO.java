@@ -3,6 +3,8 @@ package org.acme.models.DTO.Financas;
 import lombok.Getter;
 import lombok.Setter;
 import org.acme.Anotacao.Type;
+import org.acme.models.Cliente;
+import org.acme.models.DTO.ClienteDTO;
 import org.acme.models.DTO.DTO;
 import org.acme.models.asaas.ContasApagar.ContasAPagar;
 import org.acme.models.asaas.Status;
@@ -28,4 +30,7 @@ public class ContasAPagarDTO implements DTO {
     private String failReasons;
     private double value;
     private boolean retorno;
+    @Type(Cliente.class)
+    private ClienteDTO cliente;
+
 }

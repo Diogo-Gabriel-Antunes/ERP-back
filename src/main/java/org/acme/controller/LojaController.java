@@ -31,11 +31,8 @@ public class LojaController {
     @POST
     @Transactional
     public Response create(String json) {
-        Loja loja = lojaService.create(json);
-        if(loja != null){
-            return Response.ok(loja).build();
-        }
-        return Response.status(Response.Status.BAD_REQUEST).build();
+
+        return lojaService.create(json);
     }
 
     @PUT

@@ -30,16 +30,13 @@ public class OrdemDeProducaoController {
     @Path("{uuid}")
     @Produces(MediaType.APPLICATION_JSON)
     public OrdemDeProducao listOne(@PathParam("uuid")String uuid){
-
-
         return ordemDeProducaoService.findOne(uuid);
     }
     @POST
     @Transactional
-    public OrdemDeProducaoDTO create(String json){
-        OrdemDeProducaoDTO ordemDeProducaoDTO = gson.fromJson(json, OrdemDeProducaoDTO.class);
-        ordemDeProducaoService.create(ordemDeProducaoDTO);
-        return ordemDeProducaoDTO;
+    public Response create(String json){
+
+        return ordemDeProducaoService.create(json);
     }
     @GET
     @Path("/mes")
@@ -50,10 +47,9 @@ public class OrdemDeProducaoController {
     @PUT
     @Path("{uuid}")
     @Transactional
-    public OrdemDeProducaoDTO update(@PathParam("uuid")String uuid, String json){
-        OrdemDeProducaoDTO ordemDeProducaoDTO = gson.fromJson(json, OrdemDeProducaoDTO.class);
-        ordemDeProducaoService.update(uuid,ordemDeProducaoDTO);
-        return ordemDeProducaoDTO;
+    public Response update(@PathParam("uuid")String uuid, String json){
+
+        return ordemDeProducaoService.update(uuid,json);
     }
     @PUT
     @Path("{uuid}/finalizar")

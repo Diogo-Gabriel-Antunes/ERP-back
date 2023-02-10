@@ -10,6 +10,7 @@ import org.acme.models.Nota_fiscal_eletronica.EnderecoNFE;
 
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -23,6 +24,5 @@ public class LojaDTO implements DTO{
     private EnderecoNFEDTO endereco;
     @Type(Contato.class)
     private ContatoDTO contato;
-    @Type(List.class)
-    private List<ItensDTO> itens;
+
 }

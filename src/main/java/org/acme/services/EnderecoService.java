@@ -44,7 +44,6 @@ public class EnderecoService extends Service {
             }
         }else{
             if(obrigatorio){
-
                 validacaoException.add("Endereço é obrigatorio");
             }
         }

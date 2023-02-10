@@ -32,17 +32,15 @@ public class FuncionarioController {
     @POST
     @Transactional
     public Response create(String json){
-        FuncionarioDTO funcionarioDTO = gson.fromJson(json, FuncionarioDTO.class);
 
-        return funcionarioService.create(funcionarioDTO);
+        return funcionarioService.create(json);
 
     }
     @PUT
     @Path("{uuid}")
     @Transactional
     public Response update(@PathParam("uuid") String uuid,String json){
-        FuncionarioDTO funcionarioDTO = gson.fromJson(json, FuncionarioDTO.class);
-        return funcionarioService.update(uuid,funcionarioDTO);
+        return funcionarioService.update(uuid,json);
     }
     @DELETE
     @Path("{uuid}")
