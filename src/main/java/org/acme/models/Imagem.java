@@ -25,7 +25,7 @@ public class Imagem {
     @ManyToOne
     @JsonbTransient
     @Cascade(CascadeType.SAVE_UPDATE)
-    private Product produto;
+    private Produto produto;
     private LocalDateTime dataCriacao;
     private LocalDateTime ultimaAtualizacao;
     @PrePersist

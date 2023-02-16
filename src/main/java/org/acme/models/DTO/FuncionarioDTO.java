@@ -12,6 +12,7 @@ import java.util.Set;
 @Getter
 @Setter
 public class FuncionarioDTO implements DTO {
+    private String uuid;
     private String nome;
     private EnderecoNFEDTO endereco;
     private String pis;

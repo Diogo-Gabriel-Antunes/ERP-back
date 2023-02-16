@@ -2,26 +2,22 @@ package org.acme.models.DTO;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.acme.Anotacao.Type;
 import org.acme.models.Cliente;
 import org.acme.models.Itens;
-import org.acme.models.Product;
 import org.acme.models.StatusRequest;
-import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
-public class RequestDTO implements DTO {
-
+public class PedidoDTO implements DTO {
+    private String uuid;
     private String numberRequest;
+    @Type(Itens.class)
     private List<Itens> itens;
-    private Cliente cliente;
-    private LocalDate createDate;
-    private LocalDate finishDate;
+    @Type(Cliente.class)
+    private ClienteDTO cliente;
     private StatusRequest status;
     private Double value;
 }

@@ -16,7 +16,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class Product extends PanacheEntityBase implements Model {
+public class Produto extends PanacheEntityBase implements Model {
 
     @Id @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
@@ -37,9 +37,11 @@ public class Product extends PanacheEntityBase implements Model {
     @JsonbTransient
     private List<Imagem> imagens;
     private Double precoUnitario;
-    private Double precoForncedor;
     private Double pesoBruto;
     private Double pesoOriginal;
+
+    private long quantidadeMinina;
+
 
     @PrePersist
     public void prePersist(){

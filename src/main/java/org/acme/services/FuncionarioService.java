@@ -54,10 +54,14 @@ public class FuncionarioService extends Service {
             return ResponseBuilder.returnResponse();
         }
     }
-
-    private void validaFuncionario(FuncionarioDTO funcionarioDTO) {
-        ValidacaoException validacao = new ValidacaoException();
-
+    public void validaFuncionario(FuncionarioDTO funcionarioDTO) {
+        validaFuncionario(null,funcionarioDTO);
+    }
+    public void validaFuncionario(ValidacaoException validacao,FuncionarioDTO funcionarioDTO) {
+        boolean precisaLancarErro = validacao == null;
+        if(validacao == null){
+            validacao = new ValidacaoException();
+        }
         enderecoService.validaEndereco(validacao, funcionarioDTO.getEndereco(), true);
 
         if (!StringUtil.stringValida(funcionarioDTO.getNome())) {
@@ -90,8 +94,9 @@ public class FuncionarioService extends Service {
         if (funcionarioDTO.getSalario() == 0.0 || funcionarioDTO.getSalario() == null) {
             validacao.add("Campo salario invalido");
         }
-
-        validacao.lancaErro();
+        if(precisaLancarErro){
+            validacao.lancaErro();
+        }
     }
 
     public Response delete(String uuid) {

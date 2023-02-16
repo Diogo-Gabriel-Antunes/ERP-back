@@ -54,7 +54,6 @@ public class FieldUtil {
         HashMap hashMap = new HashMap();
         for (Field field : attributes) {
             try {
-
                 field.setAccessible(true);
                 if (field.get(dto) != null) {
                     hashMap.put(field.getName(), field.get(dto));

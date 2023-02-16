@@ -1,7 +1,5 @@
 package org.acme.services;
 
-import jdk.jshell.execution.Util;
-import org.acme.Util.FieldUtil;
 import org.acme.Util.StringUtil;
 import org.acme.exceptions.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
@@ -11,7 +9,6 @@ import org.acme.models.enums.StatusDaProducao;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import javax.ws.rs.core.Response;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -20,8 +17,7 @@ import java.util.List;
 @ApplicationScoped
 public class OrdemDeProducaoService extends Service {
 
-    @Inject
-    StorageService storageService;
+
     public List<OrdemDeProducao> findAll(){
         return em.createQuery("SELECT o FROM OrdemDeProducao o", OrdemDeProducao.class).getResultList();
     }
@@ -109,10 +105,10 @@ public class OrdemDeProducaoService extends Service {
         OrdemDeProducao ordemDeProducao = findOne(uuid);
 
         em.merge(ordemDeProducao);
-        Storage storage = storageService.findByProduct(ordemDeProducao.getProduct());
+        Estoque estoque = estoqueService.findByProduct(ordemDeProducao.getProduto());
 
-        em.merge(storage);
-        storage.setQuantidade(storage.getQuantidade() + ordemDeProducao.getQuantidade());
+        em.merge(estoque);
+        estoque.setQuantidade(estoque.getQuantidade() + ordemDeProducao.getQuantidade());
 
         ordemDeProducao.setFinalizadoEm(LocalDate.now());
         ordemDeProducao.setStatus(StatusDaProducao.FINALIZADO);
@@ -121,7 +117,7 @@ public class OrdemDeProducaoService extends Service {
         timesOrdemDeProducao.setTime(LocalDateTime.now());
         timesOrdemDeProducao.setOrdemDeProducao(ordemDeProducao);
         em.merge(timesOrdemDeProducao);
-        em.persist(storage);
+        em.persist(estoque);
         em.persist(ordemDeProducao);
     }
 

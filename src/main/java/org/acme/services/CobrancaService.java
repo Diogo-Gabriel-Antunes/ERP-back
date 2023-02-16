@@ -23,12 +23,7 @@ import java.util.Optional;
 @ApplicationScoped
 public class CobrancaService extends Service {
 
-    @Inject
-    DiscountService discountService;
-    @Inject
-    FineService fineService;
-    @Inject
-    InterestService interestService;
+
 
     public List<CobrancaParcelada> getAll() {
         return em.createQuery("SELECT c FROM CobrancaParcelada c", CobrancaParcelada.class).getResultList();

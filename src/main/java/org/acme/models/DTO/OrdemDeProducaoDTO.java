@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.acme.Util.FieldUtil;
 import org.acme.models.OrdemDeProducao;
-import org.acme.models.Product;
 import org.acme.models.enums.StatusDaProducao;
 
 import java.time.LocalDate;
@@ -14,7 +13,7 @@ import java.util.List;
 @Setter
 public class OrdemDeProducaoDTO implements DTO {
 
-    private Product product;
+    private ProdutoDTO product;
     private Long quantidade;
     private String descricao;
     private StatusDaProducao status;

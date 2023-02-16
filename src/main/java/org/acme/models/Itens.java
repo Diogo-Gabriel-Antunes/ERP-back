@@ -10,7 +10,6 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -28,15 +27,21 @@ public class Itens extends PanacheEntityBase implements Model{
     private String uuid;
     @ManyToOne(cascade = javax.persistence.CascadeType.ALL)
     @Cascade(CascadeType.ALL)
-    private Product produto;
+    private Produto produto;
     private Long quantidade;
+    @Cascade(CascadeType.SAVE_UPDATE)
+    @JoinTable(name="materiaprima_produto", joinColumns=
+            {@JoinColumn(name="produto_id")}, inverseJoinColumns=
+            {@JoinColumn(name="materiaprima_id")})
+    @ManyToMany
+    private Set<MateriaPrima> materiaPrimas;
     @ManyToMany
     @JsonbTransient
     @Cascade(CascadeType.SAVE_UPDATE)
     @JoinTable(name="itens_pedido", joinColumns=
             {@JoinColumn(name="itens_id")}, inverseJoinColumns=
             {@JoinColumn(name="pedido_id")})
-    private List<Request> pedido = new ArrayList<>();
+    private List<Pedido> pedido = new ArrayList<>();
     @ManyToMany(mappedBy = "itens")
     @JsonbTransient
     private Set<Compra> compras = new HashSet<>();

@@ -19,8 +19,7 @@ import java.util.Optional;
 
 @ApplicationScoped
 public class ContasAPagarService extends Service {
-    @Inject
-    ClienteService clienteService;
+
     public List<ContasAPagar> listAll() {
         return em.createQuery("SELECT c from ContasAPagar c", ContasAPagar.class).getResultList();
     }

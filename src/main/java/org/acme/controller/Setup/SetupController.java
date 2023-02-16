@@ -38,6 +38,7 @@ public class SetupController {
             add(new LinkMenuLateral("/medida","Medida"));
             add(new LinkMenuLateral("/assinatura","Assinatura"));
             add(new LinkMenuLateral("/loja","Loja"));
+            add(new LinkMenuLateral("/materiaprima","Materia Prima"));
         }};
         return linkMenuLaterals;
     }

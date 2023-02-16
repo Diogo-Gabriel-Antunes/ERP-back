@@ -4,15 +4,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.Set;
 
 @Getter
 @Setter
-public class VendasDTO implements DTO {
-
+public class EstoqueDTO implements DTO{
     private String uuid;
-    private LocalDate dataDaVenda;
-
-    private Set<ProdutoDTO> products;
-
+    private ProdutoDTO product;
+    private Long quantidade;
+    private LocalDate lastUpdate;
 }

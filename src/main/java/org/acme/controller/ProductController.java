@@ -2,11 +2,9 @@ package org.acme.controller;
 
 import com.google.gson.Gson;
 import org.acme.Util.GsonUtil;
-import org.acme.models.DTO.ProductDTO;
-import org.acme.models.Product;
-import org.acme.services.ProductServices;
-import org.acme.services.ItensService;
-import org.acme.services.StorageService;
+import org.acme.models.Produto;
+import org.acme.services.ProdutoService;
+import org.acme.services.EstoqueService;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -16,40 +14,36 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Path("/product")
+@Path("/produto")
 @ApplicationScoped
 public class ProductController {
 
     @Inject
-    ProductServices productServices;
+    ProdutoService produtoService;
     @Inject
-    StorageService storageService;
+    EstoqueService estoqueService;
 
     private Gson gson = new GsonUtil().parser;
 
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Product> listAll() {
-         return productServices.listAll();
+    public List<Produto> listAll() {
+         return produtoService.listAll();
     }
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
-    public Product listOne(@PathParam("id") String id) {
-        return productServices.getOneProduct(id);
+    public Produto listOne(@PathParam("id") String id) {
+        return produtoService.getOneProduct(id);
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     public Response create(String json) {
-        ProductDTO productCreated = gson.fromJson(json, ProductDTO.class);
-
-        Product productInBase = productServices.createProduct(productCreated);
-        storageService.create(productInBase);
-        return Response.ok(productInBase).build();
+        return estoqueService.create(json);
     }
 
     @Path("{id}")
@@ -57,16 +51,14 @@ public class ProductController {
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     public Response update(@PathParam("id") String id, String product) {
-        ProductDTO productDTO = gson.fromJson(product, ProductDTO.class);
-        Product newProduct = productServices.updateProduct(id, productDTO);
-        return Response.ok(newProduct).build();
+        return produtoService.updateProduct(id, product);
     }
 
     @DELETE
     @Path("{id}")
     @Transactional
     public Response delete(@PathParam("id")String id){
-        productServices.deleteProduct(id);
+        produtoService.deleteProduct(id);
         return Response.ok("Produto deletado com sucesso").build();
     }
 }

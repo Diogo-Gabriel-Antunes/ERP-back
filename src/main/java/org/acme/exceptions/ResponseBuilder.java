@@ -44,4 +44,16 @@ public class ResponseBuilder {
                 .entity(validacaoException.getValidacoes()).build();
 
     }
+
+    public static Response returnNumberFormat() {
+        ValidacaoException validacaoException = new ValidacaoException();
+        validacaoException.add("Erro na formatação dos dados");
+        validacaoException.add("Verifique se os dados foram informados corretamente");
+        validacaoException.add("Em caso de continuar o erro contate o suporte");
+
+        return Response.status(Response.Status.BAD_REQUEST)
+                .header("Content-Type", "application/json")
+                .entity(validacaoException.getValidacoes())
+                .build();
+    }
 }

@@ -9,6 +9,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -16,7 +17,7 @@ public class AtividadeDTO implements DTO{
     private String uuid;
     private Prioridade prioridade;
     private String versao;
-    private Funcionario funcionario;
+    private List<FuncionarioDTO> funcionario;
     private String descricao;
     private String categoria;
     private int prazo;

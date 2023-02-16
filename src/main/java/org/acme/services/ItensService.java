@@ -1,17 +1,13 @@
 package org.acme.services;
 
 import org.acme.Util.DateUtil;
-import org.acme.Util.FieldUtil;
 import org.acme.models.DTO.ItensDTO;
 import org.acme.models.Itens;
-import org.acme.models.Product;
+import org.acme.models.Produto;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,9 +15,9 @@ import java.util.List;
 public class ItensService extends Service {
 
 
-    public Itens create(Product product){
+    public Itens create(Produto produto){
         Itens itens = new Itens();
-        itens.setProduto(product);
+        itens.setProduto(produto);
         itens.setQuantidade(0L);
         return em.merge(itens);
     }
@@ -55,12 +51,12 @@ public class ItensService extends Service {
         try{
             LocalDate umMesAtras = LocalDate.of(hoje.getYear(),hoje.getMonth().getValue() -1 , hoje.getDayOfMonth()-1);
             if(new DateUtil().validaData(hoje)){
-                return em.createQuery("SELECT s FROM Itens s WHERE s.dataAtualizacao <= :hoje AND s.dataAtualizacao >= :umMesAtras",Itens.class)
+                return em.createQuery("SELECT s FROM Itens s WHERE s.ultimaAtualizacao <= :hoje AND s.ultimaAtualizacao >= :umMesAtras",Itens.class)
                         .setParameter("hoje",hoje)
                         .setParameter("umMesAtras",umMesAtras)
                         .getResultList();
             }else{
-                return em.createQuery("SELECT s FROM Itens s WHERE s.dataAtualizacao <= :hoje AND s.dataAtualizacao >= :umMesAtras",Itens.class)
+                return em.createQuery("SELECT s FROM Itens s WHERE s.ultimaAtualizacao <= :hoje AND s.ultimaAtualizacao >= :umMesAtras",Itens.class)
                         .setParameter("hoje",hoje)
                         .setParameter("umMesAtras",umMesAtras)
                         .getResultList();
@@ -68,12 +64,12 @@ public class ItensService extends Service {
         }catch (DateTimeException e){
             LocalDate umMesAtras = LocalDate.of(hoje.getYear()-1,12 , hoje.getDayOfMonth()-1);
             if(new DateUtil().validaData(hoje)){
-                return em.createQuery("SELECT s FROM Itens s WHERE s.dataAtualizacao <= :hoje AND s.dataAtualizacao >= :umMesAtras",Itens.class)
+                return em.createQuery("SELECT s FROM Itens s WHERE s.ultimaAtualizacao <= :hoje AND s.ultimaAtualizacao >= :umMesAtras",Itens.class)
                         .setParameter("hoje",hoje)
                         .setParameter("umMesAtras",umMesAtras)
                         .getResultList();
             }else{
-                return em.createQuery("SELECT s FROM Itens s WHERE s.dataAtualizacao <= :hoje AND s.dataAtualizacao >= :umMesAtras",Itens.class)
+                return em.createQuery("SELECT s FROM Itens s WHERE s.ultimaAtualizacao <= :hoje AND s.ultimaAtualizacao >= :umMesAtras",Itens.class)
                         .setParameter("hoje",hoje)
                         .setParameter("umMesAtras",umMesAtras)
                         .getResultList();

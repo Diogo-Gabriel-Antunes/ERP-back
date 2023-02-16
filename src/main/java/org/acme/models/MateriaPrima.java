@@ -5,25 +5,24 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import java.util.List;
+import javax.persistence.ManyToMany;
+import java.util.Set;
 
-@Entity
 @Getter
 @Setter
-public class Category extends PanacheEntityBase {
-    @Id @GeneratedValue(generator="system-uuid")
+@Entity
+public class MateriaPrima extends PanacheEntityBase implements Model {
+    @Id
+    @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String uuid;
     private String nome;
-    @OneToMany(mappedBy = "categoria")
-    @JsonbTransient
-    private List<Produto> produtos;
-
-
+    private String descricao;
+    private int quantidade;
+    private double precoUnitario;
+    @ManyToMany(mappedBy = "materiaPrimas")
+    private Set<Itens> materiaPrimas;
 }
-

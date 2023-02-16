@@ -16,14 +16,10 @@ import java.util.Optional;
 
 @ApplicationScoped
 public class LojaService extends Service {
-    @Inject
-    EnderecoService enderecoService;
-    @Inject
-    ContatoService contatoService;
+
 
     public Response create(String json) {
         try{
-
             Loja loja = new Loja();
             transfereDadosDtoToModel(json, loja);
             em.persist(loja);

@@ -21,12 +21,7 @@ import java.util.Optional;
 @ApplicationScoped
 public class AssinaturaService extends Service {
 
-    @Inject
-    InterestService interestService;
-    @Inject
-    DiscountService discountService;
-    @Inject
-    FineService fineService;
+
 
     @Transactional
     public Response create(String json) {
@@ -50,11 +45,13 @@ public class AssinaturaService extends Service {
                 return Response.status(Response.Status.CREATED).entity(assinatura).build();
             }
             throw new RuntimeException("Erro na inserção da assinatura");
-        } catch (ValidacaoException e) {
+        } catch (NumberFormatException n){
+            return ResponseBuilder.returnNumberFormat();
+        }catch (ValidacaoException e) {
             return ResponseBuilder.returnResponse(e);
         } catch (Throwable t) {
             t.printStackTrace();
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            return ResponseBuilder.returnResponse();
         }
     }
 

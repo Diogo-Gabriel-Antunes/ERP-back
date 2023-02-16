@@ -13,6 +13,9 @@ public class InterestService extends Service {
             if(interest.getValue() == 0.0){
                 validacao.add("Valor de juros apos vencimento invalido");
             }
+            if(interest.getValue() <= 2){
+                validacao.add("Juros deve ser maior que R$2.00");
+            }
         }else{
             validacao.add("Valor de juros apos vencimento não informado");
         }

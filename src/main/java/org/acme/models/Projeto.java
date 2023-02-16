@@ -19,6 +19,7 @@ public class Projeto extends PanacheEntityBase implements Model {
     @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String uuid;
+    private String nome;
     private String objetivoGeral;
     private LocalDate finalizarAte;
     private  Double orcamento;

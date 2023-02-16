@@ -27,7 +27,7 @@ public class Venda extends PanacheEntityBase implements Model {
             {@JoinColumn(name="vendas_id")}, inverseJoinColumns=
             {@JoinColumn(name="produtos_id")})
     @Cascade(CascadeType.SAVE_UPDATE)
-    private Set<Product> products;
+    private Set<Produto> produtos;
     private Double valorTotal;
     @Enumerated(EnumType.STRING)
     private MetodoDePagamento metodoDePagamento;
@@ -43,13 +43,13 @@ public class Venda extends PanacheEntityBase implements Model {
         if(cliente != null){
             getCliente().setUuid(getEntityManager().merge(cliente).getUuid());
         }
-        if(!products.isEmpty()){
-            Set<Product> newProducts = new HashSet<>();
-            products.forEach((product) ->{
-                Product productMerged = getEntityManager().merge(product);
+        if(!produtos.isEmpty()){
+            Set<Produto> newProducts = new HashSet<>();
+            produtos.forEach((product) ->{
+                Produto productMerged = getEntityManager().merge(product);
                 newProducts.add(productMerged);
             });
-            setProducts(newProducts);
+            setProdutos(newProducts);
         }
         dataCriacao = LocalDateTime.now();
         ultimaAtualizacao = LocalDateTime.now();

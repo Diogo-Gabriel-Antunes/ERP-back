@@ -24,7 +24,7 @@ public class StatusRequest extends PanacheEntityBase {
     @OneToMany(mappedBy = "status")
     @JsonbTransient
     @Cascade(CascadeType.SAVE_UPDATE)
-    private List<Request> requests;
+    private List<Pedido> pedidos;
     private LocalDateTime dataCriacao;
     private LocalDateTime ultimaAtualizacao;
     @PrePersist

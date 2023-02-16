@@ -1,7 +1,7 @@
 package org.acme.services;
 
 import org.acme.models.asaas.ContasApagar.ContasAPagar;
-import org.acme.models.Request;
+import org.acme.models.Pedido;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.time.DateTimeException;
@@ -25,20 +25,20 @@ public class FluxoDeCaixaService extends Service {
                 .setParameter("hoje",hoje)
                 .setParameter("umMesAtras",umMesAtras)
                 .getResultList();
-        List<Request> requests = em.createQuery("SELECT r FROM Request r WHERE r.status.uuid = :statusId AND r.finishDate <= :hoje AND r.finishDate >= :umMesAtras" , Request.class)
+        List<Pedido> pedidos = em.createQuery("SELECT r FROM Pedido r WHERE r.status.uuid = :statusId AND r.finishDate <= :hoje AND r.finishDate >= :umMesAtras" , Pedido.class)
                 .setParameter("statusId","5")
                 .setParameter("hoje",hoje)
                 .setParameter("umMesAtras",umMesAtras)
                 .getResultList();
 
-        int count = Math.max(contasAPagar.size(), requests.size());
+        int count = Math.max(contasAPagar.size(), pedidos.size());
         Double ValorFinal = 0D;
 
         for (int i = 0;i< count; i++){
             double valor = 0d;
             Double value = 0D;
-            if(requests.size() > i){
-                 value= requests.get(i).getValue();
+            if(pedidos.size() > i){
+                 value= pedidos.get(i).getValue();
             }
             if(contasAPagar.size() > i){
                 valor = contasAPagar.get(i).getValue();

@@ -23,7 +23,7 @@ public class OrdemDeProducao extends PanacheEntityBase implements Model{
     private String uuid;
     @OneToOne
     @Cascade(CascadeType.SAVE_UPDATE)
-    private Product product;
+    private Produto produto;
     private Long quantidade;
     @Column(length = 10485760)
     private String descricao;

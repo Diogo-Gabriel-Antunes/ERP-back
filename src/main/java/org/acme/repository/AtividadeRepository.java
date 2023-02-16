@@ -14,10 +14,10 @@ public class AtividadeRepository {
     EntityManager em;
     private FieldUtil fieldUtil = new FieldUtil();
 
-    public void create(Atividade atividade, AtividadeDTO atividadeDTO){
-        Atividade.getEntityManager().merge(atividade);
+    public Atividade create(Atividade newAtividade, AtividadeDTO atividadeDTO){
+        Atividade atividade = Atividade.getEntityManager().merge(newAtividade);
         fieldUtil.updateFieldsDtoToModel(atividade,atividadeDTO);
-        Atividade.persist(atividade);
+        return atividade;
     }
 
 }
