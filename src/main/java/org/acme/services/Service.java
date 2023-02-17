@@ -18,6 +18,7 @@ public class Service {
     protected Gson gson = new GsonUtil().parser;
     protected FieldUtil fieldUtil = new FieldUtil();
     protected ArrayUtil arrayUtil = new ArrayUtil();
+    protected DataUtil dataUtil = new DataUtil();
     @Inject
     protected EnderecoService enderecoService;
     @Inject
@@ -82,4 +83,6 @@ public class Service {
     protected FineService fineService ;
     @Inject
     protected InterestService interestService ;
+    @Inject
+    protected  SaidaDeProdutoService saidaDeProdutoService;
 }

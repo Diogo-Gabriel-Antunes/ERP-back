@@ -2,8 +2,14 @@ package org.acme.Util;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 
 public class DataUtil {
+    DateTimeFormatter localDaTimeFormatter = DateTimeFormatter
+            .ofPattern("yyyy-MM-dd'T'HH:mm:ss")
+            .withResolverStyle(ResolverStyle.STRICT);
     public static boolean validaLocalDateMaiorQueHoje(LocalDate localDate) {
         if (localDate.isBefore(LocalDate.now())) {
             return true;
@@ -42,6 +48,19 @@ public class DataUtil {
                 return false;
             }
         }else{
+            return false;
+        }
+    }
+
+    public boolean validaLocalDateTime(LocalDateTime dataDaSaida) {
+        try{
+            LocalDateTime dataHora = null;
+            if(dataDaSaida == null){
+                return false;
+            }
+            LocalDateTime.parse(dataDaSaida.toString(),localDaTimeFormatter);
+            return true;
+        }catch (DateTimeParseException e){
             return false;
         }
     }

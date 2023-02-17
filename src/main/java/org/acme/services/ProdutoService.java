@@ -1,5 +1,6 @@
 package org.acme.services;
 
+import org.acme.Util.StringUtil;
 import org.acme.exceptions.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
 import org.acme.models.DTO.ProdutoDTO;
@@ -22,6 +23,7 @@ public class ProdutoService extends Service{
     public Response createProduct(String json) {
         try {
             ProdutoDTO produtoDTO = gson.fromJson(json, ProdutoDTO.class);
+            validaProduto(produtoDTO);
             Produto product = new Produto();
             produtoDTO.setStatus(true);
             fieldUtil.updateFieldsDtoToModel(product, produtoDTO);
@@ -35,6 +37,25 @@ public class ProdutoService extends Service{
             t.printStackTrace();
             return ResponseBuilder.returnResponse();
         }
+    }
+
+    public void validaProduto(ProdutoDTO produtoDTO) {
+        ValidacaoException validacao = new ValidacaoException();
+        validaProduto(produtoDTO,validacao);
+    }
+    public void validaProduto(ProdutoDTO produtoDTO,ValidacaoException validacao) {
+
+        if(produtoDTO.getPrecoUnitario() <= 0 || produtoDTO.getPrecoUnitario() == null){
+            validacao.add("Preço unitario deve ser informado");
+        }
+        if(!produtoDTO.isStatus()){
+            validacao.add("Produto informado esta bloqueado");
+        }
+        if(!StringUtil.stringValida(produtoDTO.getNome())){
+            validacao.add("Nome produto invalido");
+        }
+
+        validacao.lancaErro();
     }
 
     public Produto getOneProduct(String id) {

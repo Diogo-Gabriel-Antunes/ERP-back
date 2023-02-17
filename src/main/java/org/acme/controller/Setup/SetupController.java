@@ -39,6 +39,7 @@ public class SetupController {
             add(new LinkMenuLateral("/assinatura","Assinatura"));
             add(new LinkMenuLateral("/loja","Loja"));
             add(new LinkMenuLateral("/materiaprima","Materia Prima"));
+            add(new LinkMenuLateral("/saidadeproduto","Saida de produto"));
         }};
         return linkMenuLaterals;
     }
