@@ -13,7 +13,7 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 @ApplicationScoped
-@Path("/storage")
+@Path("/estoque")
 public class StorageController {
 
     @Inject
