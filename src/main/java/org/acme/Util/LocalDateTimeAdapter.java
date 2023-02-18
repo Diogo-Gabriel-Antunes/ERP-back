@@ -11,6 +11,12 @@ public class LocalDateTimeAdapter implements JsonDeserializer<LocalDateTime> {
 
     @Override
     public LocalDateTime deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-        return LocalDateTime.parse(jsonElement.getAsString(),DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ"));
+        if(jsonElement.getAsString().length() == 16){
+
+            return LocalDateTime.parse(jsonElement.getAsString(),DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"));
+        }else{
+            return LocalDateTime.parse(jsonElement.getAsString(),DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
+
+        }
     }
 }

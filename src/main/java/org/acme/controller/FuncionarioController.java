@@ -18,7 +18,6 @@ public class FuncionarioController {
 
     @Inject
     FuncionarioService funcionarioService;
-    private Gson gson = new GsonUtil().parser;
 
     @GET
     public List<Funcionario> listAll(){

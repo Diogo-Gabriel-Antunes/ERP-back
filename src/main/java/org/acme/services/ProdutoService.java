@@ -48,7 +48,7 @@ public class ProdutoService extends Service{
         if(produtoDTO.getPrecoUnitario() <= 0 || produtoDTO.getPrecoUnitario() == null){
             validacao.add("Preço unitario deve ser informado");
         }
-        if(!produtoDTO.isStatus()){
+        if(produtoDTO.isStatus()){
             validacao.add("Produto informado esta bloqueado");
         }
         if(!StringUtil.stringValida(produtoDTO.getNome())){

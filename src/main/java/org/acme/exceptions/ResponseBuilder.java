@@ -65,8 +65,10 @@ public class ResponseBuilder extends Service {
         if(oneModel != null){
             responseFactory.setModel(oneModel);
         }
-        if(ArrayUtil.validaArray(modelList)){
-            responseFactory.setModelList(modelList);
+        if(modelList != null){
+            if(!modelList.isEmpty()){
+                responseFactory.setModelList(modelList);
+            }
         }
 
         return Response.ok(responseFactory)

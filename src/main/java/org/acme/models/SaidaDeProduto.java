@@ -24,12 +24,18 @@ public class SaidaDeProduto extends PanacheEntityBase implements Model {
     private LocalDateTime dataDeCriacao;
     private LocalDateTime dataDeEdicao;
     @ManyToOne
-    private Funcionario retirante;
+    private Funcionario funcionario;
+
+    public SaidaDeProduto() {
+        funcionario = new Funcionario();
+        produto = new Produto();
+    }
 
     @PrePersist
     public void prePersist(){
         dataDeCriacao = LocalDateTime.now();
         dataDeEdicao = LocalDateTime.now();
+
     }
     public void preUpdate(){
         dataDeEdicao = LocalDateTime.now();

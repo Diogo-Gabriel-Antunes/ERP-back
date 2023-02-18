@@ -2,6 +2,7 @@ package org.acme.models.DTO;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.acme.Anotacao.Type;
 import org.acme.models.Beneficios;
 import org.acme.models.Nota_fiscal_eletronica.EnderecoNFE;
 import org.acme.models.enums.NivelDeEscolaridade;
@@ -14,6 +15,7 @@ import java.util.Set;
 public class FuncionarioDTO implements DTO {
     private String uuid;
     private String nome;
+    @Type(EnderecoNFE.class)
     private EnderecoNFEDTO endereco;
     private String pis;
     private NivelDeEscolaridade nivelDeEscolaridade;
@@ -30,6 +32,7 @@ public class FuncionarioDTO implements DTO {
     private String nacionalidade;
     private String naturalidade;
     private Double salario;
+    @Type(Set.class)
     private Set<Beneficios> beneficios;
     private boolean ativo;
 }

@@ -1,29 +1,27 @@
 package org.acme.services;
 
 import com.google.gson.JsonSyntaxException;
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import org.acme.Util.ArrayUtil;
-import org.acme.Util.DataUtil;
 import org.acme.exceptions.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
+import org.acme.models.*;
 import org.acme.models.DTO.SaidaDeProdutoDTO;
-import org.acme.models.Estoque;
-import org.acme.models.SaidaDeProduto;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.transaction.Transactional;
 import javax.ws.rs.core.Response;
 import java.util.Optional;
 
 @ApplicationScoped
 public class SaidaDeProdutoService extends Service {
 
+    @Transactional
     public Response create(String json) {
-        SaidaDeProduto saidaDeProduto = null;
 
         try{
             SaidaDeProdutoDTO saidaDeProdutoDTO = gson.fromJson(json, SaidaDeProdutoDTO.class);
             validaSaidaDeProduto(saidaDeProdutoDTO);
-            saidaDeProduto = new SaidaDeProduto();
+            SaidaDeProduto saidaDeProduto = new SaidaDeProduto();
             parseDTOtoModel(saidaDeProduto,saidaDeProdutoDTO);
             em.persist(saidaDeProduto);
             Estoque estoque = estoqueService.findByProduct(saidaDeProduto.getProduto());
@@ -32,6 +30,7 @@ public class SaidaDeProdutoService extends Service {
             Long quantidade = estoqueMerged.getQuantidade();
             estoque.setQuantidade(quantidade - saidaDeProduto.getQuantidade());
             em.persist(estoqueMerged);
+            em.flush();
             if(ArrayUtil.validaArray(validacaoException.getValidacoes())){
                 return ResponseBuilder.respondeOkWithAlert(saidaDeProduto,validacaoException);
             }else{
@@ -48,14 +47,20 @@ public class SaidaDeProdutoService extends Service {
         }
     }
 
+
+
     public void parseDTOtoModel(SaidaDeProduto saidaDeProduto, SaidaDeProdutoDTO saidaDeProdutoDTO) {
         fieldUtil.updateFieldsDtoToModel(saidaDeProduto.getProduto(),saidaDeProdutoDTO.getProduto());
-        fieldUtil.updateFieldsDtoToModel(saidaDeProduto.getRetirante(),saidaDeProdutoDTO.getRetirante());
-        em.persist(saidaDeProduto.getProduto());
-        em.persist(saidaDeProduto.getRetirante());
+        fieldUtil.updateFieldsDtoToModel(saidaDeProduto.getFuncionario(),saidaDeProdutoDTO.getFuncionario());
+        Category category = em.merge(saidaDeProduto.getProduto().getCategoria());
+        Produto produto = em.merge(saidaDeProduto.getProduto());
+        Funcionario funcionario = em.merge(saidaDeProduto.getFuncionario());
         fieldUtil.updateFieldsDtoToModel(saidaDeProduto,saidaDeProdutoDTO);
+        saidaDeProduto.setProduto(produto);
+        saidaDeProduto.getProduto().setCategoria(category);
+        saidaDeProduto.setFuncionario(funcionario);
     }
-
+    @Transactional
     public Response update(String uuid,String json) {
         try{
             SaidaDeProdutoDTO saidaDeProdutoDTO = gson.fromJson(json, SaidaDeProdutoDTO.class);
@@ -87,7 +92,7 @@ public class SaidaDeProdutoService extends Service {
     private void validaSaidaDeProduto(SaidaDeProdutoDTO saidaDeProdutoDTO) {
         ValidacaoException validacao = new ValidacaoException();
 
-        if(saidaDeProdutoDTO.getRetirante() == null){
+        if(saidaDeProdutoDTO.getFuncionario() == null){
             validacao.add("Retirante deve ser informado");
         }
         if(dataUtil.validaLocalDateTime(saidaDeProdutoDTO.getDataDaSaida())){

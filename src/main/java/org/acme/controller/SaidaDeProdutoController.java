@@ -7,6 +7,7 @@ import org.acme.models.SaidaDeProduto;
 import org.acme.services.SaidaDeProdutoService;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -37,6 +38,7 @@ public class SaidaDeProdutoController {
     }
 
     @DELETE
+    @Transactional
     @Path("{uuid}")
     public Response delete(@PathParam("uuid")String uuid){
         Optional<SaidaDeProduto> saidaDeProduto = SaidaDeProduto.findByIdOptional(uuid);

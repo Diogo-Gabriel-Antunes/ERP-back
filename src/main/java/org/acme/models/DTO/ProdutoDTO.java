@@ -17,6 +17,7 @@ import java.util.List;
 @Getter
 @Setter
 public class ProdutoDTO implements DTO {
+    private String uuid;
     private String nome;
     private LocalDateTime dataCriacao;
     private LocalDateTime dataAlteracao;
