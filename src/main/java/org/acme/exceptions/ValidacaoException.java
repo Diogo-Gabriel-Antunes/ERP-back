@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import lombok.Getter;
 import lombok.Setter;
 import org.acme.Util.GsonUtil;
+import org.acme.models.Model;
 
 import javax.ws.rs.WebApplicationException;
 import java.util.ArrayList;
@@ -35,4 +36,5 @@ public class ValidacaoException extends RuntimeException {
             throw new ValidacaoException(gson.toJson(validacoes));
         }
     }
+
 }

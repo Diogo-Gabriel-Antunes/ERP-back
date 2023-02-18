@@ -39,8 +39,7 @@ public class Produto extends PanacheEntityBase implements Model {
     private Double precoUnitario;
     private Double pesoBruto;
     private Double pesoOriginal;
-
-    private long quantidadeMinina;
+    private long quantidadeMinima;
 
 
     @PrePersist

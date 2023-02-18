@@ -2,10 +2,12 @@ package org.acme.services;
 
 import com.google.gson.JsonSyntaxException;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import org.acme.Util.ArrayUtil;
 import org.acme.Util.DataUtil;
 import org.acme.exceptions.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
 import org.acme.models.DTO.SaidaDeProdutoDTO;
+import org.acme.models.Estoque;
 import org.acme.models.SaidaDeProduto;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -16,13 +18,25 @@ import java.util.Optional;
 public class SaidaDeProdutoService extends Service {
 
     public Response create(String json) {
+        SaidaDeProduto saidaDeProduto = null;
+
         try{
             SaidaDeProdutoDTO saidaDeProdutoDTO = gson.fromJson(json, SaidaDeProdutoDTO.class);
             validaSaidaDeProduto(saidaDeProdutoDTO);
-            SaidaDeProduto saidaDeProduto = new SaidaDeProduto();
+            saidaDeProduto = new SaidaDeProduto();
             parseDTOtoModel(saidaDeProduto,saidaDeProdutoDTO);
             em.persist(saidaDeProduto);
-            return ResponseBuilder.responseOk(saidaDeProduto);
+            Estoque estoque = estoqueService.findByProduct(saidaDeProduto.getProduto());
+            ValidacaoException validacaoException = estoque.validaQuantidade(saidaDeProduto);
+            Estoque estoqueMerged = em.merge(estoque);
+            Long quantidade = estoqueMerged.getQuantidade();
+            estoque.setQuantidade(quantidade - saidaDeProduto.getQuantidade());
+            em.persist(estoqueMerged);
+            if(ArrayUtil.validaArray(validacaoException.getValidacoes())){
+                return ResponseBuilder.respondeOkWithAlert(saidaDeProduto,validacaoException);
+            }else{
+                return ResponseBuilder.responseOk(saidaDeProduto);
+            }
         }catch (JsonSyntaxException j){
             j.printStackTrace();
             return ResponseBuilder.returnNumberFormat();
@@ -48,11 +62,18 @@ public class SaidaDeProdutoService extends Service {
             validaSaidaDeProduto(saidaDeProdutoDTO);
             Optional<SaidaDeProduto> saidaDeProdutoOp = SaidaDeProduto.findByIdOptional(uuid);
             if(saidaDeProdutoOp.isPresent()){
+                Estoque estoque = estoqueService.findByProduct(saidaDeProdutoOp.get().getProduto());
+                ValidacaoException validacaoException = estoque.validaQuantidade(saidaDeProdutoOp.get());
                 parseDTOtoModel(saidaDeProdutoOp.get(),saidaDeProdutoDTO);
                 em.persist(saidaDeProdutoOp.get());
-                return ResponseBuilder.responseOk(saidaDeProdutoOp.get());
+                if(ArrayUtil.validaArray(validacaoException.getValidacoes())){
+                    return ResponseBuilder.respondeOkWithAlert(saidaDeProdutoOp.get(),validacaoException);
+                }else{
+                    return ResponseBuilder.responseOk(saidaDeProdutoOp.get());
+                }
+            }else{
+                return ResponseBuilder.responseEntityNotFound();
             }
-            return ResponseBuilder.responseEntityNotFound();
         }catch (JsonSyntaxException j){
             j.printStackTrace();
             return ResponseBuilder.returnNumberFormat();

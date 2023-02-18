@@ -5,6 +5,7 @@ import org.acme.Util.DateUtil;
 import org.acme.Util.StringUtil;
 import org.acme.exceptions.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
+import org.acme.models.Category;
 import org.acme.models.DTO.EstoqueDTO;
 import org.acme.models.DTO.ProdutoDTO;
 import org.acme.models.Estoque;
@@ -29,8 +30,13 @@ public class EstoqueService extends Service {
             fieldUtil.updateFieldsDtoToModel(produto, produtoDTO);
             estoque.setProduto(produto);
             estoque.setQuantidade(0L);
+            Category category = categoryService.getOne(produtoDTO.getCategoria().getUuid());
+            Category categoryMerged = em.merge(category);
+            produto.setCategoria(categoryMerged);
+            em.persist(category);
             em.persist(produto);
             em.persist(estoque);
+            em.flush();
             return ResponseBuilder.responseOk(em.merge(estoque));
         }catch (JsonSyntaxException n){
             return ResponseBuilder.returnNumberFormat();
@@ -57,7 +63,7 @@ public class EstoqueService extends Service {
         if(!StringUtil.stringValida(produtoDTO.getCategoria().getUuid())){
             validacao.add("O campo categoria esta invalido");
         }
-        if(produtoDTO.getQuantidadeMinina() <= 0){
+        if(produtoDTO.getQuantidadeMinima() <= 0){
             validacao.add("O campo quantidade minima esta invalido ");
         }
 
