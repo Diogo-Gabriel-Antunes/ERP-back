@@ -1,10 +1,11 @@
 package org.acme.exceptions;
 
 import com.google.gson.Gson;
-import org.acme.Util.ArrayUtil;
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import org.acme.Util.GsonUtil;
 import org.acme.Util.StringUtil;
 import org.acme.models.DTO.Response.ResponseFactory;
+import org.acme.models.EntradaDeProduto;
 import org.acme.models.Model;
 import org.acme.models.asaas.CobrancaParcelada;
 import org.acme.services.Service;
@@ -38,7 +39,7 @@ public class ResponseBuilder extends Service {
 
     }
 
-    public static Response responseOk(Model model) {
+    public static Response responseOk(Object model) {
         return Response.ok(model)
                 .header("Content-Type", "application/json")
                 .build();
@@ -96,4 +97,13 @@ public class ResponseBuilder extends Service {
                 .entity(validacaoException.getValidacoes())
                 .build();
     }
+
+    public static Response responseNoContent() {
+
+        return Response.status(Response.Status.NO_CONTENT)
+                .header("Content-Type", "application/json")
+                .build();
+    }
+
+
 }

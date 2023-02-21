@@ -29,12 +29,7 @@ public class Itens extends PanacheEntityBase implements Model{
     @Cascade(CascadeType.ALL)
     private Produto produto;
     private Long quantidade;
-    @Cascade(CascadeType.SAVE_UPDATE)
-    @JoinTable(name="materiaprima_produto", joinColumns=
-            {@JoinColumn(name="produto_id")}, inverseJoinColumns=
-            {@JoinColumn(name="materiaprima_id")})
-    @ManyToMany
-    private Set<MateriaPrima> materiaPrimas;
+
     @ManyToMany
     @JsonbTransient
     @Cascade(CascadeType.SAVE_UPDATE)

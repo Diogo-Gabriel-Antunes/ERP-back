@@ -89,4 +89,10 @@ public class MateriaPrimaService extends Service{
             return ResponseBuilder.returnResponse();
         }
     }
+
+    public MateriaPrima findOne(String uuid) {
+        return em.createQuery("SELECT m FROM MateriaPrima m WHERE m.uuid = :uuid",MateriaPrima.class)
+                .setParameter("uuid",uuid)
+                .getSingleResult();
+    }
 }

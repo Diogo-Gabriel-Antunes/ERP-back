@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -40,8 +41,16 @@ public class Produto extends PanacheEntityBase implements Model {
     private Double pesoBruto;
     private Double pesoOriginal;
     private long quantidadeMinima;
+    @ManyToOne
+    @JsonbTransient
+    private Fornecedor fornecedor;
 
-
+    @Cascade(CascadeType.SAVE_UPDATE)
+    @JoinTable(name="informacaodefabricacao_produto", joinColumns=
+            {@JoinColumn(name="produto_id")}, inverseJoinColumns=
+            {@JoinColumn(name="informacaodefabricacao_id")})
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<InformacaoDeFabricacao> informacaoDeFabricacao;
     @PrePersist
     public void prePersist(){
         dataCriacao = LocalDateTime.now();

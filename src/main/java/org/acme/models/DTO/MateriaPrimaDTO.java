@@ -13,6 +13,7 @@ import java.util.Set;
 @Getter
 @Setter
 public class MateriaPrimaDTO implements DTO{
+    private String uuid;
     private String nome;
     private String descricao;
     private int quantidade;

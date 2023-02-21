@@ -85,4 +85,11 @@ public class Service {
     protected InterestService interestService ;
     @Inject
     protected  SaidaDeProdutoService saidaDeProdutoService;
+    @Inject
+    protected  EntradaDeProdutoService entradaDeProdutoService;
+    @Inject
+    protected  FornecedorService fornecedorService;
+    @Inject
+    protected  MateriaPrimaService materiaPrimaService;
+
 }

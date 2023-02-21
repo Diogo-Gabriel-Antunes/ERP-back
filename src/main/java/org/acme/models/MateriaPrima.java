@@ -23,6 +23,5 @@ public class MateriaPrima extends PanacheEntityBase implements Model {
     private String descricao;
     private int quantidade;
     private double precoUnitario;
-    @ManyToMany(mappedBy = "materiaPrimas")
-    private Set<Itens> materiaPrimas;
+
 }

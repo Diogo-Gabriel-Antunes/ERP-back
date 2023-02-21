@@ -27,7 +27,7 @@ public class EnderecoService extends Service {
             if (!StringUtil.stringValida(endereco.getBairro())) {
                 validacaoException.add("Campo Bairro esta invalido");
             }
-            if (endereco.getEstado() != null) {
+            if (endereco.getEstado() == null) {
                 validacaoException.add("Campo Estado esta invalido");
             }
             if (!StringUtil.stringValida(endereco.getLogradouro())) {

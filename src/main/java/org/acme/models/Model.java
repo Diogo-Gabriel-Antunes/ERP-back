@@ -1,4 +1,4 @@
 package org.acme.models;
 
-public interface Model {
+public interface Model  {
 }

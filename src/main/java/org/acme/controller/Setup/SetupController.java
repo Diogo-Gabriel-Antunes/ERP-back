@@ -40,6 +40,8 @@ public class SetupController {
             add(new LinkMenuLateral("/loja","Loja"));
             add(new LinkMenuLateral("/materiaprima","Materia Prima"));
             add(new LinkMenuLateral("/saidadeproduto","Saida de produto"));
+            add(new LinkMenuLateral("/entradadeproduto","Entrada de produto"));
+            add(new LinkMenuLateral("/fornecedor","Fornecedores"));
         }};
         return linkMenuLaterals;
     }

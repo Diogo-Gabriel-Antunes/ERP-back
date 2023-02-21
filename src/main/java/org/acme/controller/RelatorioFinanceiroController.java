@@ -12,15 +12,15 @@ public class RelatorioFinanceiroController {
 
     @Inject
     FluxoDeCaixaService fluxoDeCaixaService;
-    @GET
-    @Path("fluxodecaixa")
-    public Response fluxoDeCaixa(){
-        try{
-            Double fluxoDeCaixa = fluxoDeCaixaService.getFluxoDeCaixa();
-            return Response.ok(fluxoDeCaixa).build();
-        }catch (Throwable t){
-            t.printStackTrace();
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        }
-    }
+//    @GET
+//    @Path("fluxodecaixa")
+//    public Response fluxoDeCaixa(){
+//        try{
+//            Double fluxoDeCaixa = fluxoDeCaixaService.getFluxoDeCaixa();
+//            return Response.ok(fluxoDeCaixa).build();
+//        }catch (Throwable t){
+//            t.printStackTrace();
+//            return Response.status(Response.Status.BAD_REQUEST).build();
+//        }
+//    }
 }
