@@ -42,6 +42,8 @@ public class SetupController {
             add(new LinkMenuLateral("/saidadeproduto","Saida de produto"));
             add(new LinkMenuLateral("/entradadeproduto","Entrada de produto"));
             add(new LinkMenuLateral("/fornecedor","Fornecedores"));
+            add(new LinkMenuLateral("/motivodevolucao","Motivos da devolução"));
+            add(new LinkMenuLateral("/devolucao","Devolução"));
         }};
         return linkMenuLaterals;
     }

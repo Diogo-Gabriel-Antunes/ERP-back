@@ -17,9 +17,7 @@ public class ValidacaoException extends RuntimeException {
     Gson gson = new GsonUtil().parser;
     private List<Validacao> validacoes = new ArrayList<Validacao>();
 
-    public ValidacaoException() {
-
-    }
+    public ValidacaoException() {}
 
     public ValidacaoException(String message) {
         super(message);

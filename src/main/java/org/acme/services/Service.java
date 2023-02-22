@@ -91,5 +91,8 @@ public class Service {
     protected  FornecedorService fornecedorService;
     @Inject
     protected  MateriaPrimaService materiaPrimaService;
-
+    @Inject
+    protected DevolucaoService devolucaoService;
+    @Inject
+    protected MotivoDevolucaoService motivoDevolucaoService;
 }

@@ -25,6 +25,7 @@ public class Estoque extends PanacheEntityBase implements Model {
     @Cascade(CascadeType.SAVE_UPDATE)
     private Produto produto;
     private Long quantidade;
+    private String localNoEstoque;
     private LocalDateTime dataCriacao;
     private LocalDateTime ultimaAtualizacao;
     @PrePersist

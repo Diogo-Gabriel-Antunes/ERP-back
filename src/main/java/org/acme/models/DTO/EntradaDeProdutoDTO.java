@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.acme.Anotacao.Type;
 import org.acme.models.Cliente;
+import org.acme.models.Fornecedor;
 import org.acme.models.Funcionario;
 import org.acme.models.Produto;
 import org.acme.models.enums.TipoDeMovimentacao;
@@ -17,8 +18,8 @@ public class EntradaDeProdutoDTO implements DTO{
     @Type(Produto.class)
     private ProdutoDTO produto;
     private int quantidade;
-    @Type(Cliente.class)
-    private ClienteDTO fornecedor;
+    @Type(Fornecedor.class)
+    private FornecedorDTO fornecedor;
     private TipoDeMovimentacao tipoDeMovimentacao;
     @Type(Funcionario.class)
     private FuncionarioDTO responsavel;

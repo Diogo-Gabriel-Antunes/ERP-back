@@ -11,6 +11,8 @@ import javax.persistence.*;
 import javax.persistence.Entity;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -45,20 +47,25 @@ public class Produto extends PanacheEntityBase implements Model {
     @JsonbTransient
     private Fornecedor fornecedor;
 
-    @Cascade(CascadeType.SAVE_UPDATE)
+    @Cascade(CascadeType.ALL)
     @JoinTable(name="informacaodefabricacao_produto", joinColumns=
             {@JoinColumn(name="produto_id")}, inverseJoinColumns=
             {@JoinColumn(name="informacaodefabricacao_id")})
     @ManyToMany(fetch = FetchType.EAGER)
-    private Set<InformacaoDeFabricacao> informacaoDeFabricacao;
+    private List<InformacaoDeFabricacao> informacaoDeFabricacao = new ArrayList<>();
     @PrePersist
     public void prePersist(){
         dataCriacao = LocalDateTime.now();
         dataAlteracao = LocalDateTime.now();
+        InformacaoDeFabricacao.persist(informacaoDeFabricacao);
     }
     @PreUpdate
     public void preUpdate(){
         dataAlteracao = LocalDateTime.now();
+    }
+
+    public Produto() {
+        informacaoDeFabricacao = new ArrayList<>();
     }
 }
 

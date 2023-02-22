@@ -47,15 +47,15 @@ public class Funcionario extends PanacheEntityBase implements Model{
     private boolean ativo;
     private LocalDateTime dataCriacao;
     private LocalDateTime ultimaAtualizacao;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(nullable = true)
     private Loja loja;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JsonbTransient
     @Cascade(CascadeType.SAVE_UPDATE)
     @JoinTable(name = "funcionarios_atividade",joinColumns = {@JoinColumn(name = "funcionario_id")},inverseJoinColumns = {@JoinColumn(name = "atividade_id")})
     private List<Atividade> atividades;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @Cascade(CascadeType.SAVE_UPDATE)
     @JoinTable(name="funcionario_beneficios", joinColumns=
             {@JoinColumn(name="funcionario_id")}, inverseJoinColumns=

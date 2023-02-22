@@ -8,23 +8,26 @@ import org.acme.models.*;
 import org.acme.models.DTO.EntradaDeProdutoDTO;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.transaction.Transactional;
 import javax.ws.rs.core.Response;
+import java.time.LocalDateTime;
 
 @ApplicationScoped
 public class EntradaDeProdutoService extends Service {
 
-
+    @Transactional
     public Response create(String json) {
         try {
             EntradaDeProdutoDTO entradaDeProdutoDTO = gson.fromJson(json, EntradaDeProdutoDTO.class);
             EntradaDeProduto entradaDeProduto = new EntradaDeProduto();
             validaEntradaDeProduto(entradaDeProdutoDTO);
-            entradaDeProduto.persist();
             convertDTO(entradaDeProduto,entradaDeProdutoDTO);
             EntradaDeProduto entradaDeProdutoMerged= em.merge(entradaDeProduto);
             Estoque estoque = estoqueService.findByProduct(entradaDeProduto.getProduto());
             em.persist(estoque);
+            estoque.setUltimaAtualizacao(LocalDateTime.now());
             estoque.setQuantidade(estoque.getQuantidade() + entradaDeProdutoMerged.getQuantidade());
+            entradaDeProduto.persist();
             em.flush();
             return ResponseBuilder.responseOk(entradaDeProdutoMerged);
         } catch (JsonSyntaxException j) {
@@ -42,7 +45,10 @@ public class EntradaDeProdutoService extends Service {
     private void convertDTO(EntradaDeProduto entradaDeProduto,EntradaDeProdutoDTO entradaDeProdutoDTO) {
         Produto product = produtoService.getOneProduct(entradaDeProdutoDTO.getProduto().getUuid());
         Funcionario responsavel = Funcionario.findById(entradaDeProdutoDTO.getResponsavel().getUuid());
-        Cliente fornecedor = (Cliente) clienteService.findOne(entradaDeProduto.getUuid()).getEntity();
+        Fornecedor fornecedor = fornecedorService.getOne(entradaDeProdutoDTO.getFornecedor().getUuid());
+        em.persist(fornecedor);
+        em.persist(responsavel);
+        em.persist(product);
         fieldUtil.updateFieldsDtoToModel(entradaDeProduto,entradaDeProdutoDTO);
         entradaDeProduto.setProduto(product);
         entradaDeProduto.setResponsavel(responsavel);
@@ -75,6 +81,7 @@ public class EntradaDeProdutoService extends Service {
         validacao.lancaErro();
     }
 
+    @Transactional
     public Response update(String uuid, String json) {
         try {
             EntradaDeProdutoDTO entradaDeProdutoDTO = gson.fromJson(json, EntradaDeProdutoDTO.class);

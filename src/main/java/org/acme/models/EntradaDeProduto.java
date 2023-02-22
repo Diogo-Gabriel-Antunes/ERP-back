@@ -1,11 +1,13 @@
 package org.acme.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Getter;
 import lombok.Setter;
 import org.acme.models.enums.TipoDeMovimentacao;
 import org.hibernate.annotations.GenericGenerator;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -24,16 +26,17 @@ public class EntradaDeProduto extends PanacheEntityBase implements  Model {
     @Enumerated(EnumType.STRING)
     private TipoDeMovimentacao tipoDeMovimentacao;
     @ManyToOne
-    private Cliente fornecedor;
+    @JsonIgnore
+    private Fornecedor fornecedor;
     @ManyToOne
     private Funcionario responsavel;
     private LocalDateTime dataDaMovientacao;
     private LocalDateTime ultimaAtualizacao;
-    private LocalDateTime dataCriação;
+    private LocalDateTime dataCriacao;
 
     public EntradaDeProduto() {
         produto = new Produto();
-        fornecedor = new Cliente();
+        fornecedor = new Fornecedor();
         responsavel = new Funcionario();
     }
 }

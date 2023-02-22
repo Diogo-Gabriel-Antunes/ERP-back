@@ -1,14 +1,21 @@
 package org.acme.services;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import org.acme.Util.StringUtil;
 import org.acme.exceptions.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
+import org.acme.models.DTO.InformacaoDeFabricacaoDTO;
 import org.acme.models.DTO.ProdutoDTO;
+import org.acme.models.InformacaoDeFabricacao;
+import org.acme.models.MateriaPrima;
 import org.acme.models.Produto;
+import org.acme.models.enums.UnidadeDeMedida;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
@@ -28,8 +35,8 @@ public class ProdutoService extends Service{
             produtoDTO.setStatus(true);
             fieldUtil.updateFieldsDtoToModel(product, produtoDTO);
             Produto produtoMerged = em.merge(product);
-            product.getImposto().forEach(imposto -> {
-            });
+            infosDeFabricacaoCreate(produtoMerged,produtoDTO);
+            em.flush();
             return ResponseBuilder.responseOk(produtoMerged);
         }catch (ValidacaoException e){
             return ResponseBuilder.returnResponse(e);
@@ -38,6 +45,27 @@ public class ProdutoService extends Service{
             return ResponseBuilder.returnResponse();
         }
     }
+
+    @Transactional
+    public void infosDeFabricacaoCreate(Produto produto, ProdutoDTO produtoDTO) {
+        if(produtoDTO.getInformacaoDeFabricacao() != null && !produtoDTO.getInformacaoDeFabricacao().isEmpty()){
+            produtoDTO.getInformacaoDeFabricacao().forEach(infos->{
+                MateriaPrima materia = MateriaPrima.findById(infos.getMateriaPrima().getUuid());
+                InformacaoDeFabricacao infosModel = new InformacaoDeFabricacao();
+                fieldUtil.updateFieldsDtoToModel(infosModel,infos);
+                em.persist(materia);
+                infosModel.setMateriaPrima(materia);
+                em.persist(infosModel);
+                if(produto.getInformacaoDeFabricacao() == null){
+                    produto.setInformacaoDeFabricacao(new ArrayList<>());
+                }
+                produto.getInformacaoDeFabricacao().add(infosModel);
+                System.out.println(produto);
+            });
+        }
+    }
+
+
 
     public void validaProduto(ProdutoDTO produtoDTO) {
         ValidacaoException validacao = new ValidacaoException();

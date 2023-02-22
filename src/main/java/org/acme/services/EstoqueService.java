@@ -34,6 +34,7 @@ public class EstoqueService extends Service {
             Category categoryMerged = em.merge(category);
             produto.setCategoria(categoryMerged);
             em.persist(category);
+            produtoService.infosDeFabricacaoCreate(produto,produtoDTO);
             em.persist(produto);
             em.persist(estoque);
             em.flush();

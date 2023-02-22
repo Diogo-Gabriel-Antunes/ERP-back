@@ -31,10 +31,10 @@ public class Fornecedor extends PanacheEntityBase implements Model {
     @OneToOne
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private EnderecoNFE endereco;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Set<Produto> produtos;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Set<MateriaPrima> materiaPrimas;
 

@@ -10,6 +10,6 @@ import java.time.LocalDate;
 public class EstoqueDTO implements DTO{
     private String uuid;
     private ProdutoDTO product;
+    private String localNoEstoque;
     private Long quantidade;
-    private LocalDate lastUpdate;
 }
