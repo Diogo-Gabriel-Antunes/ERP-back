@@ -20,6 +20,8 @@ public class Service {
     protected ArrayUtil arrayUtil = new ArrayUtil();
     protected DataUtil dataUtil = new DataUtil();
     @Inject
+    protected MapaEstoqueService mapaEstoqueService;
+    @Inject
     protected EnderecoService enderecoService;
     @Inject
     protected AssinaturaService assinaturaService ;

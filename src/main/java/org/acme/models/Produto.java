@@ -1,5 +1,6 @@
 package org.acme.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,6 +10,7 @@ import org.hibernate.annotations.CascadeType;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import javax.persistence.Entity;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -19,7 +21,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-public class Produto extends PanacheEntityBase implements Model {
+public class Produto extends PanacheEntityBase implements Model, Serializable {
 
     @Id @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
@@ -36,7 +38,7 @@ public class Produto extends PanacheEntityBase implements Model {
     @ManyToOne(targetEntity = Category.class,cascade = javax.persistence.CascadeType.ALL)
     @Cascade(CascadeType.SAVE_UPDATE)
     private Category categoria;
-    @OneToMany(mappedBy = "produto",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "produto")
     @JsonbTransient
     private List<Imagem> imagens;
     private Double precoUnitario;
@@ -46,13 +48,14 @@ public class Produto extends PanacheEntityBase implements Model {
     @ManyToOne
     @JsonbTransient
     private Fornecedor fornecedor;
-
+    @OneToOne(mappedBy = "produto",fetch = FetchType.LAZY)
+    private MapaEstoque mapaEstoque;
     @Cascade(CascadeType.ALL)
     @JoinTable(name="informacaodefabricacao_produto", joinColumns=
             {@JoinColumn(name="produto_id")}, inverseJoinColumns=
             {@JoinColumn(name="informacaodefabricacao_id")})
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<InformacaoDeFabricacao> informacaoDeFabricacao = new ArrayList<>();
+    @ManyToMany
+    private List<InformacaoDeFabricacao> informacaoDeFabricacao;
     @PrePersist
     public void prePersist(){
         dataCriacao = LocalDateTime.now();
@@ -66,6 +69,10 @@ public class Produto extends PanacheEntityBase implements Model {
 
     public Produto() {
         informacaoDeFabricacao = new ArrayList<>();
+    }
+    @JsonbTransient
+    public MapaEstoque getMapaEstoque(){
+        return this.mapaEstoque;
     }
 }
 
