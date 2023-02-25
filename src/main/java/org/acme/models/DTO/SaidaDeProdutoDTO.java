@@ -8,14 +8,15 @@ import org.acme.models.Produto;
 
 import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
 public class SaidaDeProdutoDTO implements DTO  {
     private String uuid;
     private LocalDateTime dataDaSaida;
-    @Type(Produto.class)
-    private ProdutoDTO produto;
+    @Type(List.class)
+    private List<ProdutoDTO> produto;
     private int quantidade;
     private LocalDateTime dataDeCriacao;
     @Type(Funcionario.class)

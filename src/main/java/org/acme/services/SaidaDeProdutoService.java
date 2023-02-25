@@ -11,28 +11,34 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
 import javax.ws.rs.core.Response;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
 @ApplicationScoped
 public class SaidaDeProdutoService extends Service {
 
     @Transactional
     public Response create(String json) {
-
+        AtomicReference<ValidacaoException> validacaoException = new AtomicReference<>(new ValidacaoException());
         try{
             SaidaDeProdutoDTO saidaDeProdutoDTO = gson.fromJson(json, SaidaDeProdutoDTO.class);
             validaSaidaDeProduto(saidaDeProdutoDTO);
             SaidaDeProduto saidaDeProduto = new SaidaDeProduto();
             parseDTOtoModel(saidaDeProduto,saidaDeProdutoDTO);
             em.persist(saidaDeProduto);
-            Estoque estoque = estoqueService.findByProduct(saidaDeProduto.getProduto());
-            ValidacaoException validacaoException = estoque.validaQuantidade(saidaDeProduto);
-            Estoque estoqueMerged = em.merge(estoque);
-            Long quantidade = estoqueMerged.getQuantidade();
-            estoque.setQuantidade(quantidade - saidaDeProduto.getQuantidade());
-            em.persist(estoqueMerged);
+            saidaDeProduto.getProduto().forEach(produto->{
+                Estoque estoque = estoqueService.findByProduct(produto);
+                validacaoException.set(estoque.validaQuantidade(saidaDeProduto));
+                validacaoException.get().lancaErro();
+                materiaPrimaService.validaQuantidadeDeMateriaPrima(produto,saidaDeProduto,validacaoException.get());
+                validacaoException.get().lancaErro();
+                Estoque estoqueMerged = em.merge(estoque);
+                Long quantidade = estoqueMerged.getQuantidade();
+                estoque.setQuantidade(quantidade - saidaDeProduto.getQuantidade());
+                em.persist(estoqueMerged);
+            });
             em.flush();
-            if(ArrayUtil.validaArray(validacaoException.getValidacoes())){
-                return ResponseBuilder.respondeOkWithAlert(saidaDeProduto,validacaoException);
+            if(ArrayUtil.validaArray(validacaoException.get().getValidacoes())){
+                return ResponseBuilder.respondeOkWithAlert(saidaDeProduto, validacaoException.get());
             }else{
                 return ResponseBuilder.responseOk(saidaDeProduto);
             }
@@ -49,30 +55,38 @@ public class SaidaDeProdutoService extends Service {
 
 
 
+
     public void parseDTOtoModel(SaidaDeProduto saidaDeProduto, SaidaDeProdutoDTO saidaDeProdutoDTO) {
-        fieldUtil.updateFieldsDtoToModel(saidaDeProduto.getProduto(),saidaDeProdutoDTO.getProduto());
         fieldUtil.updateFieldsDtoToModel(saidaDeProduto.getFuncionario(),saidaDeProdutoDTO.getFuncionario());
-        Category category = em.merge(saidaDeProduto.getProduto().getCategoria());
-        Produto produto = em.merge(saidaDeProduto.getProduto());
+        saidaDeProdutoDTO.getProduto().forEach(produtoDTO -> {
+            Produto produto = produtoService.getOneProduct(produtoDTO.getUuid());
+            fieldUtil.updateFieldsDtoToModel(produto,produtoDTO);
+            Category category = em.merge(produto.getCategoria());
+            Produto produtoMerged = em.merge(produto);
+            produto.setCategoria(category);
+            saidaDeProduto.getProduto().add(produtoMerged);
+        });
+
         Funcionario funcionario = em.merge(saidaDeProduto.getFuncionario());
         fieldUtil.updateFieldsDtoToModel(saidaDeProduto,saidaDeProdutoDTO);
-        saidaDeProduto.setProduto(produto);
-        saidaDeProduto.getProduto().setCategoria(category);
         saidaDeProduto.setFuncionario(funcionario);
     }
     @Transactional
     public Response update(String uuid,String json) {
+        AtomicReference<ValidacaoException> validacaoException = null;
         try{
             SaidaDeProdutoDTO saidaDeProdutoDTO = gson.fromJson(json, SaidaDeProdutoDTO.class);
             validaSaidaDeProduto(saidaDeProdutoDTO);
             Optional<SaidaDeProduto> saidaDeProdutoOp = SaidaDeProduto.findByIdOptional(uuid);
             if(saidaDeProdutoOp.isPresent()){
-                Estoque estoque = estoqueService.findByProduct(saidaDeProdutoOp.get().getProduto());
-                ValidacaoException validacaoException = estoque.validaQuantidade(saidaDeProdutoOp.get());
+                saidaDeProdutoOp.get().getProduto().forEach(produto -> {
+                    Estoque estoque = estoqueService.findByProduct(produto);
+                    validacaoException.set(estoque.validaQuantidade(saidaDeProdutoOp.get()));
+                });
                 parseDTOtoModel(saidaDeProdutoOp.get(),saidaDeProdutoDTO);
                 em.persist(saidaDeProdutoOp.get());
-                if(ArrayUtil.validaArray(validacaoException.getValidacoes())){
-                    return ResponseBuilder.respondeOkWithAlert(saidaDeProdutoOp.get(),validacaoException);
+                if(ArrayUtil.validaArray(validacaoException.get().getValidacoes())){
+                    return ResponseBuilder.respondeOkWithAlert(saidaDeProdutoOp.get(), validacaoException.get());
                 }else{
                     return ResponseBuilder.responseOk(saidaDeProdutoOp.get());
                 }
@@ -98,7 +112,9 @@ public class SaidaDeProdutoService extends Service {
         if(dataUtil.validaLocalDateTime(saidaDeProdutoDTO.getDataDaSaida())){
             validacao.add("Digite uma data valida");
         }
-        produtoService.validaProduto(saidaDeProdutoDTO.getProduto(),validacao);
+        saidaDeProdutoDTO.getProduto().forEach(produtoDTO -> {
+            produtoService.validaProduto(produtoDTO,validacao);
+        });
 
         validacao.lancaErro();
 

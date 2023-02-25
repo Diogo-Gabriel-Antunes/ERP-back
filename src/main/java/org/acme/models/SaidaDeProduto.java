@@ -7,6 +7,8 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -18,8 +20,8 @@ public class SaidaDeProduto extends PanacheEntityBase implements Model {
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String uuid;
     private LocalDateTime dataDaSaida;
-    @ManyToOne
-    private Produto produto;
+    @ManyToMany
+    private List<Produto> produto;
     private int quantidade;
     private LocalDateTime dataDeCriacao;
     private LocalDateTime dataDeEdicao;
@@ -28,7 +30,7 @@ public class SaidaDeProduto extends PanacheEntityBase implements Model {
 
     public SaidaDeProduto() {
         funcionario = new Funcionario();
-        produto = new Produto();
+        produto = new ArrayList<>();
     }
 
     @PrePersist

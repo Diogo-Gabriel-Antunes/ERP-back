@@ -29,9 +29,9 @@ public class FornecedorController {
     @GET
     @Path("{uuid}")
     public Response listOne(@PathParam("uuid")String uuid){
-        Optional<EntradaDeProduto> entrada = EntradaDeProduto.findByIdOptional(uuid);
-        if(entrada.isPresent()){
-            return ResponseBuilder.responseOk(entrada.get());
+        Optional<Fornecedor> fornecedor = Fornecedor.findByIdOptional(uuid);
+        if(fornecedor.isPresent()){
+            return ResponseBuilder.responseOk(fornecedor.get());
         }
         return ResponseBuilder.responseNoContent();
     }
