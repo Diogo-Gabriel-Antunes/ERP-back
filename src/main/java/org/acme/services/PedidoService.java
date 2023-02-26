@@ -1,14 +1,14 @@
 package org.acme.services;
 
 
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import org.acme.Util.ArrayUtil;
 import org.acme.Util.DateUtil;
+import org.acme.Util.StringUtil;
 import org.acme.exceptions.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
-import org.acme.models.Cliente;
+import org.acme.models.*;
 import org.acme.models.DTO.PedidoDTO;
-import org.acme.models.Estoque;
-import org.acme.models.Pedido;
-import org.acme.models.StatusRequest;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -38,36 +38,12 @@ public class PedidoService extends Service {
     public Response create(String json) {
         try{
             PedidoDTO pedidoDTO = gson.fromJson(json, PedidoDTO.class);
+            validaPedido(pedidoDTO);
 
             Pedido pedido = new Pedido();
-            AtomicReference<Double> valor = new AtomicReference<>((double) 0);
-
-            fieldUtil.updateFieldsDtoToModel(pedido, pedidoDTO);
-
-            pedido.setDataCriacao(LocalDateTime.now());
-            pedido.setFinishDate(LocalDate.now());
-            StatusRequest status = new StatusRequest();
-            status.setUuid("1");
-            pedido.setStatus(status);
-            pedido.setNumberRequest(String.valueOf((long)(Math.random() * 1000000)));
-
-
-            Pedido pedidoDoBanco = em.merge(pedido);
-            pedidoDTO.getItens().forEach(item->{
-                em.merge(item);
-                valor.updateAndGet(v -> (double) (v + item.getProduto().getPrecoUnitario() * item.getQuantidade()));
-            });
-            em.merge(pedidoDoBanco);
-            pedidoDoBanco.setValue(valor.get());
-
-            em.persist(pedidoDoBanco);
-            Cliente cliente = new Cliente();
-            fieldUtil.updateFieldsDtoToModel(cliente,pedidoDTO.getCliente());
-            Cliente clienteBD = Cliente.getEntityManager().merge(cliente);
-            pedidoDoBanco.setCliente(clienteBD);
-            em.persist(clienteBD);
-            em.flush();
-            return ResponseBuilder.responseOk(pedidoDoBanco);
+            convertDTO(pedido,pedidoDTO);
+            em.persist(pedido);
+            return ResponseBuilder.responseOk(pedido);
         }catch (ValidacaoException e){
             return ResponseBuilder.returnResponse(e);
         }catch (Throwable t){
@@ -76,22 +52,25 @@ public class PedidoService extends Service {
         }
     }
 
+    private void convertDTO(Pedido pedido, PedidoDTO pedidoDTO) {
+        fieldUtil.updateFieldsDtoToModel(pedido,pedidoDTO);
+        pedidoDTO.getItens().forEach(itemDTO->{
+            Itens item = Itens.findById(itemDTO.getUuid());
+            pedido.getItens().add(item);
+        });
+        Cliente cliente = Cliente.findById(pedidoDTO.getUuid());
+        pedido.setCliente(cliente);
+    }
+
+
     public Response update(String uuid, String json) {
       try {
           PedidoDTO pedidoDTO = gson.fromJson(json, PedidoDTO.class);
-          Pedido pedido = findOne(uuid);
-          Cliente clienteBD = em.merge(pedido.getCliente());
-          fieldUtil.updateFieldsDtoToModel(pedido, pedidoDTO);
-          pedidoDTO.getItens().forEach(item->{
-              item.getPedido().add(pedido);
-              em.merge(item);
-          });
-          pedido.setFinishDate(LocalDate.now());
-          pedido.setCliente(clienteBD);
-          em.persist(pedido.getCliente());
-          em.persist(pedido);
+          validaPedido(pedidoDTO);
 
-          em.flush();
+          Pedido pedido = new Pedido();
+          convertDTO(pedido,pedidoDTO);
+          em.persist(pedido);
           return ResponseBuilder.responseOk(pedido);
       }catch (ValidacaoException e){
           return ResponseBuilder.returnResponse(e);
@@ -100,7 +79,26 @@ public class PedidoService extends Service {
           return ResponseBuilder.returnResponse();
       }
     }
+    public void validaPedido(PedidoDTO pedidoDTO) {
+        ValidacaoException validacaoException = new ValidacaoException();
 
+        if(pedidoDTO.getCliente() == null){
+            validacaoException.add("O Cliente deve ser informado");
+        }
+        if(!StringUtil.stringValida(pedidoDTO.getNumberRequest())){
+            validacaoException.add("Campo numero do pedido esta invalido");
+        }
+        if(!ArrayUtil.validaArray(pedidoDTO.getItens())){
+            validacaoException.add("O campo itens esta invalido");
+        }
+        if(pedidoDTO.getStatus() == null){
+            validacaoException.add("O campo status esta invalido");
+        }
+        pedidoDTO.getItens().forEach(item->{
+            estoqueService.validaQuantidadeMinima(item);
+        });
+        validacaoException.lancaErro();
+    }
     public List<Pedido> findMonth() {
         LocalDate hoje = LocalDate.now();
         try{

@@ -7,11 +7,15 @@ import org.acme.exceptions.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
 import org.acme.models.Category;
 import org.acme.models.DTO.EstoqueDTO;
+import org.acme.models.DTO.ItensDTO;
 import org.acme.models.DTO.ProdutoDTO;
 import org.acme.models.Estoque;
 import org.acme.models.Produto;
+import org.acme.models.consulta.ProdutoEstoque;
+import org.acme.repository.ProdutoRepository;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 import java.time.DateTimeException;
 import java.time.LocalDate;
@@ -20,6 +24,8 @@ import java.util.List;
 @ApplicationScoped
 public class EstoqueService extends Service {
 
+    @Inject
+    ProdutoRepository produtoRepository;
 
     public Response create(String json) {
         try {
@@ -137,4 +143,16 @@ public class EstoqueService extends Service {
     }
 
 
+    public void validaQuantidadeMinima(ItensDTO item) {
+        ValidacaoException validacaoException = new ValidacaoException();
+        ProdutoEstoque produtoEstoque = produtoRepository.findProdutoEstoque(item);
+
+        if(item.getQuantidade() >= produtoEstoque.getEstoque().getQuantidade()){
+            if(item.getQuantidade() - produtoEstoque.getEstoque().getQuantidade() <= produtoEstoque.getProduto().getQuantidadeMinima()){
+                validacaoException.add("Opa, Seu estoque esta baixo");
+            }
+        }else{
+            validacaoException.add("Não tem estoque suficiente para efetuar criação do pedido");
+        }
+    }
 }

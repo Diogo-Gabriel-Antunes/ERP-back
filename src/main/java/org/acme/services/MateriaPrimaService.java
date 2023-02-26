@@ -132,6 +132,10 @@ public class MateriaPrimaService extends Service {
                 } else if (UnidadeDeMedida.GRAMAS.equals(infos.getUnidadeDaQuantidadeGasta()) && UnidadeDeMedida.KG.equals(infos.getMateriaPrima().getUnidadeDeMedida())) {
                     double valorConvertido = ConversorDeUnidadesUtils.gramaParaKg(multiplicacaoParaConversao(saidaDeProduto, infos));
                     valorConvertidoMaiorQueOEsperado(produto, validacaoException, infos, valorConvertido);
+                }else if(infos.getUnidadeDaQuantidadeGasta().equals(infos.getMateriaPrima().getUnidadeDeMedida())){
+                    System.out.println("Conversão ocorreu tudo bem");
+                }else{
+                    validacaoException.add("Unidade distancia não reconhecida");
                 }
             } else if (validaLiquido(infos.getUnidadeDaQuantidadeGasta())) {
                 if (UnidadeDeMedida.LITROS.equals(infos.getUnidadeDaQuantidadeGasta()) && UnidadeDeMedida.GALOES.equals(infos.getMateriaPrima().getUnidadeDeMedida())) {
@@ -140,6 +144,10 @@ public class MateriaPrimaService extends Service {
                 } else if (UnidadeDeMedida.GALOES.equals(infos.getUnidadeDaQuantidadeGasta()) && UnidadeDeMedida.LITROS.equals(infos.getMateriaPrima().getUnidadeDeMedida())) {
                     double valorConvertido = ConversorDeUnidadesUtils.gramaParaKg(multiplicacaoParaConversao(saidaDeProduto, infos));
                     valorConvertidoMaiorQueOEsperado(produto, validacaoException, infos, valorConvertido);
+                }else if(infos.getUnidadeDaQuantidadeGasta().equals(infos.getMateriaPrima().getUnidadeDeMedida())){
+                    System.out.println("Conversão ocorreu tudo bem");
+                }else{
+                    validacaoException.add("Unidade distancia não reconhecida");
                 }
             } else {
                 validacaoException.add("Algo de errado com a unidade de medida deu errado");

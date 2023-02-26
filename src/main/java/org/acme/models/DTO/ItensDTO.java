@@ -11,6 +11,7 @@ import java.util.Set;
 @Getter
 @Setter
 public class ItensDTO implements DTO {
+    private String uuid;
     private ProdutoDTO produto;
     private Long quantidade;
 }

@@ -15,7 +15,7 @@ public class PedidoDTO implements DTO {
     private String uuid;
     private String numberRequest;
     @Type(Itens.class)
-    private List<Itens> itens;
+    private List<ItensDTO> itens;
     @Type(Cliente.class)
     private ClienteDTO cliente;
     private StatusRequest status;

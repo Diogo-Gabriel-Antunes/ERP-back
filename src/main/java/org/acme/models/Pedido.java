@@ -8,6 +8,7 @@ import org.hibernate.annotations.CascadeType;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -40,5 +41,9 @@ public class Pedido implements Model{
     @PreUpdate
     public void preUpdate(){
         ultimaAtualizacao = LocalDateTime.now();
+    }
+
+    public Pedido() {
+        itens = new ArrayList<>();
     }
 }
