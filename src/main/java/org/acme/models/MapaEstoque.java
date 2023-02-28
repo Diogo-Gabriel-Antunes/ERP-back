@@ -23,11 +23,14 @@ public class MapaEstoque extends PanacheEntityBase implements Model {
     private String tipoLocal;
     private String identificacao;
     private String localPosicao;
+    @ManyToOne
+    private TipoDeLote tipoDeLote;
     @OneToOne
     private Produto produto;
 
     public MapaEstoque(){
         produto = new Produto();
+        tipoDeLote = new TipoDeLote();
     }
 
     public Produto getProduto(){

@@ -12,5 +12,5 @@ import java.time.LocalDateTime;
 public class TimesOrdemDeProducaoDTO {
     private LocalDateTime time;
     private StatusDaProducao statusDaProducao;
-    private OrdemDeProducao ordemDeProducao;
+    private OrdemDeProducaoDTO ordemDeProducao;
 }

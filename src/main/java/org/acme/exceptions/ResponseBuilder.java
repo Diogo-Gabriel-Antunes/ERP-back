@@ -99,9 +99,11 @@ public class ResponseBuilder extends Service {
     }
 
     public static Response responseNoContent() {
-
+        ValidacaoException validacao = new ValidacaoException();
+        validacao.add("Não foi encontrado nem uma informação");
         return Response.status(Response.Status.NO_CONTENT)
                 .header("Content-Type", "application/json")
+                .entity(validacao.getValidacoes())
                 .build();
     }
 

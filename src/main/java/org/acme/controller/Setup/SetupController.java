@@ -1,6 +1,9 @@
 package org.acme.controller.Setup;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import org.acme.models.Setup.LinkMenuLateral;
+import org.acme.models.StatusRequest;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.GET;
@@ -45,7 +48,13 @@ public class SetupController {
             add(new LinkMenuLateral("/motivodevolucao","Motivos da devolução"));
             add(new LinkMenuLateral("/devolucao","Devolução"));
             add(new LinkMenuLateral("/mapaestoque","Mapeamento Do Estoque"));
+            add(new LinkMenuLateral("/tipolote","Tipo De Lote"));
         }};
         return linkMenuLaterals;
+    }
+    @GET
+    @Path("statuspedido")
+    public List<StatusRequest> listStatusPedido(){
+        return StatusRequest.listAll();
     }
 }

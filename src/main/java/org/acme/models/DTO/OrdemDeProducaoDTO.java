@@ -7,6 +7,7 @@ import org.acme.models.OrdemDeProducao;
 import org.acme.models.enums.StatusDaProducao;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -20,6 +21,10 @@ public class OrdemDeProducaoDTO implements DTO {
     private List<TimesOrdemDeProducaoDTO> atualizadoEm;
     private LocalDate inicioDaProducao;
     private LocalDate finalizadoEm;
+
+    public OrdemDeProducaoDTO() {
+        atualizadoEm = new ArrayList<>();
+    }
 
     public static OrdemDeProducaoDTO convert(OrdemDeProducao ordemDeProducao) {
         OrdemDeProducaoDTO ordemDeProducaoDTO = new OrdemDeProducaoDTO();
