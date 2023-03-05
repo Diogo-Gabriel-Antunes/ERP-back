@@ -1,13 +1,15 @@
 package org.acme.controller;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import org.acme.exceptions.ResponseBuilder;
 import org.acme.models.Nota_fiscal_eletronica.Veiculo;
 import org.acme.services.VeiculoService;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.Optional;
 
 @Path("veiculo")
 public class VeiculoController {
@@ -17,5 +19,38 @@ public class VeiculoController {
     @GET
     public Response listAll(){
         return veiculoService.listAll();
+    }
+
+    @GET
+    @Path("{uuid}")
+    public Response listOne(@PathParam("uuid")String uuid){
+        Optional<Veiculo> veiculo = Veiculo.findByIdOptional(uuid);
+        if(veiculo.isPresent()){
+            return ResponseBuilder.responseOk(veiculo.get());
+        }else {
+            return ResponseBuilder.responseEntityNotFound();
+        }
+    }
+
+    @POST
+    public Response create(String json){
+        return veiculoService.create(json);
+    }
+    @PUT
+    @Path("{uuid}")
+    public Response update(@PathParam("uuid")String uuid,String json){
+        return veiculoService.update(uuid,json);
+    }
+
+    @DELETE
+    @Path("{uuid}")
+    public Response delete(@PathParam("uuid")String uuid){
+        Optional<Veiculo> veiculo = Veiculo.findByIdOptional(uuid);
+        if(veiculo.isPresent()){
+            veiculo.get().delete();
+            return ResponseBuilder.responseOk(veiculo.get());
+        }else{
+            return ResponseBuilder.responseEntityNotFound();
+        }
     }
 }

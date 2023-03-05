@@ -1,32 +1,23 @@
-package org.acme.models.Nota_fiscal_eletronica;
+package org.acme.models.DTO;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Getter;
 import lombok.Setter;
-import org.acme.models.DTO.CorDTO;
-import org.acme.models.Model;
-import org.hibernate.annotations.GenericGenerator;
+import org.acme.Anotacao.Type;
+import org.acme.models.Nota_fiscal_eletronica.Cor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 @Getter
 @Setter
-@Entity
-public class Veiculo extends PanacheEntityBase implements Model {
-    @Id
-    @GeneratedValue(generator="system-uuid")
-    @GenericGenerator(name="system-uuid", strategy = "uuid")
+public class VeiculoDTO implements DTO{
     private String uuid;
     private Integer tipoOperacao;
     private String chassi;
     private String placa;
     private String uf;
     private String rntc;
-    @OneToOne
-    private Cor cor;
+    @Type(Cor.class)
+    private CorDTO cor;
     private Long potenciaMotor;
     private Long pesoBruto;
     private String numeroSerie;
