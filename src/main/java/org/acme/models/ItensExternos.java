@@ -1,32 +1,36 @@
 package org.acme.models;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Getter;
 import lombok.Setter;
-import org.acme.models.Nota_fiscal_eletronica.*;
+import org.acme.Util.GsonUtil;
+import org.acme.models.Nota_fiscal_eletronica.ImportacaoDados;
+import org.acme.models.Nota_fiscal_eletronica.ImportacaoImposto;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
+import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 @Getter
 @Setter
 @Entity
-public class Itens extends PanacheEntityBase implements Model {
-
+public class ItensExternos extends PanacheEntityBase implements Model, JsonSerializer<ItensExternos> {
     @Id
     @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String uuid;
-    @ManyToOne(cascade = javax.persistence.CascadeType.ALL)
+    @ManyToOne(cascade = javax.persistence.CascadeType.ALL,fetch = FetchType.LAZY)
     @Cascade(CascadeType.ALL)
     private Produto produto;
     private Long quantidade;
@@ -43,6 +47,8 @@ public class Itens extends PanacheEntityBase implements Model {
     private Set<Compra> compras = new HashSet<>();
     private LocalDateTime ultimaAtualizacao;
     private LocalDateTime dataCriacao;
+    @OneToOne
+    private Cliente cliente;
     @ManyToOne
     @JoinColumn(nullable = true)
     @JsonbTransient
@@ -50,11 +56,11 @@ public class Itens extends PanacheEntityBase implements Model {
     //Informações NFE
     @OneToOne
     private ImportacaoImposto importacao;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<ImportacaoDados> importacaoDados;
     @OneToOne
     private Tributos tributos;
-    @ManyToMany(mappedBy = "itens")
+    @ManyToMany(mappedBy = "itens",fetch = FetchType.EAGER)
     @JsonbTransient
     private Set<EstoqueExterno> estoqueExternos;
     private String codigoBarrasTributavel;
@@ -72,5 +78,9 @@ public class Itens extends PanacheEntityBase implements Model {
     public void preUpdate(){
         ultimaAtualizacao = LocalDateTime.now();
     }
-}
 
+    @Override
+    public JsonElement serialize(ItensExternos itensExternos, Type type, JsonSerializationContext jsonSerializationContext) {
+        return jsonSerializationContext.serialize(itensExternos);
+    }
+}

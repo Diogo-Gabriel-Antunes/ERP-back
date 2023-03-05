@@ -49,6 +49,8 @@ public class SetupController {
             add(new LinkMenuLateral("/devolucao","Devolução"));
             add(new LinkMenuLateral("/mapaestoque","Mapeamento Do Estoque"));
             add(new LinkMenuLateral("/tipolote","Tipo De Lote"));
+            add(new LinkMenuLateral("/estoqueexterno","Estoque externo"));
+            add(new LinkMenuLateral("/itensexternos","Itens externo"));
         }};
         return linkMenuLaterals;
     }

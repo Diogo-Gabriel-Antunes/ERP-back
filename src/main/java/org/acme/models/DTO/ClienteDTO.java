@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class ClienteDTO implements DTO {
+    private String uuid;
     private String cpfCnpj;
     private String idEstrangeiro;
     private String xNome;

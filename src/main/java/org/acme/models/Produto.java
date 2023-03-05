@@ -35,7 +35,7 @@ public class Produto extends PanacheEntityBase implements Model, Serializable {
     @Cascade(CascadeType.ALL)
     @JsonbTransient
     private List<Imposto> imposto;
-    @ManyToOne(targetEntity = Category.class,cascade = javax.persistence.CascadeType.ALL)
+    @ManyToOne(targetEntity = Category.class,cascade = javax.persistence.CascadeType.ALL,fetch = FetchType.EAGER)
     @Cascade(CascadeType.SAVE_UPDATE)
     private Category categoria;
     @OneToMany(mappedBy = "produto")
@@ -54,7 +54,7 @@ public class Produto extends PanacheEntityBase implements Model, Serializable {
     @JoinTable(name="informacaodefabricacao_produto", joinColumns=
             {@JoinColumn(name="produto_id")}, inverseJoinColumns=
             {@JoinColumn(name="informacaodefabricacao_id")})
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<InformacaoDeFabricacao> informacaoDeFabricacao;
     @PrePersist
     public void prePersist(){
