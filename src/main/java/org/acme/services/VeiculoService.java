@@ -42,7 +42,7 @@ public class VeiculoService extends Service {
             return ResponseBuilder.responseOk(veiculo);
         } catch (JsonSyntaxException j) {
             j.printStackTrace();
-            return ResponseBuilder.returnNumberFormat();
+            return ResponseBuilder.returnJsonSyntax();
         } catch (ValidacaoException v) {
             return ResponseBuilder.returnResponse(v);
         } catch (Throwable t) {
@@ -60,7 +60,7 @@ public class VeiculoService extends Service {
             veiculo.persistAndFlush();
             return ResponseBuilder.responseOk(veiculo);
         } catch (JsonSyntaxException j) {
-            return ResponseBuilder.returnNumberFormat();
+            return ResponseBuilder.returnJsonSyntax();
         } catch (ValidacaoException v) {
             return ResponseBuilder.returnResponse(v);
         } catch (Throwable t) {

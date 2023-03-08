@@ -51,6 +51,8 @@ public class SetupController {
             add(new LinkMenuLateral("/tipolote","Tipo De Lote"));
             add(new LinkMenuLateral("/estoqueexterno","Estoque externo"));
             add(new LinkMenuLateral("/itensexternos","Itens externo"));
+            add(new LinkMenuLateral("/montagemdecarga","Montagem de Carga"));
+            add(new LinkMenuLateral("/motorista","Motorista"));
         }};
         return linkMenuLaterals;
     }

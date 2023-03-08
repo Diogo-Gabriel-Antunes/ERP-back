@@ -7,6 +7,7 @@ import org.acme.models.Cliente;
 import org.acme.models.Compra;
 import org.acme.models.Pedido;
 import org.acme.models.Produto;
+import org.acme.models.enums.PrioridadeCarga;
 
 import javax.ws.rs.client.Client;
 import java.time.LocalDate;
@@ -21,4 +22,6 @@ public class ItensDTO implements DTO {
     private Long quantidade;
     @Type(Cliente.class)
     private ClienteDTO cliente;
+    private PrioridadeCarga prioridade;
+
 }

@@ -2,7 +2,7 @@ package org.acme.controller;
 
 import com.google.gson.Gson;
 import org.acme.Util.GsonUtil;
-import org.acme.models.Category;
+import org.acme.models.Categoria;
 import org.acme.services.CategoryService;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -26,15 +26,15 @@ public class CategoryController {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
-    public List<Category> listAll(){
+    public List<Categoria> listAll(){
         return categoryService.listAll();
     }
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     @Path("{uuid}")
-    public Category listOne(@PathParam("uuid")String uuid){
-        return Category.findById(uuid);
+    public Categoria listOne(@PathParam("uuid")String uuid){
+        return Categoria.findById(uuid);
     }
 
 }

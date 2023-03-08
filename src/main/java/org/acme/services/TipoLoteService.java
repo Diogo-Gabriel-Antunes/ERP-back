@@ -1,19 +1,15 @@
 package org.acme.services;
 
 import com.google.gson.JsonSyntaxException;
-import org.acme.Util.ArrayUtil;
 import org.acme.Util.StringUtil;
 import org.acme.exceptions.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
-import org.acme.models.*;
-import org.acme.models.DTO.SaidaDeProdutoDTO;
 import org.acme.models.DTO.TipoDeLoteDTO;
+import org.acme.models.TipoDeLote;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
 import javax.ws.rs.core.Response;
-import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 
 @ApplicationScoped
 public class TipoLoteService extends Service {
@@ -30,7 +26,7 @@ public class TipoLoteService extends Service {
             return ResponseBuilder.responseOk(tipoDeLote);
         }catch (JsonSyntaxException j){
             j.printStackTrace();
-            return ResponseBuilder.returnNumberFormat();
+            return ResponseBuilder.returnJsonSyntax();
         }catch (ValidacaoException e){
             return ResponseBuilder.returnResponse(e);
         }catch (Throwable t){
@@ -55,7 +51,7 @@ public class TipoLoteService extends Service {
             return ResponseBuilder.responseOk(tipoDeLote);
         }catch (JsonSyntaxException j){
             j.printStackTrace();
-            return ResponseBuilder.returnNumberFormat();
+            return ResponseBuilder.returnJsonSyntax();
         }catch (ValidacaoException e){
             return ResponseBuilder.returnResponse(e);
         }catch (Throwable t){

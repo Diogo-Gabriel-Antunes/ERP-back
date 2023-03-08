@@ -1,6 +1,5 @@
 package org.acme.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,12 +10,9 @@ import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import javax.persistence.Entity;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -35,14 +31,16 @@ public class Produto extends PanacheEntityBase implements Model, Serializable {
     @Cascade(CascadeType.ALL)
     @JsonbTransient
     private List<Imposto> imposto;
-    @ManyToOne(targetEntity = Category.class,cascade = javax.persistence.CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = Categoria.class,cascade = javax.persistence.CascadeType.ALL,fetch = FetchType.EAGER)
     @Cascade(CascadeType.SAVE_UPDATE)
-    private Category categoria;
+    private Categoria categoria;
     @OneToMany(mappedBy = "produto")
     @JsonbTransient
     private List<Imagem> imagens;
     private Double precoUnitario;
     private Double pesoBruto;
+    private Double pesoCubico;
+
     private Double pesoOriginal;
     private long quantidadeMinima;
     @ManyToOne

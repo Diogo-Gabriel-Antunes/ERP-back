@@ -5,6 +5,7 @@ import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Getter;
 import lombok.Setter;
 import org.acme.models.Nota_fiscal_eletronica.*;
+import org.acme.models.enums.PrioridadeCarga;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.GenericGenerator;
@@ -43,6 +44,8 @@ public class Itens extends PanacheEntityBase implements Model {
     private Set<Compra> compras = new HashSet<>();
     private LocalDateTime ultimaAtualizacao;
     private LocalDateTime dataCriacao;
+    @Enumerated(EnumType.STRING)
+    private PrioridadeCarga prioridade;
     @ManyToOne
     @JoinColumn(nullable = true)
     @JsonbTransient

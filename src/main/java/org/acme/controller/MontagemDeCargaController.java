@@ -2,10 +2,12 @@ package org.acme.controller;
 
 import com.google.gson.Gson;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import org.acme.Util.ArrayUtil;
 import org.acme.Util.GsonUtil;
 import org.acme.exceptions.ResponseBuilder;
-import org.acme.models.DTO.TransportadorDTO;
+import org.acme.models.MontagemDeCarga;
 import org.acme.models.Nota_fiscal_eletronica.Transportador;
+import org.acme.services.MontagemDeCargaService;
 import org.acme.services.TransportadoraService;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -17,37 +19,25 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.Optional;
 
-@Path("transportador")
+@Path("montagemdecarga")
 @ApplicationScoped
-public class TransportadorController {
+public class MontagemDeCargaController {
 
     @Inject
-    TransportadoraService transportadoraService;
-    private Gson gson = new GsonUtil().parser;
+    MontagemDeCargaService montagemDeCargaService;
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Transportador> listAll(){
-        return transportadoraService.findAll();
-//        Transportadora transportadora = new Transportadora();
-//        transportadora.setIe("123123123");
-//        transportadora.setNome("Teste");
-//        transportadora.setCnpj("11111111000111");
-//        Endereco endereco = new Endereco();
-//        endereco.setXEnder("Teste");
-//        endereco.setUf("sc");
-//        endereco.setXMun("sc");
-//        endereco.setCEP("11111111");
-//        transportadora.setEndereco(endereco);
-//        return List.of(transportadora);
+    public Response listAll(){
+        return montagemDeCargaService.listAll();
     }
 
     @GET
     @Path("{uuid}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response listOne(@PathParam("uuid")String uuid){
-        Optional<Transportador> transportador = Transportador.findByIdOptional(uuid);
-        if(transportador.isPresent()){
-            return ResponseBuilder.responseOk(transportador.get());
+        Optional<MontagemDeCarga> montagemDeCarga = MontagemDeCarga.findByIdOptional(uuid);
+        if(montagemDeCarga.isPresent()){
+            return ResponseBuilder.responseOk(montagemDeCarga.get());
         }else{
             return ResponseBuilder.responseEntityNotFound();
         }
@@ -55,19 +45,19 @@ public class TransportadorController {
     @POST
     @Transactional
     public Response create(String json){
-        return transportadoraService.create(json);
+        return montagemDeCargaService.create(json);
     }
     @PUT
     @Path("{uuid}")
     @Transactional
     public Response update(@PathParam("uuid")String uuid, String json){
-        return transportadoraService.update(uuid,json);
+        return montagemDeCargaService.update(uuid,json);
     }
 
     @Path("{uuid}")
     @DELETE
     @Transactional
     public Response delete(@PathParam("uuid")String uuid){
-        return transportadoraService.delete(uuid);
+        return montagemDeCargaService.delete(uuid);
     }
 }

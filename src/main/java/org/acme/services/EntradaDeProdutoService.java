@@ -31,7 +31,7 @@ public class EntradaDeProdutoService extends Service {
             em.flush();
             return ResponseBuilder.responseOk(entradaDeProdutoMerged);
         } catch (JsonSyntaxException j) {
-            return ResponseBuilder.returnNumberFormat();
+            return ResponseBuilder.returnJsonSyntax();
         } catch (ValidacaoException v) {
             return ResponseBuilder.returnResponse(v);
         } catch (Throwable t) {
@@ -99,7 +99,7 @@ public class EntradaDeProdutoService extends Service {
             em.flush();
             return ResponseBuilder.responseOk(entradaDeProdutoMerged);
         } catch (JsonSyntaxException j) {
-            return ResponseBuilder.returnNumberFormat();
+            return ResponseBuilder.returnJsonSyntax();
         } catch (ValidacaoException v) {
             return ResponseBuilder.returnResponse(v);
         } catch (Throwable t) {

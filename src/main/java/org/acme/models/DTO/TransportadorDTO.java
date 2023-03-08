@@ -2,6 +2,7 @@ package org.acme.models.DTO;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.acme.Anotacao.Type;
 import org.acme.Util.FieldUtil;
 import org.acme.models.Nota_fiscal_eletronica.EnderecoNFE;
 import org.acme.models.Nota_fiscal_eletronica.Transportador;
@@ -16,17 +17,13 @@ import java.time.LocalDate;
 @Setter
 public class TransportadorDTO implements DTO{
 
+    private String uuid;
     private String cnpjCpf;
     private String razaoSocial;
     private String nome;
     private String inscricaoEstadual;
+    @Type(EnderecoNFE.class)
     private EnderecoNFEDTO endereco;
 
-    public static TransportadorDTO convert(Transportador transportador) {
-        TransportadorDTO transportadoraDTO = new TransportadorDTO();
-        FieldUtil fieldUtil = new FieldUtil();
-        transportador.setUuid(null);
-        fieldUtil.updateFieldsModelToDTO(transportador,transportadoraDTO);
-        return transportadoraDTO;
-    }
+
 }

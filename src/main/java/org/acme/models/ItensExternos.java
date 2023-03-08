@@ -10,6 +10,7 @@ import lombok.Setter;
 import org.acme.Util.GsonUtil;
 import org.acme.models.Nota_fiscal_eletronica.ImportacaoDados;
 import org.acme.models.Nota_fiscal_eletronica.ImportacaoImposto;
+import org.acme.models.enums.PrioridadeCarga;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.GenericGenerator;
@@ -47,6 +48,8 @@ public class ItensExternos extends PanacheEntityBase implements Model, JsonSeria
     private Set<Compra> compras = new HashSet<>();
     private LocalDateTime ultimaAtualizacao;
     private LocalDateTime dataCriacao;
+    @Enumerated(EnumType.STRING)
+    private PrioridadeCarga prioridade;
     @OneToOne
     private Cliente cliente;
     @ManyToOne
@@ -69,6 +72,7 @@ public class ItensExternos extends PanacheEntityBase implements Model, JsonSeria
     private String ncm;
     private String cest;
     private String cfop;
+
     @PrePersist
     public void prePersist(){
         dataCriacao = LocalDateTime.now();

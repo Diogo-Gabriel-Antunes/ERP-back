@@ -5,7 +5,7 @@ import org.acme.Util.DateUtil;
 import org.acme.Util.StringUtil;
 import org.acme.exceptions.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
-import org.acme.models.Category;
+import org.acme.models.Categoria;
 import org.acme.models.DTO.*;
 import org.acme.models.Estoque;
 import org.acme.models.Produto;
@@ -36,17 +36,17 @@ public class EstoqueService extends Service {
             fieldUtil.updateFieldsDtoToModel(produto, produtoDTO);
             estoque.setProduto(produto);
             estoque.setQuantidade(0L);
-            Category category = categoryService.getOne(produtoDTO.getCategoria().getUuid());
-            Category categoryMerged = em.merge(category);
-            produto.setCategoria(categoryMerged);
-            em.persist(category);
+            Categoria categoria = categoryService.getOne(produtoDTO.getCategoria().getUuid());
+            Categoria categoriaMerged = em.merge(categoria);
+            produto.setCategoria(categoriaMerged);
+            em.persist(categoria);
             produtoService.infosDeFabricacaoCreate(produto,produtoDTO);
             em.persist(produto);
             em.persist(estoque);
             em.flush();
             return ResponseBuilder.responseOk(em.merge(estoque));
         }catch (JsonSyntaxException n){
-            return ResponseBuilder.returnNumberFormat();
+            return ResponseBuilder.returnJsonSyntax();
         } catch (ValidacaoException e) {
             return ResponseBuilder.returnResponse(e);
         } catch (Throwable t) {

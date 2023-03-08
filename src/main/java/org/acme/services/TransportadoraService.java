@@ -1,13 +1,15 @@
 package org.acme.services;
 
-import org.acme.Util.FieldUtil;
+import com.google.gson.JsonSyntaxException;
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import org.acme.Util.StringUtil;
+import org.acme.exceptions.ResponseBuilder;
+import org.acme.exceptions.ValidacaoException;
 import org.acme.models.DTO.TransportadorDTO;
 import org.acme.models.Nota_fiscal_eletronica.EnderecoNFE;
 import org.acme.models.Nota_fiscal_eletronica.Transportador;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
@@ -24,21 +26,66 @@ public class TransportadoraService extends Service{
                 .getSingleResult();
     }
 
-    public void create(TransportadorDTO transportadorDTO) {
-        Transportador transportador = new Transportador();
-        fieldUtil.updateFieldsDtoToModel(transportador,transportadorDTO);
-        EnderecoNFE enderoNoBanco = em.merge(transportador.getEndereco());
-        transportador.setEndereco(enderoNoBanco);
-        em.merge(transportador);
+    public Response create(String json) {
+        try{
+            TransportadorDTO transportadorDTO = gson.fromJson(json, TransportadorDTO.class);
+            validaDTO(transportadorDTO);
+            Transportador transportador = new Transportador();
+            parserToModel(transportador,transportadorDTO);
+            em.persist(transportador);
+            return ResponseBuilder.responseOk(transportador);
+        }catch (JsonSyntaxException j){
+            return ResponseBuilder.returnJsonSyntax();
+        }catch (ValidacaoException v){
+           return ResponseBuilder.returnResponse(v);
+        }catch (Throwable t){
+            t.printStackTrace();
+            return ResponseBuilder.returnResponse();
+        }
     }
 
-    public void update(String uuid, TransportadorDTO transportadorDTO) {
-        Transportador transportador = findOne(uuid);
-        em.merge(transportador);
-        em.merge(transportador.getEndereco());
+    public Response update(String uuid, String json) {
+        try{
+            TransportadorDTO transportadorDTO = gson.fromJson(json, TransportadorDTO.class);
+            validaDTO(transportadorDTO);
+            Transportador transportador = Transportador.findById(uuid);
+            parserToModel(transportador,transportadorDTO);
+            em.persist(transportador);
+            return ResponseBuilder.responseOk(transportador);
+        }catch (JsonSyntaxException j){
+            return ResponseBuilder.returnJsonSyntax();
+        }catch (ValidacaoException v){
+            return ResponseBuilder.returnResponse(v);
+        }catch (Throwable t){
+            t.printStackTrace();
+            return ResponseBuilder.returnResponse();
+        }
+    }
+
+    private void parserToModel(Transportador transportador, TransportadorDTO transportadorDTO) {
         fieldUtil.updateFieldsDtoToModel(transportador,transportadorDTO);
-        em.persist(transportador.getEndereco());
-        em.persist(transportador);
+        EnderecoNFE enderecoNFE = new EnderecoNFE();
+        fieldUtil.updateFieldsDtoToModel(enderecoNFE,transportadorDTO.getEndereco());
+        em.persist(enderecoNFE);
+        transportador.setEndereco(enderecoNFE);
+    }
+
+    private void validaDTO(TransportadorDTO transportadorDTO) {
+        ValidacaoException validacao = new ValidacaoException();
+
+        if(!StringUtil.stringValida(transportadorDTO.getCnpjCpf())){
+            validacao.add("É Necessario passar um CNPJ/CPF valido");
+        }
+        if(!StringUtil.stringValida(transportadorDTO.getNome())){
+            validacao.add("É necesarrio passar um nome valido");
+        }
+        if(!StringUtil.stringValida(transportadorDTO.getInscricaoEstadual())){
+            validacao.add("É necessario passar uma inscrição estudal valida");
+        }
+        if(transportadorDTO.getEndereco() == null){
+            validacao.add("É Necessario informar o endereço");
+        }
+        validacao.lancaErro();
     }
 
     public Response delete(String uuid) {

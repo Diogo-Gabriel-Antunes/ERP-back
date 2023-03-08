@@ -27,7 +27,7 @@ public class DevolucaoService extends Service {
             devolucao.persistAndFlush();
             return ResponseBuilder.responseOk(devolucao);
         } catch (JsonSyntaxException j) {
-            return ResponseBuilder.returnNumberFormat();
+            return ResponseBuilder.returnJsonSyntax();
         } catch (ValidacaoException v) {
             return ResponseBuilder.returnResponse(v);
         } catch (Throwable t) {
@@ -52,7 +52,7 @@ public class DevolucaoService extends Service {
                 return ResponseBuilder.responseEntityNotFound();
             }
         } catch (JsonSyntaxException j) {
-            return ResponseBuilder.returnNumberFormat();
+            return ResponseBuilder.returnJsonSyntax();
         } catch (ValidacaoException v) {
             return ResponseBuilder.returnResponse(v);
         } catch (Throwable t) {

@@ -28,7 +28,7 @@ public class EstoqueExternoService extends Service implements ServiceInterface {
             em.persist(estoqueExterno);
             return ResponseBuilder.responseOk(estoqueExterno);
         } catch (JsonSyntaxException j) {
-            return ResponseBuilder.returnNumberFormat();
+            return ResponseBuilder.returnJsonSyntax();
         } catch (ValidacaoException v) {
             return ResponseBuilder.returnResponse(v);
         } catch (Throwable t) {
@@ -52,7 +52,7 @@ public class EstoqueExternoService extends Service implements ServiceInterface {
                 return ResponseBuilder.responseEntityNotFound();
             }
         } catch (JsonSyntaxException j) {
-            return ResponseBuilder.returnNumberFormat();
+            return ResponseBuilder.returnJsonSyntax();
         } catch (ValidacaoException v) {
             return ResponseBuilder.returnResponse(v);
         } catch (Throwable t) {

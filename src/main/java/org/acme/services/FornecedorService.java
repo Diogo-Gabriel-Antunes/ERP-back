@@ -31,7 +31,7 @@ public class FornecedorService extends Service{
             return ResponseBuilder.responseOk(fornecedor);
         }catch (JsonSyntaxException j){
             j.printStackTrace();
-            return ResponseBuilder.returnNumberFormat();
+            return ResponseBuilder.returnJsonSyntax();
         }catch (ValidacaoException v){
             return ResponseBuilder.returnResponse(v);
         }catch (Throwable t){
@@ -49,7 +49,7 @@ public class FornecedorService extends Service{
             fornecedor.persistAndFlush();
             return ResponseBuilder.responseOk(fornecedor);
         }catch (JsonSyntaxException j ){
-            return ResponseBuilder.returnNumberFormat();
+            return ResponseBuilder.returnJsonSyntax();
         }catch (ValidacaoException v){
             return ResponseBuilder.returnResponse(v);
         }catch (Throwable t){

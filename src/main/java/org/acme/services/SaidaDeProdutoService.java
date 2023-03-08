@@ -44,7 +44,7 @@ public class SaidaDeProdutoService extends Service {
             }
         }catch (JsonSyntaxException j){
             j.printStackTrace();
-            return ResponseBuilder.returnNumberFormat();
+            return ResponseBuilder.returnJsonSyntax();
         }catch (ValidacaoException e){
             return ResponseBuilder.returnResponse(e);
         }catch (Throwable t){
@@ -61,9 +61,9 @@ public class SaidaDeProdutoService extends Service {
         saidaDeProdutoDTO.getProduto().forEach(produtoDTO -> {
             Produto produto = produtoService.getOneProduct(produtoDTO.getUuid());
             fieldUtil.updateFieldsDtoToModel(produto,produtoDTO);
-            Category category = em.merge(produto.getCategoria());
+            Categoria categoria = em.merge(produto.getCategoria());
             Produto produtoMerged = em.merge(produto);
-            produto.setCategoria(category);
+            produto.setCategoria(categoria);
             saidaDeProduto.getProduto().add(produtoMerged);
         });
 
@@ -95,7 +95,7 @@ public class SaidaDeProdutoService extends Service {
             }
         }catch (JsonSyntaxException j){
             j.printStackTrace();
-            return ResponseBuilder.returnNumberFormat();
+            return ResponseBuilder.returnJsonSyntax();
         }catch (ValidacaoException e){
             return ResponseBuilder.returnResponse(e);
         }catch (Throwable t){

@@ -86,7 +86,7 @@ public class ResponseBuilder extends Service {
 
     }
 
-    public static Response returnNumberFormat() {
+    public static Response returnJsonSyntax() {
         ValidacaoException validacaoException = new ValidacaoException();
         validacaoException.add("Erro na formatação dos dados");
         validacaoException.add("Verifique se os dados foram informados corretamente");
@@ -108,4 +108,13 @@ public class ResponseBuilder extends Service {
     }
 
 
+    public static Response returnDateTimeException() {
+        ValidacaoException validacao = new ValidacaoException();
+        validacao.add("Alguma data não foi informada");
+        validacao.add("Se o erro continuar contate o suporte");
+        return Response.status(Response.Status.BAD_REQUEST)
+                .header("Content-Type", "application/json")
+                .entity(validacao.getValidacoes())
+                .build();
+    }
 }

@@ -34,7 +34,7 @@ public class ItensExternosService extends Service {
         }catch (ValidacaoException v){
             return ResponseBuilder.returnResponse(v);
         }catch (JsonSyntaxException j){
-            return ResponseBuilder.returnNumberFormat();
+            return ResponseBuilder.returnJsonSyntax();
         }catch (Throwable t){
             t.printStackTrace();
             return ResponseBuilder.returnResponse();
@@ -52,7 +52,7 @@ public class ItensExternosService extends Service {
         }catch (ValidacaoException v){
             return ResponseBuilder.returnResponse(v);
         }catch (JsonSyntaxException j){
-            return ResponseBuilder.returnNumberFormat();
+            return ResponseBuilder.returnJsonSyntax();
         }catch (Throwable t){
             t.printStackTrace();
             return ResponseBuilder.returnResponse();

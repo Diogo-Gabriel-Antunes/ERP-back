@@ -13,10 +13,10 @@ import javax.persistence.OneToMany;
 import java.io.Serializable;
 import java.util.List;
 
-@Entity
+@Entity(name = "Category")
 @Getter
 @Setter
-public class Category extends PanacheEntityBase implements Serializable {
+public class Categoria extends PanacheEntityBase implements Serializable {
     @Id @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String uuid;

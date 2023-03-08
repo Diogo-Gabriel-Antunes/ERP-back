@@ -97,4 +97,8 @@ public class Service {
     protected DevolucaoService devolucaoService;
     @Inject
     protected MotivoDevolucaoService motivoDevolucaoService;
+    @Inject
+    protected MontagemDeCargaService montagemDeCargaService;
+    @Inject
+    protected MotoristaService motoristaService;
 }

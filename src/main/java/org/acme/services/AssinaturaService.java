@@ -46,7 +46,7 @@ public class AssinaturaService extends Service {
             }
             throw new RuntimeException("Erro na inserção da assinatura");
         } catch (NumberFormatException n){
-            return ResponseBuilder.returnNumberFormat();
+            return ResponseBuilder.returnJsonSyntax();
         }catch (ValidacaoException e) {
             return ResponseBuilder.returnResponse(e);
         } catch (Throwable t) {
