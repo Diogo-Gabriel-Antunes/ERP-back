@@ -18,10 +18,7 @@ public class EntradaDeProdutoService extends Service {
     @Transactional
     public Response create(String json) {
         try {
-            json = JsonUtil.preValidate(json, EntradaDeProdutoDTO.class);
-            if(json.contains("erro")){
-                return ResponseBuilder.returnResponseErro(json);
-            }
+
             EntradaDeProdutoDTO entradaDeProdutoDTO = gson.fromJson(json, EntradaDeProdutoDTO.class);
             EntradaDeProduto entradaDeProduto = new EntradaDeProduto();
             validaEntradaDeProduto(entradaDeProdutoDTO);

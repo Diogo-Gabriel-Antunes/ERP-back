@@ -33,10 +33,7 @@ public class VeiculoService extends Service {
     @Transactional
     public Response create(String json) {
         try {
-            json = JsonUtil.preValidate(json,VeiculoDTO.class);
-            if(json.contains("erro")){
-                return ResponseBuilder.returnResponseErro(json);
-            }
+
             VeiculoDTO veiculoDTO = gson.fromJson(json, VeiculoDTO.class);
             validaDTO(veiculoDTO);
             Veiculo veiculo = new Veiculo();

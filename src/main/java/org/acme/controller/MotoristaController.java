@@ -1,5 +1,7 @@
 package org.acme.controller;
 
+import io.quarkus.vertx.web.RouteBase;
+import io.vertx.ext.web.RoutingContext;
 import org.acme.response.ResponseBuilder;
 import org.acme.models.MontagemDeCarga;
 import org.acme.services.MotoristaService;

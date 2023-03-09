@@ -22,10 +22,6 @@ public class FornecedorService extends Service{
     @Transactional
     public Response create(String json) {
         try{
-            json = JsonUtil.preValidate(json,FornecedorDTO.class);
-            if(json.contains("erro")){
-                return ResponseBuilder.returnResponseErro(json);
-            }
             FornecedorDTO fornecedorDTO = gson.fromJson(json, FornecedorDTO.class);
             validaFornecedor(fornecedorDTO);
             Fornecedor fornecedor = new Fornecedor();

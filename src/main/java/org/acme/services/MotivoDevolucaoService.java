@@ -19,10 +19,7 @@ public class MotivoDevolucaoService extends Service {
     @Transactional
     public Response create(String json) {
         try {
-            json = JsonUtil.preValidate(json,MotivoDaDevolucaoDTO.class);
-            if(json.contains("erro")){
-                return ResponseBuilder.returnResponseErro(json);
-            }
+
             MotivoDaDevolucaoDTO motivoDaDevolucaoDTO = gson.fromJson(json, MotivoDaDevolucaoDTO.class);
             validaMotivoDevolucao(motivoDaDevolucaoDTO);
             MotivoDaDevolucao motivo = new MotivoDaDevolucao();

@@ -9,6 +9,8 @@ import org.acme.exceptions.ValidacaoException;
 import javax.enterprise.context.ApplicationScoped;
 import java.lang.reflect.Field;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.concurrent.ConcurrentHashMap;
 
 @ApplicationScoped
 public class JsonUtil {
@@ -66,14 +68,14 @@ public class JsonUtil {
                 if (!StringUtil.stringValida(String.valueOf(value))) {
                     try {
                         Field field = classe.getDeclaredField(String.valueOf(key));
-                        if(field.getAnnotation(Type.class) != null && field.getAnnotation(Type.class).value() != null){
-                            atributoTipoClasse(field.getAnnotation(Type.class).value(),gson.toJson(value));
-                        }else{
+                        if (field.getAnnotation(Type.class) != null && field.getAnnotation(Type.class).value() != null) {
+                            atributoTipoClasse(field.getAnnotation(Type.class).value(), gson.toJson(value));
+                        } else {
                             if (field.getAnnotation(LabelForm.class) != null && StringUtil.stringValida(field.getAnnotation(LabelForm.class).value())) {
                                 String label = field.getAnnotation(LabelForm.class).value();
                                 validacao.add("Campo " + label + " Esta com algum problema por favor verificar");
                                 hashMap.remove(key);
-                            }else{
+                            } else {
                                 validacao.add("Existe algum campo invalido que não foi possivel identificar");
                                 hashMap.remove(key);
                             }
@@ -94,8 +96,39 @@ public class JsonUtil {
         }
     }
 
+    public static String preValidateFilter(String json) {
+        Gson gson = new GsonUtil().parser;
+        ConcurrentHashMap hashMap = gson.fromJson(json, ConcurrentHashMap.class);
+
+        novoHashMapValidado(hashMap, gson);
+        return gson.toJson(hashMap);
+    }
+
+    private static void novoHashMapValidado(ConcurrentHashMap hashMap, Gson gson) {
+        hashMap.forEach((key, value) -> {
+            if (!StringUtil.stringValida(String.valueOf(value))) {
+                hashMap.remove(key);
+            } else if (StringUtil.stringValida(String.valueOf(value))) {
+                String jsonSubClass = gson.toJson(value);
+                if (jsonSubClass.contains("{") && jsonSubClass.contains("}")) {
+                    ConcurrentHashMap subClass = gson.fromJson(jsonSubClass, ConcurrentHashMap.class);
+                    if (subClass.size() >= 2) {
+                        String newSubClass = validateSubClass(subClass);
+                        hashMap.replace(key,newSubClass);
+                    };
+                }
+            }
+        });
+    }
+
+    private static String validateSubClass(ConcurrentHashMap hashMap) {
+        Gson gson = new GsonUtil().parser;
+        novoHashMapValidado(hashMap,gson);
+        return gson.toJson(hashMap);
+    }
+
     private static void atributoTipoClasse(Class value, String json) {
-        preValidate(json,value);
+        preValidate(json, value);
     }
 }
 

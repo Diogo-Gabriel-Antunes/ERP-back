@@ -30,10 +30,7 @@ public class EstoqueService extends Service {
 
     public Response create(String json) {
         try {
-            json = JsonUtil.preValidate(json,ProdutoDTO.class);
-            if(json.contains("erro")){
-                return ResponseBuilder.returnResponseErro(json);
-            }
+
             ProdutoDTO produtoDTO = gson.fromJson(json, ProdutoDTO.class);
             validaProduto(produtoDTO);
             Estoque estoque = new Estoque();

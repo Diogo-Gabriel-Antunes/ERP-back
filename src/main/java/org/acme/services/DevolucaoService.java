@@ -18,10 +18,7 @@ public class DevolucaoService extends Service {
     @Transactional
     public Response create(String json) {
         try {
-            json = JsonUtil.preValidate(json, DevolucaoDTO.class);
-            if(json.contains("erro")){
-                return ResponseBuilder.returnResponseErro(json);
-            }
+
             DevolucaoDTO devolucaoDTO = gson.fromJson(json, DevolucaoDTO.class);
             validaDevolucao(devolucaoDTO);
             Devolucao devolucao = new Devolucao();

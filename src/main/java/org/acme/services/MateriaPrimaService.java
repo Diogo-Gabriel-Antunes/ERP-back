@@ -24,10 +24,7 @@ public class MateriaPrimaService extends Service {
     @Transactional
     public Response create(String json) {
         try {
-            json = JsonUtil.preValidate(json, MateriaPrimaDTO.class);
-            if(json.contains("erro")){
-                return ResponseBuilder.returnResponseErro(json);
-            }
+
             MateriaPrimaDTO dto = gson.fromJson(json, MateriaPrimaDTO.class);
             validacaoMetariaPrima(dto);
             MateriaPrima materiaPrima = new MateriaPrima();

@@ -14,10 +14,7 @@ public class CompraService extends Service {
 
     public Response create(String json) {
         try {
-            json = JsonUtil.preValidate(json, CompraDTO.class);
-            if(json.contains("erro")){
-                return ResponseBuilder.returnResponseErro(json);
-            }
+
             CompraDTO compraDTO = gson.fromJson(json, CompraDTO.class);
             validaCompra(compraDTO);
             Compra compra = new Compra();

@@ -43,10 +43,7 @@ public class ItensExternosService extends Service {
     @Transactional
     public Response update(String uuid, String json) {
         try{
-            json = JsonUtil.preValidate(json,ItensDTO.class);
-            if(json.contains("erro")){
-                return ResponseBuilder.returnResponseErro(json);
-            }
+
             ItensDTO itensDTO = gson.fromJson(json, ItensDTO.class);
             validaDTO(itensDTO);
             ItensExternos itensExternos = new ItensExternos();

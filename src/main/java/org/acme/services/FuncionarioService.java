@@ -16,7 +16,7 @@ public class FuncionarioService extends Service {
 
     public Response create(String json) {
         try {
-            JsonUtil.preValidate(json,FuncionarioDTO.class);
+
             FuncionarioDTO funcionarioDTO = gson.fromJson(json, FuncionarioDTO.class);
 
             validaFuncionario(funcionarioDTO);

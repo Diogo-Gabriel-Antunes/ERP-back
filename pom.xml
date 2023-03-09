@@ -90,7 +90,10 @@
       <artifactId>xstream</artifactId>
       <version>1.4.20</version>
     </dependency>
-
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-vertx-web</artifactId>
+    </dependency>
     <dependency>
       <groupId>org.apache.axis2</groupId>
       <artifactId>axis2-kernel</artifactId>

@@ -41,10 +41,7 @@ public class EstoqueExternoService extends Service implements ServiceInterface {
     @Transactional
     public Response update(String uuid, String json) {
         try {
-            json = JsonUtil.preValidate(json, EstoqueExternoDTO.class);
-            if(json.contains("erro")){
-                return ResponseBuilder.returnResponseErro(json);
-            }
+
             EstoqueExternoDTO estoqueExternoDTO = gson.fromJson(json, EstoqueExternoDTO.class);
             validaDTO(estoqueExternoDTO);
             EstoqueExterno estoqueExterno = EstoqueExterno.findById(uuid);

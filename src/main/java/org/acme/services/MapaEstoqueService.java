@@ -20,10 +20,7 @@ public class MapaEstoqueService extends Service {
     @Transactional
     public Response create(String json) {
         try {
-            json = JsonUtil.preValidate(json, MapaEstoqueDTO.class);
-            if(json.contains("erro")){
-                return ResponseBuilder.returnResponseErro(json);
-            }
+
             MapaEstoqueDTO mapaEstoqueDTO = gson.fromJson(json, MapaEstoqueDTO.class);
             validaMapaEstoque(mapaEstoqueDTO);
             MapaEstoque mapaEstoque = new MapaEstoque();

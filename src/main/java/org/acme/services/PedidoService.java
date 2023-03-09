@@ -34,10 +34,7 @@ public class PedidoService extends Service {
 
     public Response create(String json) {
         try{
-            json = JsonUtil.preValidate(json,PedidoDTO.class);
-            if(json.contains("erro")){
-                return ResponseBuilder.returnResponseErro(json);
-            }
+
             PedidoDTO pedidoDTO = gson.fromJson(json, PedidoDTO.class);
             validaPedido(pedidoDTO);
 

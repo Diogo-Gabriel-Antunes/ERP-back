@@ -18,10 +18,7 @@ public class TipoLoteService extends Service {
     @Transactional
     public Response create(String json) {
         try {
-            json = JsonUtil.preValidate(json, TipoDeLoteDTO.class);
-            if (json.contains("erro")) {
-                return ResponseBuilder.returnResponseErro(json);
-            }
+
             TipoDeLoteDTO tipoDeLoteDTO = gson.fromJson(json, TipoDeLoteDTO.class);
             validaTipoDeLote(tipoDeLoteDTO);
             TipoDeLote tipoDeLote = new TipoDeLote();

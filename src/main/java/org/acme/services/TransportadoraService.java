@@ -28,10 +28,7 @@ public class TransportadoraService extends Service{
 
     public Response create(String json) {
         try{
-            json = JsonUtil.preValidate(json,TransportadorDTO.class);
-            if(json.contains("erro")){
-                return ResponseBuilder.returnResponseErro(json);
-            }
+
             TransportadorDTO transportadorDTO = gson.fromJson(json, TransportadorDTO.class);
             validaDTO(transportadorDTO);
             Transportador transportador = new Transportador();

@@ -24,10 +24,7 @@ public class OrdemDeProducaoService extends Service {
 
     public Response create(String json) {
         try {
-            json =JsonUtil.preValidate(json,OrdemDeProducaoDTO.class);
-            if(json.contains("erro")){
-                return ResponseBuilder.returnResponseErro(json);
-            }
+
             OrdemDeProducaoDTO ordemDeProducaoDTO = gson.fromJson(json, OrdemDeProducaoDTO.class);
             validaOrdemDeProducao(ordemDeProducaoDTO);
             OrdemDeProducao ordemDeProducao = new OrdemDeProducao();

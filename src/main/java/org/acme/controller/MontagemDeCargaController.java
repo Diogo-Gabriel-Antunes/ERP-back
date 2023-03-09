@@ -41,7 +41,8 @@ public class MontagemDeCargaController {
         return montagemDeCargaService.create(json);
     }
     @POST
-    public Response criacaoDeCargaAntesDeAceitar(String json){
+    @Path("preparacao")
+    public Response createPreparacaoDeCarga(String json){
         return montagemDeCargaService.criarPreparacaoDeCarga(json);
     }
 

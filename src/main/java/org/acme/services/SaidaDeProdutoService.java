@@ -21,10 +21,7 @@ public class SaidaDeProdutoService extends Service {
     public Response create(String json) {
         AtomicReference<ValidacaoException> validacaoException = new AtomicReference<>(new ValidacaoException());
         try{
-            json =JsonUtil.preValidate(json,SaidaDeProdutoDTO.class);
-            if(json.contains("erro")){
-                return ResponseBuilder.returnResponseErro(json);
-            }
+
             SaidaDeProdutoDTO saidaDeProdutoDTO = gson.fromJson(json, SaidaDeProdutoDTO.class);
             validaSaidaDeProduto(saidaDeProdutoDTO);
             SaidaDeProduto saidaDeProduto = new SaidaDeProduto();

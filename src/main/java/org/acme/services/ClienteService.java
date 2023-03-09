@@ -24,10 +24,7 @@ public class ClienteService extends Service {
 
     public Response create(String json) {
         try {
-            json = JsonUtil.preValidate(json,ClienteDTO.class);
-            if(json.contains("erro")){
-                return ResponseBuilder.returnResponseErro(json);
-            }
+
             ClienteDTO clienteDTO = createDTO(json);
             validaCliente(clienteDTO,null,true);
             Cliente cliente = new Cliente();

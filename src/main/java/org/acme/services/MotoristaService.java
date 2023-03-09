@@ -36,10 +36,7 @@ public class MotoristaService extends Service implements ServiceInterface {
     @Override
     public Response create(String json) {
         try {
-             json =JsonUtil.preValidate(json,MotoristaDTO.class);
-            if(json.contains("erro")){
-                return ResponseBuilder.returnResponseErro(json);
-            }
+
             MotoristaDTO motoristaDTO = gson.fromJson(json, MotoristaDTO.class);
             validaDTO(motoristaDTO);
             Motorista motorista = new Motorista();
