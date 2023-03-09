@@ -18,7 +18,6 @@ import java.util.List;
 @ApplicationScoped
 public class MotoristaService extends Service implements ServiceInterface {
     public Response listAll() {
-        try{
             List<Motorista> motoristas = em.createQuery("SELECT m FROM Motorista m", Motorista.class)
                     .getResultList();
             if(motoristas.isEmpty()){
@@ -26,16 +25,11 @@ public class MotoristaService extends Service implements ServiceInterface {
             }else{
                 return ResponseBuilder.responseOk(motoristas);
             }
-        }catch (Throwable t){
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-        }
     }
 
     @Transactional
     @Override
     public Response create(String json) {
-        try {
 
             MotoristaDTO motoristaDTO = gson.fromJson(json, MotoristaDTO.class);
             validaDTO(motoristaDTO);
@@ -43,23 +37,11 @@ public class MotoristaService extends Service implements ServiceInterface {
             convertModel(motorista,motoristaDTO);
             em.persist(motorista);
             return ResponseBuilder.responseOk(motorista);
-        } catch (JsonSyntaxException j) {
-            j.printStackTrace();
-            return ResponseBuilder.returnJsonSyntax();
-        } catch (DateTimeParseException d){
-            return ResponseBuilder.returnDateTimeException();
-        }catch (ValidacaoException v) {
-            return ResponseBuilder.returnResponse(v);
-        } catch (Throwable t) {
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-        }
     }
 
     @Override
     @Transactional
     public Response update(String uuid, String json) {
-        try {
             MotoristaDTO motoristaDTO = gson.fromJson(json, MotoristaDTO.class);
             validaDTO(motoristaDTO);
             Motorista motorista = Motorista.findById(uuid);
@@ -70,15 +52,6 @@ public class MotoristaService extends Service implements ServiceInterface {
             }else{
                 return ResponseBuilder.responseEntityNotFound();
             }
-        } catch (JsonSyntaxException j) {
-            j.printStackTrace();
-            return ResponseBuilder.returnJsonSyntax();
-        } catch (ValidacaoException v) {
-            return ResponseBuilder.returnResponse(v);
-        } catch (Throwable t) {
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-        }
     }
     public void validaDTO(MotoristaDTO motoristaDTO) {
         validaDTO(null,motoristaDTO);
@@ -122,13 +95,8 @@ public class MotoristaService extends Service implements ServiceInterface {
     }
 
     public Response delete(String uuid) {
-        try{
             Motorista motorista = Motorista.findById(uuid);
             motorista.delete();
             return ResponseBuilder.responseOk(motorista);
-        }catch (Throwable t){
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-        }
     }
 }

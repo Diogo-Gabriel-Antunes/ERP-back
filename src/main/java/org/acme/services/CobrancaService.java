@@ -25,16 +25,11 @@ public class CobrancaService extends Service {
         return em.createQuery("SELECT c FROM CobrancaParcelada c", CobrancaParcelada.class).getResultList();
     }
     public Response listOne(String uuid) {
-        try{
             CobrancaParcelada cobrancaParcelada = listOneEntity(uuid);
             if(cobrancaParcelada == null){
                 return ResponseBuilder.responseEntityNotFound();
             }
             return ResponseBuilder.responseOk(cobrancaParcelada);
-        }catch (Throwable t){
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-        }
     }
     public Response create(String json) {
         try {
@@ -65,7 +60,6 @@ public class CobrancaService extends Service {
 
 
     public Response update(String json, String uuid) {
-        try {
             CobrancaParcelada cobrancaParcelada = listOneEntity(uuid);
             if(cobrancaParcelada == null){
                 return ResponseBuilder.responseEntityNotFound();
@@ -87,11 +81,6 @@ public class CobrancaService extends Service {
             cobrancaParceladaDTO.setCobrancaParceladaRetorno(cobrancaParceladaDTO.getCobrancaParceladaRetorno());
             em.persist(cobrancaParcelada);
             return ResponseBuilder.responseOk(cobrancaParcelada);
-        } catch (ValidacaoException e) {
-            return ResponseBuilder.returnResponse(e);
-        } catch (Throwable t) {
-            return ResponseBuilder.returnResponse();
-        }
     }
 
     public CobrancaParcelada listOneEntity(String uuid) {

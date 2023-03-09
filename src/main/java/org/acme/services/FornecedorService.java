@@ -21,40 +21,21 @@ import java.util.Set;
 public class FornecedorService extends Service{
     @Transactional
     public Response create(String json) {
-        try{
             FornecedorDTO fornecedorDTO = gson.fromJson(json, FornecedorDTO.class);
             validaFornecedor(fornecedorDTO);
             Fornecedor fornecedor = new Fornecedor();
             convertDTOtoModel(fornecedorDTO,fornecedor);
             fornecedor.persistAndFlush();
             return ResponseBuilder.responseOk(fornecedor);
-        }catch (JsonSyntaxException j){
-            j.printStackTrace();
-            return ResponseBuilder.returnJsonSyntax();
-        }catch (ValidacaoException v){
-            return ResponseBuilder.returnResponse(v);
-        }catch (Throwable t){
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-        }
     }
     @Transactional
     public Response update(String uuid, String json) {
-        try{
             FornecedorDTO fornecedorDTO = gson.fromJson(json, FornecedorDTO.class);
             validaFornecedor(fornecedorDTO);
             Fornecedor fornecedor = getOne(uuid);
             convertDTOtoModel(fornecedorDTO,fornecedor);
             fornecedor.persistAndFlush();
             return ResponseBuilder.responseOk(fornecedor);
-        }catch (JsonSyntaxException j ){
-            return ResponseBuilder.returnJsonSyntax();
-        }catch (ValidacaoException v){
-            return ResponseBuilder.returnResponse(v);
-        }catch (Throwable t){
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-        }
     }
 
     public Fornecedor getOne(String uuid){

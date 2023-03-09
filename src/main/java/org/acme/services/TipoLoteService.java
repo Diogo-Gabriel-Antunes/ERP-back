@@ -17,7 +17,6 @@ public class TipoLoteService extends Service {
 
     @Transactional
     public Response create(String json) {
-        try {
 
             TipoDeLoteDTO tipoDeLoteDTO = gson.fromJson(json, TipoDeLoteDTO.class);
             validaTipoDeLote(tipoDeLoteDTO);
@@ -26,21 +25,11 @@ public class TipoLoteService extends Service {
             em.persist(tipoDeLote);
             em.flush();
             return ResponseBuilder.responseOk(tipoDeLote);
-        } catch (JsonSyntaxException j) {
-            j.printStackTrace();
-            return ResponseBuilder.returnJsonSyntax();
-        } catch (ValidacaoException e) {
-            return ResponseBuilder.returnResponse(e);
-        } catch (Throwable t) {
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-        }
     }
 
 
     @Transactional
     public Response update(String uuid, String json) {
-        try {
             TipoDeLoteDTO tipoDeLoteDTO = gson.fromJson(json, TipoDeLoteDTO.class);
             validaTipoDeLote(tipoDeLoteDTO);
             TipoDeLote tipoDeLote = new TipoDeLote();
@@ -48,15 +37,6 @@ public class TipoLoteService extends Service {
             em.persist(tipoDeLote);
             em.flush();
             return ResponseBuilder.responseOk(tipoDeLote);
-        } catch (JsonSyntaxException j) {
-            j.printStackTrace();
-            return ResponseBuilder.returnJsonSyntax();
-        } catch (ValidacaoException e) {
-            return ResponseBuilder.returnResponse(e);
-        } catch (Throwable t) {
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-        }
     }
 
     private void validaTipoDeLote(TipoDeLoteDTO tipoDeLoteDTO) {

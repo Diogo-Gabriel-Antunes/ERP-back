@@ -55,13 +55,8 @@ public class OrdemDeProducaoController {
     @Path("{uuid}/finalizar")
     @Transactional
     public Response finish(@PathParam("uuid") String uuid ){
-        try{
             ordemDeProducaoService.updateFinish(uuid);
             return Response.ok().build();
-        }catch (Throwable t){
-            t.printStackTrace();
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        }
     }
     
     @Path("{uuid}")

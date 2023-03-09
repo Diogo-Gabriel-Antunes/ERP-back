@@ -15,78 +15,49 @@ public class ImpostoService extends Service {
 
     @Transactional
     public Response create(String json) {
-        try {
             ImpostoDTO impostoDTO = gson.fromJson(json, ImpostoDTO.class);
             Imposto imposto = new Imposto();
             convertAndUpdateFieldsDTO(impostoDTO, imposto);
             fieldUtil.updateFieldsDtoToModel(imposto, impostoDTO);
             Imposto.persist(imposto);
             return Response.ok(impostoDTO).build();
-        } catch (Throwable t) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        }
 
     }
     @Transactional
     public Response create(CofinsDTO cofinsDTO) {
-        try {
             Cofins cofins = montaCofins(cofinsDTO);
             Cofins.persist(cofins);
             return Response.ok(cofins).build();
-        } catch (ValidacaoException e) {
-            e.printStackTrace();
-            return Response.status(Response.Status.BAD_REQUEST).entity(e.getValidacoes()).build();
-        }
     }
 
     @Transactional
     public Response create(PisDTO pisDTO) {
-        try {
             Pis cofins = montaPis(pisDTO);
             Pis.persist(cofins);
             return Response.ok(cofins).build();
-        }catch (ValidacaoException e) {
-            e.printStackTrace();
-            return Response.status(Response.Status.BAD_REQUEST).entity(e.getValidacoes()).build();
-        }
     }
 
     @Transactional
     public Response create(ICMSDTO icmsdto) {
-        try {
             ICMS icms = montaICMS(icmsdto);
             ICMS.persist(icms);
             return Response.ok(icms).build();
-        }catch (ValidacaoException e) {
-            e.printStackTrace();
-            return Response.status(Response.Status.BAD_REQUEST).entity(e.getValidacoes()).build();
-        }
 
     }
 
     @Transactional
     public Response create(IssqnDTO issqnDTO) {
-        try {
             Issqn issqn = montaIssqn(issqnDTO);
             Issqn.persist(issqn);
             return Response.ok(issqn).build();
-        } catch (ValidacaoException e) {
-            e.printStackTrace();
-            return Response.status(Response.Status.BAD_REQUEST).entity(e.getValidacoes()).build();
-        }
 
     }
 
     @Transactional
     public Response create(IPIDTO ipidto) {
-        try {
             IPI ipi = montaIpi(ipidto);
             IPI.persist(ipi);
             return Response.ok(ipi).build();
-        }catch (ValidacaoException e) {
-            e.printStackTrace();
-            return Response.status(Response.Status.BAD_REQUEST).entity(e.getValidacoes()).build();
-        }
 
     }
 

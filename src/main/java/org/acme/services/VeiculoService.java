@@ -19,13 +19,9 @@ public class VeiculoService extends Service {
 
 
     public Response listAll() {
-        try {
             List<Veiculo> veiculos = em.createQuery("select v from Veiculo v", Veiculo.class)
                     .getResultList();
             return Response.ok(veiculos).build();
-        } catch (Throwable t) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        }
 
 
     }
@@ -52,21 +48,12 @@ public class VeiculoService extends Service {
     }
     @Transactional
     public Response update(String uuid,String json) {
-        try {
             VeiculoDTO veiculoDTO = gson.fromJson(json, VeiculoDTO.class);
             validaDTO(veiculoDTO);
             Veiculo veiculo = Veiculo.findById(uuid);
             convertDTOtoModel(veiculo,veiculoDTO);
             veiculo.persistAndFlush();
             return ResponseBuilder.responseOk(veiculo);
-        } catch (JsonSyntaxException j) {
-            return ResponseBuilder.returnJsonSyntax();
-        } catch (ValidacaoException v) {
-            return ResponseBuilder.returnResponse(v);
-        } catch (Throwable t) {
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-        }
     }
 
 

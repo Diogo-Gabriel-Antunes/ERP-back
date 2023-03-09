@@ -18,7 +18,6 @@ public class MotivoDevolucaoService extends Service {
 
     @Transactional
     public Response create(String json) {
-        try {
 
             MotivoDaDevolucaoDTO motivoDaDevolucaoDTO = gson.fromJson(json, MotivoDaDevolucaoDTO.class);
             validaMotivoDevolucao(motivoDaDevolucaoDTO);
@@ -27,20 +26,10 @@ public class MotivoDevolucaoService extends Service {
             convertDTO(motivo,motivoDaDevolucaoDTO);
             motivo.persistAndFlush();
             return ResponseBuilder.responseOk(motivo);
-        } catch (JsonSyntaxException j) {
-            return ResponseBuilder.returnJsonSyntax();
-        } catch (ValidacaoException v) {
-            return ResponseBuilder.returnResponse(v);
-        } catch (Throwable t) {
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-
-        }
 
     }
     @Transactional
     public Response update(String uuid, String json) {
-        try {
             Optional<MotivoDaDevolucao> motivo = MotivoDaDevolucao.findByIdOptional(uuid);
             if(motivo.isPresent()){
                 MotivoDaDevolucaoDTO motivoDaDevolucaoDTO = gson.fromJson(json, MotivoDaDevolucaoDTO.class);
@@ -52,15 +41,6 @@ public class MotivoDevolucaoService extends Service {
             }else{
                 return ResponseBuilder.responseEntityNotFound();
             }
-        } catch (JsonSyntaxException j) {
-            return ResponseBuilder.returnJsonSyntax();
-        } catch (ValidacaoException v) {
-            return ResponseBuilder.returnResponse(v);
-        } catch (Throwable t) {
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-
-        }
     }
     private void convertDTO(MotivoDaDevolucao motivoDaDevolucao,MotivoDaDevolucaoDTO motivoDaDevolucaoDTO) {
         fieldUtil.updateFieldsDtoToModel(motivoDaDevolucao,motivoDaDevolucaoDTO);

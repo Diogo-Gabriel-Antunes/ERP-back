@@ -24,25 +24,15 @@ public class ItensExternosService extends Service {
 
     @Transactional
     public Response create(String json){
-        try{
             ItensDTO itensDTO = gson.fromJson(json, ItensDTO.class);
             validaDTO(itensDTO);
             ItensExternos itensExternos = new ItensExternos();
             convertDtoToModel(itensExternos,itensDTO);
             em.persist(itensExternos);
             return ResponseBuilder.responseOk(itensExternos);
-        }catch (ValidacaoException v){
-            return ResponseBuilder.returnResponse(v);
-        }catch (JsonSyntaxException j){
-            return ResponseBuilder.returnJsonSyntax();
-        }catch (Throwable t){
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-        }
     }
     @Transactional
     public Response update(String uuid, String json) {
-        try{
 
             ItensDTO itensDTO = gson.fromJson(json, ItensDTO.class);
             validaDTO(itensDTO);
@@ -50,14 +40,6 @@ public class ItensExternosService extends Service {
             convertDtoToModel(itensExternos,itensDTO);
             em.persist(itensExternos);
             return ResponseBuilder.responseOk(itensExternos);
-        }catch (ValidacaoException v){
-            return ResponseBuilder.returnResponse(v);
-        }catch (JsonSyntaxException j){
-            return ResponseBuilder.returnJsonSyntax();
-        }catch (Throwable t){
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-        }
     }
     private void validaDTO(ItensDTO itensDTO) {
         ValidacaoException validacao = new ValidacaoException();

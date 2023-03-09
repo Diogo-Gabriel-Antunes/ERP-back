@@ -23,20 +23,12 @@ public class MateriaPrimaService extends Service {
 
     @Transactional
     public Response create(String json) {
-        try {
-
             MateriaPrimaDTO dto = gson.fromJson(json, MateriaPrimaDTO.class);
             validacaoMetariaPrima(dto);
             MateriaPrima materiaPrima = new MateriaPrima();
             fieldUtil.updateFieldsDtoToModel(materiaPrima, dto);
             em.persist(materiaPrima);
             return ResponseBuilder.responseOk(materiaPrima);
-        } catch (ValidacaoException e) {
-            return ResponseBuilder.returnResponse(e);
-        } catch (Throwable t) {
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-        }
     }
 
     private void validacaoMetariaPrima(MateriaPrimaDTO dto) {
@@ -61,7 +53,6 @@ public class MateriaPrimaService extends Service {
     }
 
     public Response update(String uuid, String json) {
-        try {
             Optional<MateriaPrima> materiaPrima = MateriaPrima.findByIdOptional(uuid);
             if (materiaPrima.isPresent()) {
                 MateriaPrima materiaBD = em.merge(materiaPrima.get());
@@ -71,28 +62,15 @@ public class MateriaPrimaService extends Service {
                 return ResponseBuilder.responseOk(materiaBD);
             }
             throw new RuntimeException();
-        } catch (ValidacaoException e) {
-            return ResponseBuilder.returnResponse(e);
-        } catch (Throwable t) {
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-        }
     }
 
     public Response delete(String uuid) {
-        try {
             MateriaPrima materiaPrima = MateriaPrima.findById(uuid);
             if (materiaPrima != null) {
                 materiaPrima.delete();
                 return ResponseBuilder.responseOk(materiaPrima);
             }
             throw new RuntimeException();
-        } catch (ValidacaoException e) {
-            return ResponseBuilder.returnResponse(e);
-        } catch (Throwable t) {
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-        }
     }
 
     public MateriaPrima findOne(String uuid) {

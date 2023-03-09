@@ -27,40 +27,21 @@ public class TransportadoraService extends Service{
     }
 
     public Response create(String json) {
-        try{
-
             TransportadorDTO transportadorDTO = gson.fromJson(json, TransportadorDTO.class);
             validaDTO(transportadorDTO);
             Transportador transportador = new Transportador();
             parserToModel(transportador,transportadorDTO);
             em.persist(transportador);
             return ResponseBuilder.responseOk(transportador);
-        }catch (JsonSyntaxException j){
-            return ResponseBuilder.returnJsonSyntax();
-        }catch (ValidacaoException v){
-           return ResponseBuilder.returnResponse(v);
-        }catch (Throwable t){
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-        }
     }
 
     public Response update(String uuid, String json) {
-        try{
             TransportadorDTO transportadorDTO = gson.fromJson(json, TransportadorDTO.class);
             validaDTO(transportadorDTO);
             Transportador transportador = Transportador.findById(uuid);
             parserToModel(transportador,transportadorDTO);
             em.persist(transportador);
             return ResponseBuilder.responseOk(transportador);
-        }catch (JsonSyntaxException j){
-            return ResponseBuilder.returnJsonSyntax();
-        }catch (ValidacaoException v){
-            return ResponseBuilder.returnResponse(v);
-        }catch (Throwable t){
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-        }
     }
 
     private void parserToModel(Transportador transportador, TransportadorDTO transportadorDTO) {
@@ -90,13 +71,8 @@ public class TransportadoraService extends Service{
     }
 
     public Response delete(String uuid) {
-        try{
             Transportador transportador = findOne(uuid);
             em.remove(transportador);
             return Response.ok().build();
-        }catch (Throwable t){
-            t.printStackTrace();
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        }
     }
 }

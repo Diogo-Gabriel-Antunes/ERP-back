@@ -40,7 +40,6 @@ public class MontagemDeCargaService extends Service implements ServiceInterface 
 
     @Override
     public Response create(String json) {
-        try {
             PreparacaoDeCargaPreview preparacaoDeCargaPreview = gson.fromJson(json, PreparacaoDeCargaPreview.class);
             validaDTO(preparacaoDeCargaPreview.getMontagemDeCargaDTO());
             MontagemDeCarga montagemDeCarga = new MontagemDeCarga();
@@ -55,15 +54,6 @@ public class MontagemDeCargaService extends Service implements ServiceInterface 
             fieldUtil.updateFieldsDtoToModel(preparacaoDeCarga,preparacaoDeCargaPreview);
             preparacaoDeCarga.setMontagemDeCarga(montagemDeCarga);
             return ResponseBuilder.responseOk(montagemDeCarga);
-        } catch (JsonSyntaxException j) {
-            j.printStackTrace();
-            return ResponseBuilder.returnJsonSyntax();
-        } catch (ValidacaoException v) {
-            return ResponseBuilder.returnResponse(v);
-        } catch (Throwable t) {
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-        }
     }
 
     private void convertToModel(MontagemDeCarga montagemDeCarga, MontagemDeCargaDTO montagemDeCargaDTO) {
@@ -103,17 +93,7 @@ public class MontagemDeCargaService extends Service implements ServiceInterface 
 
     @Override
     public Response update(String uuid, String json) {
-        try {
             return ResponseBuilder.responseOk(null);
-        } catch (JsonSyntaxException j) {
-            j.printStackTrace();
-            return ResponseBuilder.returnJsonSyntax();
-        } catch (ValidacaoException v) {
-            return ResponseBuilder.returnResponse(v);
-        } catch (Throwable t) {
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-        }
     }
 
     public void montagemAutomatica(MontagemDeCarga montagemDeCarga, MontagemDeCargaDTO montagemDeCargaDTO) {
@@ -217,14 +197,9 @@ public class MontagemDeCargaService extends Service implements ServiceInterface 
     }
 
     public Response delete(String uuid) {
-        try {
             MontagemDeCarga montagemDeCarga = MontagemDeCarga.findById(uuid);
             montagemDeCarga.delete();
             return ResponseBuilder.responseOk(montagemDeCarga);
-        } catch (Throwable t) {
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-        }
     }
 
     public Response criarPreparacaoDeCarga(String json) {

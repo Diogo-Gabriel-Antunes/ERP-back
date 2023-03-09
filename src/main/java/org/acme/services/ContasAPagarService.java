@@ -9,6 +9,7 @@ import org.acme.models.DTO.Financas.ContasAPagarDTO;
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.core.Response;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -22,8 +23,7 @@ public class ContasAPagarService extends Service {
         return em.createQuery("SELECT c from ContasAPagar c", ContasAPagar.class).getResultList();
     }
 
-    public Response create(String json) {
-        try{
+    public Response create(String json) throws Throwable {
             ContasAPagarDTO contasAPagarDTO = gson.fromJson(json, ContasAPagarDTO.class);
             validaConta(contasAPagarDTO);
             HttpClient httpClient = HttpClient.newBuilder().build();
@@ -42,12 +42,6 @@ public class ContasAPagarService extends Service {
                 return ResponseBuilder.responseOk(contasAPagar);
             }
             throw new RuntimeException();
-        }catch (ValidacaoException e){
-            return ResponseBuilder.returnResponse(e);
-        }catch (Throwable t){
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-        }
 
     }
 
@@ -86,13 +80,8 @@ public class ContasAPagarService extends Service {
     }
 
     private ContasAPagar getEntity(String uuid) {
-        try {
             Optional<ContasAPagar> contasAPagar = ContasAPagar.findByIdOptional(uuid);
             return contasAPagar.orElse(null);
-        }catch (Throwable t){
-            t.printStackTrace();
-            return null;
-        }
     }
 
     public Response update(String id, String json) {

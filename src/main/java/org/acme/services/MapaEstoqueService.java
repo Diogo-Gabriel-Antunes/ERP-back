@@ -19,7 +19,6 @@ public class MapaEstoqueService extends Service {
 
     @Transactional
     public Response create(String json) {
-        try {
 
             MapaEstoqueDTO mapaEstoqueDTO = gson.fromJson(json, MapaEstoqueDTO.class);
             validaMapaEstoque(mapaEstoqueDTO);
@@ -27,19 +26,10 @@ public class MapaEstoqueService extends Service {
             convertDTO(mapaEstoque, mapaEstoqueDTO);
             em.persist(mapaEstoque);
             return ResponseBuilder.responseOk(mapaEstoque);
-        } catch (JsonSyntaxException j) {
-            return ResponseBuilder.returnJsonSyntax();
-        } catch (ValidacaoException v) {
-            return ResponseBuilder.returnResponse(v);
-        } catch (Throwable t) {
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-        }
     }
 
     @Transactional
     public Response update(String uuid, String json) {
-        try {
             MapaEstoqueDTO mapaEstoqueDTO = gson.fromJson(json, MapaEstoqueDTO.class);
             Optional<MapaEstoque> mapaEstoque = MapaEstoque.findByIdOptional(uuid);
             if (mapaEstoque.isPresent()) {
@@ -50,14 +40,6 @@ public class MapaEstoqueService extends Service {
             } else {
                 return ResponseBuilder.responseEntityNotFound();
             }
-        } catch (JsonSyntaxException j) {
-            return ResponseBuilder.returnJsonSyntax();
-        } catch (ValidacaoException v) {
-            return ResponseBuilder.returnResponse(v);
-        } catch (Throwable t) {
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-        }
     }
 
     private void convertDTO(MapaEstoque mapaEstoque, MapaEstoqueDTO mapaEstoqueDTO) {

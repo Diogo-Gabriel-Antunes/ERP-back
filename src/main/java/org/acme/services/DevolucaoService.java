@@ -17,7 +17,6 @@ public class DevolucaoService extends Service {
 
     @Transactional
     public Response create(String json) {
-        try {
 
             DevolucaoDTO devolucaoDTO = gson.fromJson(json, DevolucaoDTO.class);
             validaDevolucao(devolucaoDTO);
@@ -25,20 +24,10 @@ public class DevolucaoService extends Service {
             convertDTO(devolucao,devolucaoDTO);
             devolucao.persistAndFlush();
             return ResponseBuilder.responseOk(devolucao);
-        } catch (JsonSyntaxException j) {
-            return ResponseBuilder.returnJsonSyntax();
-        } catch (ValidacaoException v) {
-            return ResponseBuilder.returnResponse(v);
-        } catch (Throwable t) {
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-
-        }
 
     }
     @Transactional
     public Response update(String uuid, String json) {
-        try {
             Optional<Devolucao> devolucao = Devolucao.findByIdOptional(uuid);
             if(devolucao.isPresent()){
                 DevolucaoDTO devolucaoDTO = gson.fromJson(json, DevolucaoDTO.class);
@@ -50,15 +39,6 @@ public class DevolucaoService extends Service {
             }else{
                 return ResponseBuilder.responseEntityNotFound();
             }
-        } catch (JsonSyntaxException j) {
-            return ResponseBuilder.returnJsonSyntax();
-        } catch (ValidacaoException v) {
-            return ResponseBuilder.returnResponse(v);
-        } catch (Throwable t) {
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-
-        }
     }
     private void convertDTO(Devolucao devolucao,DevolucaoDTO devolucaoDTO) {
         Pedido pedido = pedidoService.findOne(devolucaoDTO.getPedido().getUuid());

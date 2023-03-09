@@ -13,7 +13,6 @@ import javax.ws.rs.core.Response;
 public class CompraService extends Service {
 
     public Response create(String json) {
-        try {
 
             CompraDTO compraDTO = gson.fromJson(json, CompraDTO.class);
             validaCompra(compraDTO);
@@ -23,12 +22,6 @@ public class CompraService extends Service {
             Compra.getEntityManager().persist(compra);
             Compra.flush();
             return ResponseBuilder.responseOk(compra);
-        }catch (ValidacaoException e){
-            return ResponseBuilder.returnResponse(e);
-        }catch (Throwable t){
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-        }
 
     }
 

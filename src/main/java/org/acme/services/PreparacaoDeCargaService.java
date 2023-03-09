@@ -16,7 +16,6 @@ public class PreparacaoDeCargaService extends Service implements ServiceInterfac
 
     @Override
     public Response create(String json) {
-        try{
             MontagemDeCargaDTO montagemDeCargaDTO = gson.fromJson(json, MontagemDeCargaDTO.class);
             Long capacidade = montagemDeCargaDTO.getVeiculo().getLotacaoMaxima();
             Long tamanhoMedioDosProdutos = 0L;
@@ -35,15 +34,6 @@ public class PreparacaoDeCargaService extends Service implements ServiceInterfac
             preparacaoDeCargaPreview.setCapacidadeTotalDeProdutos(capacidadeTotalDeProdutos);
             preparacaoDeCargaPreview.setMontagemDeCargaDTO(montagemDeCargaDTO);
             return ResponseBuilder.responseOk(preparacaoDeCargaPreview);
-        }catch (JsonSyntaxException j){
-            j.printStackTrace();
-            return ResponseBuilder.returnJsonSyntax();
-        }catch (ValidacaoException v){
-            return ResponseBuilder.returnResponse(v);
-        }catch (Throwable t){
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-        }
     }
 
     @Override

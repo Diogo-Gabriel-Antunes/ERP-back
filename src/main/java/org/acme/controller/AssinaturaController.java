@@ -30,7 +30,7 @@ public class AssinaturaController {
     }
 
     @POST
-    public Response create(String json){
+    public Response create(String json) throws Throwable {
         return assinaturaService.create(json);
     }
     @PUT

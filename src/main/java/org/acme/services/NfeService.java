@@ -44,16 +44,11 @@ public class NfeService extends Service{
 
     @Transactional
     public Response create(String json) {
-        try {
             NFe nFe = new NFe();
             NFEDto nfeDto = gson.fromJson(json, NFEDto.class);
             fieldUtil.updateFieldsDtoToModel(nFe, nfeDto);
             NFe nfeMerged = em.merge(nFe);
             return Response.ok(nfeMerged).build();
-        } catch (Throwable t) {
-            t.printStackTrace();
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        }
     }
 
     @Transactional

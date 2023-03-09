@@ -15,7 +15,6 @@ public class FuncionarioService extends Service {
 
 
     public Response create(String json) {
-        try {
 
             FuncionarioDTO funcionarioDTO = gson.fromJson(json, FuncionarioDTO.class);
 
@@ -27,16 +26,9 @@ public class FuncionarioService extends Service {
 
             em.flush();
             return ResponseBuilder.responseOk(funcionario);
-        }  catch (ValidacaoException e) {
-            return ResponseBuilder.returnResponse(e);
-        }catch (Throwable t) {
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-        }
     }
 
     public Response update(String uuid, String json) {
-        try {
             FuncionarioDTO funcionarioDTO = gson.fromJson(json, FuncionarioDTO.class);
             validaFuncionario(funcionarioDTO);
 
@@ -48,12 +40,6 @@ public class FuncionarioService extends Service {
 
             Funcionario.persist(funcionario);
             return ResponseBuilder.responseOk(funcionario);
-        } catch (ValidacaoException e) {
-            return ResponseBuilder.returnResponse(e);
-        } catch (Throwable t) {
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-        }
     }
     public void validaFuncionario(FuncionarioDTO funcionarioDTO) {
         validaFuncionario(null,funcionarioDTO);
@@ -101,12 +87,7 @@ public class FuncionarioService extends Service {
     }
 
     public Response delete(String uuid) {
-        try {
             Funcionario.delete("uuid", uuid);
             return Response.ok().build();
-        } catch (Throwable t) {
-            t.printStackTrace();
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        }
     }
 }

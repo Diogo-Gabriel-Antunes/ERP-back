@@ -20,28 +20,17 @@ public class EstoqueExternoService extends Service implements ServiceInterface {
     @Override
     @Transactional
     public Response create(String json) {
-        try {
             EstoqueExternoDTO estoqueExternoDTO = gson.fromJson(json, EstoqueExternoDTO.class);
             validaDTO(estoqueExternoDTO);
             EstoqueExterno estoqueExterno = new EstoqueExterno();
             convertDTO(estoqueExterno, estoqueExternoDTO);
             em.persist(estoqueExterno);
             return ResponseBuilder.responseOk(estoqueExterno);
-        } catch (JsonSyntaxException j) {
-            return ResponseBuilder.returnJsonSyntax();
-        } catch (ValidacaoException v) {
-            return ResponseBuilder.returnResponse(v);
-        } catch (Throwable t) {
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-        }
     }
 
     @Override
     @Transactional
     public Response update(String uuid, String json) {
-        try {
-
             EstoqueExternoDTO estoqueExternoDTO = gson.fromJson(json, EstoqueExternoDTO.class);
             validaDTO(estoqueExternoDTO);
             EstoqueExterno estoqueExterno = EstoqueExterno.findById(uuid);
@@ -52,14 +41,6 @@ public class EstoqueExternoService extends Service implements ServiceInterface {
             } else {
                 return ResponseBuilder.responseEntityNotFound();
             }
-        } catch (JsonSyntaxException j) {
-            return ResponseBuilder.returnJsonSyntax();
-        } catch (ValidacaoException v) {
-            return ResponseBuilder.returnResponse(v);
-        } catch (Throwable t) {
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-        }
     }
 
     public void convertDTO(EstoqueExterno estoqueExterno, EstoqueExternoDTO estoqueExternoDTO) {

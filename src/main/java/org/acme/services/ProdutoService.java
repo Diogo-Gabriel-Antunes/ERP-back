@@ -24,7 +24,6 @@ public class ProdutoService extends Service{
     }
 
     public Response createProduct(String json) {
-        try {
             ProdutoDTO produtoDTO = gson.fromJson(json, ProdutoDTO.class);
             validaProduto(produtoDTO);
             Produto product = new Produto();
@@ -34,12 +33,6 @@ public class ProdutoService extends Service{
             infosDeFabricacaoCreate(produtoMerged,produtoDTO);
             em.flush();
             return ResponseBuilder.responseOk(produtoMerged);
-        }catch (ValidacaoException e){
-            return ResponseBuilder.returnResponse(e);
-        }catch (Throwable t){
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-        }
     }
 
     @Transactional
@@ -89,19 +82,12 @@ public class ProdutoService extends Service{
     }
 
     public Response updateProduct(String id, String newProduct) {
-        try {
             ProdutoDTO produtoDTO = gson.fromJson(newProduct, ProdutoDTO.class);
             Produto produto = new Produto();
             fieldUtil.updateFieldsDtoToModel(produto,produtoDTO);
             em.merge(produto);
             em.flush();
             return ResponseBuilder.responseOk(produto);
-        }catch (ValidacaoException e){
-            return ResponseBuilder.returnResponse(e);
-        }catch (Throwable t){
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-        }
     }
 
 

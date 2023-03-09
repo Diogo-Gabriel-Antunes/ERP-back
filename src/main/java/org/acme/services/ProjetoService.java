@@ -22,7 +22,6 @@ public class ProjetoService extends Service{
 
 
     public Response create(String json) {
-        try {
             ProjetoDTO projetoDTO = gson.fromJson(json, ProjetoDTO.class);
 
             Projeto projeto = new Projeto();
@@ -52,10 +51,6 @@ public class ProjetoService extends Service{
             em.persist(projeto);
             em.flush();
             return Response.status(Response.Status.CREATED).entity(projeto).build();
-        } catch (Throwable t) {
-            t.printStackTrace();
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        }
     }
 
     public Response update(String uuid, String json) {

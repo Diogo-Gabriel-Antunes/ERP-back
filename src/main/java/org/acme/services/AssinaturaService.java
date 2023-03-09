@@ -9,6 +9,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
 import javax.ws.rs.core.Response;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -20,8 +21,7 @@ public class AssinaturaService extends Service {
 
 
     @Transactional
-    public Response create(String json) {
-        try {
+    public Response create(String json) throws Throwable {
             AssinaturaDTO assinaturaDTO = gson.fromJson(json, AssinaturaDTO.class);
 
             validaAssinatura(assinaturaDTO);
@@ -39,16 +39,9 @@ public class AssinaturaService extends Service {
                 fieldUtil.updateFieldsDtoToModel(assinatura, assinaturaDTO);
                 em.persist(assinatura);
                 return Response.status(Response.Status.CREATED).entity(assinatura).build();
+            }else{
+                return Response.status(Response.Status.BAD_REQUEST).build();
             }
-            throw new RuntimeException("Erro na inserção da assinatura");
-        } catch (NumberFormatException n){
-            return ResponseBuilder.returnJsonSyntax();
-        }catch (ValidacaoException e) {
-            return ResponseBuilder.returnResponse(e);
-        } catch (Throwable t) {
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-        }
     }
 
     private void validaAssinatura(AssinaturaDTO assinaturaDTO) {
@@ -82,7 +75,6 @@ public class AssinaturaService extends Service {
 
     @Transactional
     public Response update(String uuid, String json) {
-        try {
             Optional<Assinatura> assinatura = Assinatura.findByIdOptional(uuid);
             if (!assinatura.isPresent()) {
                 throw new RuntimeException("Não foi encontrado nenhuma assinatura com esse uuid");
@@ -94,14 +86,6 @@ public class AssinaturaService extends Service {
             fieldUtil.updateFieldsDtoToModel(assinatura.get(), assinaturaDTO);
             em.persist(assinatura.get());
             return Response.ok(assinatura.get()).build();
-        } catch (ValidacaoException e) {
-            return Response.status(Response.Status.BAD_REQUEST).entity(e.getValidacoes()).build();
-        } catch (Throwable t) {
-            t.printStackTrace();
-            ValidacaoException validacaoException = new ValidacaoException();
-            validacaoException.add("Erro no sistema, contate o suporte");
-            return Response.status(500).entity(validacaoException.getValidacoes()).build();
-        }
     }
 
 

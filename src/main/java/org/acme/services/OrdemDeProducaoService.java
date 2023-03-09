@@ -23,7 +23,6 @@ public class OrdemDeProducaoService extends Service {
     }
 
     public Response create(String json) {
-        try {
 
             OrdemDeProducaoDTO ordemDeProducaoDTO = gson.fromJson(json, OrdemDeProducaoDTO.class);
             validaOrdemDeProducao(ordemDeProducaoDTO);
@@ -40,12 +39,6 @@ public class OrdemDeProducaoService extends Service {
             timesOrdemDeProducao.setOrdemDeProducao(ordemDeProducaoDB);
             em.merge(timesOrdemDeProducao);
             return ResponseBuilder.responseOk(ordemDeProducaoDB);
-        } catch (ValidacaoException e) {
-            return ResponseBuilder.returnResponse(e);
-        } catch (Throwable t) {
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-        }
 
     }
 

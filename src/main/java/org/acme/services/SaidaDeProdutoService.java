@@ -20,7 +20,6 @@ public class SaidaDeProdutoService extends Service {
     @Transactional
     public Response create(String json) {
         AtomicReference<ValidacaoException> validacaoException = new AtomicReference<>(new ValidacaoException());
-        try{
 
             SaidaDeProdutoDTO saidaDeProdutoDTO = gson.fromJson(json, SaidaDeProdutoDTO.class);
             validaSaidaDeProduto(saidaDeProdutoDTO);
@@ -44,15 +43,6 @@ public class SaidaDeProdutoService extends Service {
             }else{
                 return ResponseBuilder.responseOk(saidaDeProduto);
             }
-        }catch (JsonSyntaxException j){
-            j.printStackTrace();
-            return ResponseBuilder.returnJsonSyntax();
-        }catch (ValidacaoException e){
-            return ResponseBuilder.returnResponse(e);
-        }catch (Throwable t){
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-        }
     }
 
 
@@ -76,7 +66,6 @@ public class SaidaDeProdutoService extends Service {
     @Transactional
     public Response update(String uuid,String json) {
         AtomicReference<ValidacaoException> validacaoException = null;
-        try{
             SaidaDeProdutoDTO saidaDeProdutoDTO = gson.fromJson(json, SaidaDeProdutoDTO.class);
             validaSaidaDeProduto(saidaDeProdutoDTO);
             Optional<SaidaDeProduto> saidaDeProdutoOp = SaidaDeProduto.findByIdOptional(uuid);
@@ -95,15 +84,6 @@ public class SaidaDeProdutoService extends Service {
             }else{
                 return ResponseBuilder.responseEntityNotFound();
             }
-        }catch (JsonSyntaxException j){
-            j.printStackTrace();
-            return ResponseBuilder.returnJsonSyntax();
-        }catch (ValidacaoException e){
-            return ResponseBuilder.returnResponse(e);
-        }catch (Throwable t){
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-        }
     }
     private void validaSaidaDeProduto(SaidaDeProdutoDTO saidaDeProdutoDTO) {
         ValidacaoException validacao = new ValidacaoException();

@@ -36,7 +36,7 @@ public class ContasAPagarController {
     }
     @POST
     @Transactional
-    public Response create(String json){
+    public Response create(String json) throws Throwable {
 
         return contasAPagarService.create(json);
     }

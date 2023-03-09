@@ -69,7 +69,6 @@ public class BoletoService extends Service {
 
 
     public Response update(String uuid, String json) {
-        try{
             BoletoAsaas boletoAsaas = listOne(uuid);
             BoletoAsaasDTO boletoAsaasDTO = gson.fromJson(json,BoletoAsaasDTO.class);
             validaBoleto(boletoAsaasDTO);
@@ -78,12 +77,6 @@ public class BoletoService extends Service {
             em.persist(boletoAsaas);
 
             return Response.ok(boletoAsaas).build();
-        }catch (ValidacaoException e){
-           return ResponseBuilder.returnResponse(e);
-        }catch (Throwable t){
-
-            return ResponseBuilder.returnResponse();
-        }
     }
 
     public List<BoletoAsaas> listByMonth() {

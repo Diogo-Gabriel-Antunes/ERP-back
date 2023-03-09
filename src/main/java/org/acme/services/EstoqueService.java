@@ -29,7 +29,6 @@ public class EstoqueService extends Service {
     ProdutoRepository produtoRepository;
 
     public Response create(String json) {
-        try {
 
             ProdutoDTO produtoDTO = gson.fromJson(json, ProdutoDTO.class);
             validaProduto(produtoDTO);
@@ -47,14 +46,6 @@ public class EstoqueService extends Service {
             em.persist(estoque);
             em.flush();
             return ResponseBuilder.responseOk(em.merge(estoque));
-        }catch (JsonSyntaxException n){
-            return ResponseBuilder.returnJsonSyntax();
-        } catch (ValidacaoException e) {
-            return ResponseBuilder.returnResponse(e);
-        } catch (Throwable t) {
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-        }
     }
 
     private void validaProduto(ProdutoDTO produtoDTO) {
@@ -94,18 +85,11 @@ public class EstoqueService extends Service {
     }
 
     public Response update(String uuid, String json) {
-        try {
             Estoque estoque = findOne(uuid);
             EstoqueDTO estoqueDTO = gson.fromJson(json, EstoqueDTO.class);
             fieldUtil.updateFieldsDtoToModel(estoque, estoqueDTO);
             em.persist(estoque);
             return ResponseBuilder.responseOk(estoque);
-        } catch (ValidacaoException e) {
-            return ResponseBuilder.returnResponse(e);
-        } catch (Throwable t) {
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-        }
 
     }
 

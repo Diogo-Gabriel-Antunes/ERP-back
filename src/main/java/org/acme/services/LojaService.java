@@ -18,17 +18,10 @@ public class LojaService extends Service {
 
 
     public Response create(String json) {
-        try{
             Loja loja = new Loja();
             transfereDadosDtoToModel(json, loja);
             em.persist(loja);
             return ResponseBuilder.responseOk(loja);
-        }catch (ValidacaoException e){
-            return ResponseBuilder.returnResponse(e);
-        }catch (Throwable t){
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-        }
     }
 
     private void transfereDadosDtoToModel(String json, Loja loja) {
@@ -66,7 +59,6 @@ public class LojaService extends Service {
     }
 
     public Loja update(String uuid, String json) {
-        try {
             Optional<Loja> loja = Loja.findByIdOptional(uuid);
             if (loja.isPresent()) {
                 Loja lojaModel = em.merge(loja.get());
@@ -76,10 +68,6 @@ public class LojaService extends Service {
                 return lojaModel;
             }
             throw new RuntimeException();
-        } catch (Throwable t) {
-            t.printStackTrace();
-            return null;
-        }
     }
 
     public Response delete(String uuid) {

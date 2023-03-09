@@ -1,4 +1,4 @@
-package org.acme.filters;
+package org.acme.Providers.filters;
 
 import com.google.gson.Gson;
 import org.acme.Util.GsonUtil;

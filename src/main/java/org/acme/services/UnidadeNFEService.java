@@ -18,16 +18,11 @@ import java.util.List;
 public class UnidadeNFEService extends Service{
 
     public Response listAll() {
-        try{
             List<UnidadeNFE> unidadeNFEList = em.createQuery("select u from UnidadeNFE u", UnidadeNFE.class).getResultList();
             if(unidadeNFEList.size() == 0){
                 return Response.status(Response.Status.NO_CONTENT).build();
             }
             return Response.ok(unidadeNFEList).build();
-        }catch (Throwable t){
-            t.printStackTrace();
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        }
     }
 
     public Response listOne(String uuid) {
@@ -44,16 +39,11 @@ public class UnidadeNFEService extends Service{
 
     @Transactional
     public Response create(String json) {
-        try{
             UnidadeNFEDto unidadeNFEDto = gson.fromJson(json, UnidadeNFEDto.class);
             UnidadeNFE unidadeNFE = new UnidadeNFE();
             fieldUtil.updateFieldsDtoToModel(unidadeNFE,unidadeNFEDto);
             UnidadeNFE unidadeMerged = em.merge(unidadeNFE);
             return Response.ok(unidadeMerged).build();
-        }catch (Throwable t){
-            t.printStackTrace();
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        }
 
 
     }
@@ -68,14 +58,9 @@ public class UnidadeNFEService extends Service{
     }
     @Transactional
     public Response delete(String uuid) {
-        try{
             UnidadeNFE unidade =(UnidadeNFE) listOne(uuid).getEntity();
             em.remove(unidade);
             return Response.ok(unidade).build();
-        }catch (Throwable t){
-            t.printStackTrace();
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        }
 
     }
 }

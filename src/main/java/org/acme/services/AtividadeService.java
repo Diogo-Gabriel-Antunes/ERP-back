@@ -26,7 +26,6 @@ public class AtividadeService extends Service {
     AtividadeRepository atividadeRepository;
 
     public Response update(String uuid, String json) {
-        try {
             AtividadeDTO atividadeDTO = gson.fromJson(json, AtividadeDTO.class);
             validaAtividade(null, atividadeDTO);
             Atividade atividade = Atividade.findById(uuid);
@@ -42,18 +41,11 @@ public class AtividadeService extends Service {
             em.persist(atividade);
 
             return ResponseBuilder.responseOk(atividade);
-        } catch (ValidacaoException e) {
-            return ResponseBuilder.returnResponse(e);
-        } catch (Throwable t) {
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-        }
 
     }
 
     @Transactional
     public Response create(String json) {
-        try {
             AtividadeDTO atividadeDTO = gson.fromJson(json, AtividadeDTO.class);
             validaAtividade(null, atividadeDTO);
             Atividade atividade = new Atividade();
@@ -68,12 +60,6 @@ public class AtividadeService extends Service {
             fieldUtil.updateFieldsDtoToModel(atividade,atividadeDTO);
             em.persist(atividade);
             return ResponseBuilder.responseOk(atividade);
-        } catch (ValidacaoException e) {
-            return ResponseBuilder.returnResponse(e);
-        } catch (Throwable t) {
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-        }
     }
 
     private void validaAtividade(ValidacaoException validacao, AtividadeDTO atividadeDTO) {

@@ -33,7 +33,6 @@ public class PedidoService extends Service {
     }
 
     public Response create(String json) {
-        try{
 
             PedidoDTO pedidoDTO = gson.fromJson(json, PedidoDTO.class);
             validaPedido(pedidoDTO);
@@ -42,12 +41,6 @@ public class PedidoService extends Service {
             convertDTO(pedido,pedidoDTO);
             em.persist(pedido);
             return ResponseBuilder.responseOk(pedido);
-        }catch (ValidacaoException e){
-            return ResponseBuilder.returnResponse(e);
-        }catch (Throwable t){
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-        }
     }
 
     private void convertDTO(Pedido pedido, PedidoDTO pedidoDTO) {
@@ -62,7 +55,6 @@ public class PedidoService extends Service {
 
 
     public Response update(String uuid, String json) {
-      try {
 
           PedidoDTO pedidoDTO = gson.fromJson(json, PedidoDTO.class);
           validaPedido(pedidoDTO);
@@ -71,12 +63,6 @@ public class PedidoService extends Service {
           convertDTO(pedido,pedidoDTO);
           em.persist(pedido);
           return ResponseBuilder.responseOk(pedido);
-      }catch (ValidacaoException e){
-          return ResponseBuilder.returnResponse(e);
-      }catch (Throwable t){
-          t.printStackTrace();
-          return ResponseBuilder.returnResponse();
-      }
     }
     public void validaPedido(PedidoDTO pedidoDTO) {
         ValidacaoException validacaoException = new ValidacaoException();
@@ -140,7 +126,6 @@ public class PedidoService extends Service {
     }
 
     public Response updateFinish(String uuid) {
-        try{
             Pedido pedido = findOne(uuid);
             pedido.setStatus(StatusRequest.findById("5"));
             pedido.setFinishDate(LocalDate.now());
@@ -152,9 +137,5 @@ public class PedidoService extends Service {
             });
             em.persist(pedido);
             return Response.ok().build();
-        }catch (Throwable t){
-            t.printStackTrace();
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        }
     }
 }

@@ -23,7 +23,6 @@ public class ClienteService extends Service {
     }
 
     public Response create(String json) {
-        try {
 
             ClienteDTO clienteDTO = createDTO(json);
             validaCliente(clienteDTO,null,true);
@@ -34,12 +33,6 @@ public class ClienteService extends Service {
             em.persist(cliente.getEndereco());
             em.persist(cliente);
             return Response.ok(cliente).build();
-        } catch (ValidacaoException e) {
-            return ResponseBuilder.returnResponse(e);
-        } catch (Throwable t) {
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-        }
 
     }
 
@@ -55,30 +48,19 @@ public class ClienteService extends Service {
 
 
     public Response findOne(String uuid) {
-       try{
            Cliente cliente = findOneEntity(uuid);
            if (cliente != null) {
                return Response.ok(cliente).build();
            }
            return Response.status(Response.Status.BAD_REQUEST).build();
-       }catch (Throwable t){
-           t.printStackTrace();
-           return ResponseBuilder.returnResponse();
-       }
     }
 
     private static Cliente findOneEntity(String uuid) {
-        try{
             Optional<Cliente> cliente = Cliente.findByIdOptional(uuid);
             return cliente.orElse(null);
-        }catch (Throwable t){
-            t.printStackTrace();
-            return null;
-        }
     }
 
     public Response update(String uuid, String json) {
-        try {
             ClienteDTO clienteDTO = gson.fromJson(json, ClienteDTO.class);
             validaCliente(clienteDTO,null,true);
             Cliente cliente = findOneEntity(uuid);
@@ -87,25 +69,15 @@ public class ClienteService extends Service {
 
             em.persist(cliente);
             return Response.ok(cliente).build();
-        } catch (ValidacaoException e) {
-            return ResponseBuilder.returnResponse(e);
-        } catch (Throwable t) {
-            return ResponseBuilder.returnResponse();
-        }
     }
 
     public Response delete(String uuid) {
-       try {
            Cliente cliente =findOneEntity(uuid);
            if(cliente != null){
                em.remove(cliente);
                return Response.ok(cliente).build();
            }
            throw new RuntimeException();
-       }catch (Throwable t){
-           t.printStackTrace();
-           return ResponseBuilder.returnResponse();
-       }
     }
     public void validaCliente(ClienteDTO clienteDTO,ValidacaoException validacaoException,boolean comEndereco) {
         boolean validacaoExiste = validacaoException == null;

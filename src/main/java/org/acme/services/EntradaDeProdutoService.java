@@ -17,7 +17,6 @@ public class EntradaDeProdutoService extends Service {
 
     @Transactional
     public Response create(String json) {
-        try {
 
             EntradaDeProdutoDTO entradaDeProdutoDTO = gson.fromJson(json, EntradaDeProdutoDTO.class);
             EntradaDeProduto entradaDeProduto = new EntradaDeProduto();
@@ -31,15 +30,6 @@ public class EntradaDeProdutoService extends Service {
             entradaDeProduto.persist();
             em.flush();
             return ResponseBuilder.responseOk(entradaDeProdutoMerged);
-        } catch (JsonSyntaxException j) {
-            return ResponseBuilder.returnJsonSyntax();
-        } catch (ValidacaoException v) {
-            return ResponseBuilder.returnResponse(v);
-        } catch (Throwable t) {
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-
-        }
 
     }
 
@@ -84,7 +74,6 @@ public class EntradaDeProdutoService extends Service {
 
     @Transactional
     public Response update(String uuid, String json) {
-        try {
             EntradaDeProdutoDTO entradaDeProdutoDTO = gson.fromJson(json, EntradaDeProdutoDTO.class);
             validaEntradaDeProduto(entradaDeProdutoDTO);
             EntradaDeProduto entradaDeProduto = EntradaDeProduto.findById(uuid);
@@ -99,14 +88,5 @@ public class EntradaDeProdutoService extends Service {
             EntradaDeProduto entradaDeProdutoMerged = em.merge(entradaDeProduto);
             em.flush();
             return ResponseBuilder.responseOk(entradaDeProdutoMerged);
-        } catch (JsonSyntaxException j) {
-            return ResponseBuilder.returnJsonSyntax();
-        } catch (ValidacaoException v) {
-            return ResponseBuilder.returnResponse(v);
-        } catch (Throwable t) {
-            t.printStackTrace();
-            return ResponseBuilder.returnResponse();
-
-        }
     }
 }
