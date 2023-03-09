@@ -1,9 +1,7 @@
 package org.acme.services;
 
 import com.google.gson.JsonSyntaxException;
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import org.acme.Util.FieldUtil;
-import org.acme.Util.StringUtil;
+import org.acme.Util.PrimitiveUtil.StringUtil;
 import org.acme.exceptions.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
 import org.acme.models.DTO.VeiculoDTO;
@@ -93,7 +91,7 @@ public class VeiculoService extends Service {
         if (veiculoDTO.getAnoFabricacao() == null || veiculoDTO.getAnoFabricacao() <= 0 ) {
             validacao.add("É necessario adicionar o ano de fabricação");
         }
-        if (veiculoDTO.getAnoFabricacao() == null || veiculoDTO.getAnoFabricacao() <= 0) {
+        if (veiculoDTO.getAnoModelo() == null || veiculoDTO.getAnoModelo() <= 0) {
             validacao.add("É necessario adicionar o ano do modelo");
         }
         if (!StringUtil.stringValida(veiculoDTO.getChassi())) {

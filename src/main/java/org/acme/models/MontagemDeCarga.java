@@ -39,7 +39,12 @@ public class MontagemDeCarga extends PanacheEntityBase implements Model {
     @JoinTable(name="itensExternos_montagemDeCarga", joinColumns=
             {@JoinColumn(name="montagem_id")}, inverseJoinColumns=
             {@JoinColumn(name="itensExternos_id")})
-    private List<ItensExternos> itensExternos;
+    private List<ItensExternos> itensExternos;   @ManyToMany
+    @Cascade(CascadeType.SAVE_UPDATE)
+    @JoinTable(name="itensMovimentado_montagemDeCarga", joinColumns=
+            {@JoinColumn(name="montagem_id")}, inverseJoinColumns=
+            {@JoinColumn(name="itensMovimentados_id")})
+    private List<ItemMovimentado> itemMovimentados;
 
     @ManyToOne
     private Transportador transportador;

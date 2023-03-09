@@ -1,4 +1,4 @@
-package org.acme.Util;
+package org.acme.Util.PrimitiveUtil;
 
 public class StringUtil {
     private static final int[] pesoCPF = {11, 10, 9, 8, 7, 6, 5, 4, 3, 2};

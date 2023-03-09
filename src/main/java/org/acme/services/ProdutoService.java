@@ -1,18 +1,14 @@
 package org.acme.services;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import org.acme.Util.StringUtil;
+import org.acme.Util.PrimitiveUtil.StringUtil;
 import org.acme.exceptions.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
-import org.acme.models.DTO.InformacaoDeFabricacaoDTO;
 import org.acme.models.DTO.ProdutoDTO;
 import org.acme.models.InformacaoDeFabricacao;
 import org.acme.models.MateriaPrima;
 import org.acme.models.Produto;
-import org.acme.models.enums.UnidadeDeMedida;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;

@@ -1,11 +1,10 @@
 package org.acme.services;
 
 import com.google.gson.JsonSyntaxException;
-import org.acme.Util.StringUtil;
+import org.acme.Util.PrimitiveUtil.StringUtil;
 import org.acme.exceptions.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
 import org.acme.models.DTO.MotoristaDTO;
-import org.acme.models.MontagemDeCarga;
 import org.acme.models.Motorista;
 import org.acme.models.Nota_fiscal_eletronica.EnderecoNFE;
 

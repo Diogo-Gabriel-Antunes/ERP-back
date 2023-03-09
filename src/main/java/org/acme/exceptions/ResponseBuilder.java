@@ -1,13 +1,9 @@
 package org.acme.exceptions;
 
 import com.google.gson.Gson;
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import org.acme.Util.GsonUtil;
-import org.acme.Util.StringUtil;
+import org.acme.Util.PrimitiveUtil.StringUtil;
 import org.acme.models.DTO.Response.ResponseFactory;
-import org.acme.models.EntradaDeProduto;
 import org.acme.models.Model;
-import org.acme.models.asaas.CobrancaParcelada;
 import org.acme.services.Service;
 
 import javax.enterprise.context.ApplicationScoped;

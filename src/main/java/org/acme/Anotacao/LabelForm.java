@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD})
-public @interface Type {
-    public Class value();
+public @interface LabelForm {
+    public String value();
 
 }

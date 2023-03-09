@@ -1,4 +1,4 @@
-package org.acme.Util;
+package org.acme.Util.PrimitiveUtil;
 
 import java.util.List;
 

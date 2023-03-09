@@ -2,7 +2,7 @@ package org.acme.services;
 
 import com.google.gson.JsonSyntaxException;
 import org.acme.Util.DateUtil;
-import org.acme.Util.StringUtil;
+import org.acme.Util.PrimitiveUtil.StringUtil;
 import org.acme.exceptions.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
 import org.acme.models.Categoria;
@@ -72,6 +72,9 @@ public class EstoqueService extends Service {
         }
         if(produtoDTO.getQuantidadeMinima() <= 0){
             validacao.add("O campo quantidade minima esta invalido ");
+        }
+        if(produtoDTO.getPesoCubico() == null || produtoDTO.getPesoCubico() <= 0){
+            validacao.add("Campo peso cubico esta invalido");
         }
 
         validacao.lancaErro();

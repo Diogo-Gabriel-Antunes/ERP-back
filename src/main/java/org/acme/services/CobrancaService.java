@@ -1,17 +1,13 @@
 package org.acme.services;
 
-import org.acme.Util.StringUtil;
+import org.acme.Util.PrimitiveUtil.StringUtil;
 import org.acme.exceptions.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
 import org.acme.models.asaas.CobrancaParcelada;
 import org.acme.models.asaas.CobrancaParceladaDTO;
 import org.acme.models.asaas.CobrancaParceladaRetorno;
-import org.acme.services.CobrancasService.DiscountService;
-import org.acme.services.CobrancasService.FineService;
-import org.acme.services.CobrancasService.InterestService;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.net.http.HttpClient;

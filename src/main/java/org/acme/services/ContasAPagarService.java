@@ -1,14 +1,12 @@
 package org.acme.services;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import org.acme.Util.StringUtil;
+import org.acme.Util.PrimitiveUtil.StringUtil;
 import org.acme.exceptions.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
 import org.acme.models.asaas.ContasApagar.ContasAPagar;
 import org.acme.models.DTO.Financas.ContasAPagarDTO;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.net.http.HttpClient;

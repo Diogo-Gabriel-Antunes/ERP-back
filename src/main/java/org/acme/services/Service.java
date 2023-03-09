@@ -2,6 +2,7 @@ package org.acme.services;
 
 import com.google.gson.Gson;
 import org.acme.Util.*;
+import org.acme.Util.PrimitiveUtil.ArrayUtil;
 import org.acme.services.CobrancasService.DiscountService;
 import org.acme.services.CobrancasService.FineService;
 import org.acme.services.CobrancasService.InterestService;
@@ -9,7 +10,6 @@ import org.acme.services.CobrancasService.InterestService;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import java.time.format.DateTimeFormatter;
 
 @ApplicationScoped
 public class Service {
@@ -101,4 +101,6 @@ public class Service {
     protected MontagemDeCargaService montagemDeCargaService;
     @Inject
     protected MotoristaService motoristaService;
+    @Inject
+    protected PreparacaoDeCargaService preparacaoDeCargaService;
 }

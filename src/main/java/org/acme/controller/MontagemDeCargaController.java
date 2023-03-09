@@ -1,14 +1,8 @@
 package org.acme.controller;
 
-import com.google.gson.Gson;
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import org.acme.Util.ArrayUtil;
-import org.acme.Util.GsonUtil;
 import org.acme.exceptions.ResponseBuilder;
 import org.acme.models.MontagemDeCarga;
-import org.acme.models.Nota_fiscal_eletronica.Transportador;
 import org.acme.services.MontagemDeCargaService;
-import org.acme.services.TransportadoraService;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -16,7 +10,6 @@ import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
 import java.util.Optional;
 
 @Path("montagemdecarga")
@@ -47,6 +40,11 @@ public class MontagemDeCargaController {
     public Response create(String json){
         return montagemDeCargaService.create(json);
     }
+    @POST
+    public Response criacaoDeCargaAntesDeAceitar(String json){
+        return montagemDeCargaService.criarPreparacaoDeCarga(json);
+    }
+
     @PUT
     @Path("{uuid}")
     @Transactional
@@ -60,4 +58,6 @@ public class MontagemDeCargaController {
     public Response delete(@PathParam("uuid")String uuid){
         return montagemDeCargaService.delete(uuid);
     }
+
+
 }

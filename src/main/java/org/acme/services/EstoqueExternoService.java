@@ -1,7 +1,6 @@
 package org.acme.services;
 
 import com.google.gson.JsonSyntaxException;
-import org.acme.Util.ArrayUtil;
 import org.acme.exceptions.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
 import org.acme.models.Cliente;

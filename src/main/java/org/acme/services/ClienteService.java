@@ -1,16 +1,13 @@
 package org.acme.services;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import org.acme.Util.StringUtil;
+import org.acme.Util.PrimitiveUtil.StringUtil;
 import org.acme.exceptions.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
 import org.acme.models.Cliente;
 import org.acme.models.DTO.ClienteDTO;
 import org.acme.models.DTO.EnderecoNFEDTO;
-import org.acme.models.Nota_fiscal_eletronica.EnderecoNFE;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 import java.util.HashMap;
 import java.util.List;

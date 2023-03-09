@@ -1,6 +1,6 @@
 package org.acme.services;
 
-import org.acme.Util.StringUtil;
+import org.acme.Util.PrimitiveUtil.StringUtil;
 import org.acme.exceptions.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
 import org.acme.models.*;
@@ -8,7 +8,6 @@ import org.acme.models.DTO.OrdemDeProducaoDTO;
 import org.acme.models.enums.StatusDaProducao;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 import java.time.LocalDate;
 import java.time.LocalDateTime;

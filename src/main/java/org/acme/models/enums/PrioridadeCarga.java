@@ -1,15 +1,15 @@
 package org.acme.models.enums;
 
 public enum PrioridadeCarga {
-    MUITO_ALTA("Muito alta"), ALTA("Alta"), MEDIA("Media"), BAIXA("Baixa")
-    , MUITO_BAIXA("Muito Baixa");
+    MUITO_ALTA(0.40), ALTA(0.30), MEDIA(0.15), BAIXA(0.10)
+    , MUITO_BAIXA(0.05);
 
-    private String prioridade;
+    private Double prioridade;
 
-    public String getPrioridade(){
+    public Double getPrioridade(){
         return this.prioridade;
     }
-    PrioridadeCarga(String prioridade) {
+    PrioridadeCarga(Double prioridade) {
         this.prioridade = prioridade;
     }
 }

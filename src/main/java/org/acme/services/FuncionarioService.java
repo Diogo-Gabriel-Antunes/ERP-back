@@ -1,11 +1,10 @@
 package org.acme.services;
 
-import org.acme.Util.StringUtil;
+import org.acme.Util.PrimitiveUtil.StringUtil;
 import org.acme.exceptions.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
 import org.acme.models.DTO.FuncionarioDTO;
 import org.acme.models.Funcionario;
-import org.acme.models.Nota_fiscal_eletronica.EnderecoNFE;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.core.Response;

@@ -1,7 +1,7 @@
 package org.acme.services;
 
 import com.google.gson.JsonSyntaxException;
-import org.acme.Util.StringUtil;
+import org.acme.Util.PrimitiveUtil.StringUtil;
 import org.acme.exceptions.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
 import org.acme.models.DTO.FornecedorDTO;
@@ -13,9 +13,7 @@ import org.acme.models.Produto;
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @ApplicationScoped

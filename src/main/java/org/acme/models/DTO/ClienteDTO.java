@@ -2,6 +2,7 @@ package org.acme.models.DTO;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.acme.Anotacao.LabelForm;
 import org.acme.Anotacao.Type;
 import org.acme.Util.FieldUtil;
 import org.acme.models.Cliente;
@@ -13,12 +14,16 @@ import java.time.LocalDate;
 @Setter
 public class ClienteDTO implements DTO {
     private String uuid;
+    @LabelForm("CNPJ/CPF")
     private String cpfCnpj;
     private String idEstrangeiro;
+    @LabelForm("Nome")
     private String xNome;
     private String indIEDest;
+    @LabelForm("Inscrição estadual")
     private String ie;
     private String isuf;
+    @LabelForm("Inscrição estadual")
     private String im;
     private String email;
     private String asaasId;
@@ -26,11 +31,5 @@ public class ClienteDTO implements DTO {
     @Type(EnderecoNFE.class)
     private EnderecoNFEDTO endereco;
 
-    public static ClienteDTO convert(Cliente cliente) {
-        ClienteDTO clienteDTO = new ClienteDTO();
-        FieldUtil fieldUtil = new FieldUtil();
-        cliente.setUuid(null);
-        fieldUtil.updateFieldsModelToDTO(cliente,clienteDTO);
-        return clienteDTO;
-    }
+
 }

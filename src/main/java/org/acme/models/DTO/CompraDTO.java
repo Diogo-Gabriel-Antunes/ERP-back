@@ -2,6 +2,7 @@ package org.acme.models.DTO;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.acme.Anotacao.LabelForm;
 import org.acme.models.Cliente;
 import org.acme.models.CondicoesArmazenamentoETransporte;
 import org.acme.models.Garantia;
@@ -14,10 +15,12 @@ import java.util.List;
 @Setter
 public class CompraDTO implements DTO{
 
+    @LabelForm("Itens")
     private List<Itens> itens;
     private BillingType formaDePagamento;
     private Long numeroDaFatura;
     private Long reciboCompra;
+    @LabelForm("Responsavel pela venda")
     private Cliente responsavelPelaVenda;
     private Garantia garantia;
     private CondicoesArmazenamentoETransporte condicoesArmazenamentoETransporte;

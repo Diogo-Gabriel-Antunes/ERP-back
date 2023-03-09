@@ -1,26 +1,23 @@
 package org.acme.services;
 
 import com.google.gson.JsonSyntaxException;
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import org.acme.Util.ArrayUtil;
-import org.acme.Util.StringUtil;
+import org.acme.Util.PrimitiveUtil.ArrayUtil;
+import org.acme.Util.PrimitiveUtil.LongUtil;
+import org.acme.Util.PrimitiveUtil.StringUtil;
 import org.acme.exceptions.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
+import org.acme.models.*;
 import org.acme.models.DTO.ItensDTO;
 import org.acme.models.DTO.MontagemDeCargaDTO;
-import org.acme.models.Estoque;
-import org.acme.models.Itens;
-import org.acme.models.ItensExternos;
-import org.acme.models.MontagemDeCarga;
 import org.acme.models.Nota_fiscal_eletronica.Transportador;
 import org.acme.models.Nota_fiscal_eletronica.Veiculo;
+import org.acme.models.consulta.PreparacaoDeCargaPreview;
 import org.acme.models.enums.PrioridadeCarga;
 import org.acme.models.enums.TipoDeCarga;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 @ApplicationScoped
@@ -33,9 +30,9 @@ public class MontagemDeCargaService extends Service implements ServiceInterface 
         List<MontagemDeCarga> resultado = em.createQuery("SELECT M FROM MontagemDeCarga M "
                         , MontagemDeCarga.class)
                 .getResultList();
-        if(resultado.isEmpty()){
+        if (resultado.isEmpty()) {
             return ResponseBuilder.responseNoContent();
-        }else{
+        } else {
             return ResponseBuilder.responseOk(resultado);
         }
 
@@ -44,16 +41,17 @@ public class MontagemDeCargaService extends Service implements ServiceInterface 
     @Override
     public Response create(String json) {
         try {
-            MontagemDeCargaDTO montagemDeCargaDTO = gson.fromJson(json, MontagemDeCargaDTO.class);
-            validaDTO(montagemDeCargaDTO);
+            PreparacaoDeCargaPreview preparacaoDeCargaPreview = gson.fromJson(json, PreparacaoDeCargaPreview.class);
+            validaDTO(preparacaoDeCargaPreview.getMontagemDeCargaDTO());
             MontagemDeCarga montagemDeCarga = new MontagemDeCarga();
-            if (montagemDeCargaDTO.getIsManual()) {
-                montagemManual(montagemDeCarga, montagemDeCargaDTO);
+            if (preparacaoDeCargaPreview.getMontagemDeCargaDTO().getIsManual()) {
+                montagemManual(montagemDeCarga, preparacaoDeCargaPreview.getMontagemDeCargaDTO());
             } else {
-                montagemAutomatica(montagemDeCarga, montagemDeCargaDTO);
+                montagemAutomatica(montagemDeCarga, preparacaoDeCargaPreview.getMontagemDeCargaDTO());
             }
-            convertToModel(montagemDeCarga, montagemDeCargaDTO);
+            convertToModel(montagemDeCarga, preparacaoDeCargaPreview.getMontagemDeCargaDTO());
             em.persist(montagemDeCarga);
+            PreparacaoDeCarga preparacaoDeCarga = new PreparacaoDeCarga();
             return ResponseBuilder.responseOk(montagemDeCarga);
         } catch (JsonSyntaxException j) {
             j.printStackTrace();
@@ -89,11 +87,11 @@ public class MontagemDeCargaService extends Service implements ServiceInterface 
         if (ArrayUtil.validaArray(montagemDeCargaDTO.getItens())) {
             montagemDeCarga.setItens(new ArrayList<>());
             montagemDeCarga.setItensExternos(new ArrayList<>());
-            montagemDeCargaDTO.getItens().forEach(item->{
-                if(TipoDeCarga.INTERNA.equals(montagemDeCargaDTO.getTipoDeCarga())){
+            montagemDeCargaDTO.getItens().forEach(item -> {
+                if (TipoDeCarga.INTERNA.equals(montagemDeCargaDTO.getTipoDeCarga())) {
                     Itens itemBD = Itens.findById(item.getUuid());
                     montagemDeCarga.getItens().add(itemBD);
-                }else{
+                } else {
                     ItensExternos itemExternoBD = ItensExternos.findById(item.getUuid());
                     montagemDeCarga.getItensExternos().add(itemExternoBD);
                 }
@@ -206,9 +204,9 @@ public class MontagemDeCargaService extends Service implements ServiceInterface 
                     validacao.add("Seu veiculo esta com problema na lotação, favor arrumar");
                 }
             }
-            if(montagemDeCargaDTO.getMotorista() == null){
+            if (montagemDeCargaDTO.getMotorista() == null) {
                 validacao.add("É necessario informar um motorista");
-            }else if(montagemDeCargaDTO.getMotorista() != null && StringUtil.stringValida(montagemDeCargaDTO.getMotorista().getUuid())){
+            } else if (montagemDeCargaDTO.getMotorista() != null && StringUtil.stringValida(montagemDeCargaDTO.getMotorista().getUuid())) {
                 validacao.add("É necessario informar um motorista");
             }
         }
@@ -217,14 +215,54 @@ public class MontagemDeCargaService extends Service implements ServiceInterface 
     }
 
     public Response delete(String uuid) {
-        try{
+        try {
             MontagemDeCarga montagemDeCarga = MontagemDeCarga.findById(uuid);
             montagemDeCarga.delete();
             return ResponseBuilder.responseOk(montagemDeCarga);
-        }catch (Throwable t){
+        } catch (Throwable t) {
             t.printStackTrace();
             return ResponseBuilder.returnResponse();
         }
+    }
+
+    public Response criarPreparacaoDeCarga(String json) {
+        try {
+            MontagemDeCargaDTO montagemDeCargaDTO = gson.fromJson(json, MontagemDeCargaDTO.class);
+            validaDTO(montagemDeCargaDTO);
+            PreparacaoDeCargaPreview preparacaoDeCarga = criaPreparacaoDeCarga(montagemDeCargaDTO);
+            return ResponseBuilder.responseOk(preparacaoDeCarga);
+        } catch (JsonSyntaxException j) {
+            j.printStackTrace();
+            return ResponseBuilder.returnJsonSyntax();
+        } catch (ValidacaoException v) {
+            return ResponseBuilder.returnResponse(v);
+        } catch (Throwable t) {
+            t.printStackTrace();
+            return ResponseBuilder.returnResponse();
+        }
+
+    }
+
+    private PreparacaoDeCargaPreview criaPreparacaoDeCarga(MontagemDeCargaDTO montagemDeCargaDTO) {
+        Long capacidade = montagemDeCargaDTO.getVeiculo().getLotacaoMaxima();
+        Long tamanhoMedioDosProdutos = 0L;
+        Double fatorOcupacao = 1.2;
+        for (ItensDTO iten : montagemDeCargaDTO.getItens()) {
+            tamanhoMedioDosProdutos += Long.parseLong(String.valueOf(iten.getProduto().getPesoCubico()));
+        }
+        tamanhoMedioDosProdutos = tamanhoMedioDosProdutos / montagemDeCargaDTO.getItens().size();
+        Long capacidadeTotalDeProdutos = capacidade / tamanhoMedioDosProdutos;
+
+        PreparacaoDeCargaPreview preparacaoDeCargaPreview = new PreparacaoDeCargaPreview();
+        preparacaoDeCargaPreview.setCapacidadeVeiculo(capacidade);
+        preparacaoDeCargaPreview.setQuantidadeDeItens(LongUtil.parseFromInteger(montagemDeCargaDTO.getItens().size()));
+        preparacaoDeCargaPreview.setFatorOcupacao(fatorOcupacao);
+        preparacaoDeCargaPreview.setTamanhoMedioDosProdutos(tamanhoMedioDosProdutos);
+        preparacaoDeCargaPreview.setCapacidadeTotalDeProdutos(capacidadeTotalDeProdutos);
+        preparacaoDeCargaPreview.setMontagemDeCargaDTO(montagemDeCargaDTO);
+        return preparacaoDeCargaPreview;
+
+
     }
 }
 

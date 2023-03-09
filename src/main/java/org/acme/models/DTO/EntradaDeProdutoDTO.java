@@ -2,6 +2,7 @@ package org.acme.models.DTO;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.acme.Anotacao.LabelForm;
 import org.acme.Anotacao.Type;
 import org.acme.models.Cliente;
 import org.acme.models.Fornecedor;
@@ -16,12 +17,17 @@ import java.time.LocalDateTime;
 public class EntradaDeProdutoDTO implements DTO{
     private String uuid;
     @Type(Produto.class)
+    @LabelForm("Produto")
     private ProdutoDTO produto;
+    @LabelForm("Quantidade")
     private int quantidade;
     @Type(Fornecedor.class)
+    @LabelForm("Fornecedor")
     private FornecedorDTO fornecedor;
+    @LabelForm("Tipo da movimentação")
     private TipoDeMovimentacao tipoDeMovimentacao;
     @Type(Funcionario.class)
+    @LabelForm("Responsavel")
     private FuncionarioDTO responsavel;
     private LocalDateTime dataDaMovientacao;
 }

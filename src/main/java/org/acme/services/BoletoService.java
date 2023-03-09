@@ -1,13 +1,12 @@
 package org.acme.services;
 
 import org.acme.Util.DateUtil;
-import org.acme.Util.StringUtil;
+import org.acme.Util.PrimitiveUtil.StringUtil;
 import org.acme.exceptions.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
 import org.acme.models.asaas.Boleto.BoletoAsaas;
 import org.acme.models.asaas.Boleto.BoletoAsaasDTO;
 import org.acme.models.asaas.Boleto.RetornoAsaas;
-import org.acme.services.Service;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.core.Response;

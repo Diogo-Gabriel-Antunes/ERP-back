@@ -3,6 +3,7 @@ package org.acme.models.DTO;
 import lombok.Getter;
 import lombok.Setter;
 import org.acme.Anotacao.Type;
+import org.acme.models.ItemMovimentado;
 import org.acme.models.Motorista;
 import org.acme.models.Nota_fiscal_eletronica.Transportador;
 import org.acme.models.Nota_fiscal_eletronica.Veiculo;
@@ -24,6 +25,8 @@ public class MontagemDeCargaDTO implements DTO {
     private Boolean isManual;
     @Type(Motorista.class)
     private MotoristaDTO motorista;
+    private List<ItemMovimentadoDTO> itemMovimentados;
+
 
 }
 
