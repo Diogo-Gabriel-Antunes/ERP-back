@@ -1,8 +1,6 @@
 package org.acme.controller;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import org.acme.exceptions.ResponseBuilder;
-import org.acme.models.DTO.SaidaDeProdutoDTO;
+import org.acme.response.ResponseBuilder;
 import org.acme.models.SaidaDeProduto;
 import org.acme.services.SaidaDeProdutoService;
 

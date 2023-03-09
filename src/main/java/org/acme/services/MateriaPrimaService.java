@@ -3,9 +3,8 @@ package org.acme.services;
 import org.acme.Util.ConversorDeUnidadesUtils;
 import org.acme.Util.JsonUtil;
 import org.acme.Util.PrimitiveUtil.StringUtil;
-import org.acme.exceptions.ResponseBuilder;
+import org.acme.response.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
-import org.acme.models.DTO.MapaEstoqueDTO;
 import org.acme.models.DTO.MateriaPrimaDTO;
 import org.acme.models.InformacaoDeFabricacao;
 import org.acme.models.MateriaPrima;
@@ -25,8 +24,10 @@ public class MateriaPrimaService extends Service {
     @Transactional
     public Response create(String json) {
         try {
-            JsonUtil.preValidate(json, MateriaPrimaDTO.class);
-
+            json = JsonUtil.preValidate(json, MateriaPrimaDTO.class);
+            if(json.contains("erro")){
+                return ResponseBuilder.returnResponseErro(json);
+            }
             MateriaPrimaDTO dto = gson.fromJson(json, MateriaPrimaDTO.class);
             validacaoMetariaPrima(dto);
             MateriaPrima materiaPrima = new MateriaPrima();

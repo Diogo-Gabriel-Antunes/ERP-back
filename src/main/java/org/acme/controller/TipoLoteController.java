@@ -1,12 +1,7 @@
 package org.acme.controller;
 
-import com.google.gson.Gson;
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import org.acme.Util.GsonUtil;
-import org.acme.exceptions.ResponseBuilder;
-import org.acme.models.OrdemDeProducao;
+import org.acme.response.ResponseBuilder;
 import org.acme.models.TipoDeLote;
-import org.acme.services.OrdemDeProducaoService;
 import org.acme.services.TipoLoteService;
 
 import javax.enterprise.context.ApplicationScoped;

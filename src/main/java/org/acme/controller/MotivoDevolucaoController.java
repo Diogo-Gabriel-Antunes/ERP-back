@@ -1,9 +1,7 @@
 package org.acme.controller;
 
-import org.acme.exceptions.ResponseBuilder;
-import org.acme.models.Devolucao;
+import org.acme.response.ResponseBuilder;
 import org.acme.models.MotivoDaDevolucao;
-import org.acme.services.DevolucaoService;
 import org.acme.services.MotivoDevolucaoService;
 
 import javax.inject.Inject;

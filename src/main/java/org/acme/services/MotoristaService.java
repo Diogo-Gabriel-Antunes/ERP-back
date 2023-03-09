@@ -3,7 +3,7 @@ package org.acme.services;
 import com.google.gson.JsonSyntaxException;
 import org.acme.Util.JsonUtil;
 import org.acme.Util.PrimitiveUtil.StringUtil;
-import org.acme.exceptions.ResponseBuilder;
+import org.acme.response.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
 import org.acme.models.DTO.MotoristaDTO;
 import org.acme.models.Motorista;
@@ -36,7 +36,10 @@ public class MotoristaService extends Service implements ServiceInterface {
     @Override
     public Response create(String json) {
         try {
-            JsonUtil.preValidate(json,MotoristaDTO.class);
+             json =JsonUtil.preValidate(json,MotoristaDTO.class);
+            if(json.contains("erro")){
+                return ResponseBuilder.returnResponseErro(json);
+            }
             MotoristaDTO motoristaDTO = gson.fromJson(json, MotoristaDTO.class);
             validaDTO(motoristaDTO);
             Motorista motorista = new Motorista();

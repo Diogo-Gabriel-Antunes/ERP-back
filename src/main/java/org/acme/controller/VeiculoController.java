@@ -1,14 +1,12 @@
 package org.acme.controller;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import org.acme.exceptions.ResponseBuilder;
+import org.acme.response.ResponseBuilder;
 import org.acme.models.Nota_fiscal_eletronica.Veiculo;
 import org.acme.services.VeiculoService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
-import java.util.List;
 import java.util.Optional;
 
 @Path("veiculo")

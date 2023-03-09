@@ -1,15 +1,11 @@
 package org.acme.services;
 
-import org.acme.exceptions.ResponseBuilder;
+import org.acme.response.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
 import org.acme.models.DTO.Financas.AssinaturaDTO;
 import org.acme.models.asaas.Assinatura.Assinatura;
-import org.acme.services.CobrancasService.DiscountService;
-import org.acme.services.CobrancasService.FineService;
-import org.acme.services.CobrancasService.InterestService;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.core.Response;
 import java.net.URI;

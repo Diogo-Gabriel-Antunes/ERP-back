@@ -1,24 +1,15 @@
 package org.acme.services;
 
 import com.google.gson.JsonSyntaxException;
-import org.acme.Util.PrimitiveUtil.ArrayUtil;
 import org.acme.Util.PrimitiveUtil.LongUtil;
-import org.acme.Util.PrimitiveUtil.StringUtil;
-import org.acme.exceptions.ResponseBuilder;
+import org.acme.response.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
 import org.acme.models.DTO.ItensDTO;
 import org.acme.models.DTO.MontagemDeCargaDTO;
-import org.acme.models.*;
-import org.acme.models.Nota_fiscal_eletronica.Transportador;
-import org.acme.models.Nota_fiscal_eletronica.Veiculo;
 import org.acme.models.consulta.PreparacaoDeCargaPreview;
-import org.acme.models.enums.PrioridadeCarga;
-import org.acme.models.enums.TipoDeCarga;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
-import java.util.List;
 
 @ApplicationScoped
 public class PreparacaoDeCargaService extends Service implements ServiceInterface {

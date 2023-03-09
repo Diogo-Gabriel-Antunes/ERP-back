@@ -1,7 +1,7 @@
 package org.acme.services;
 
 import org.acme.Util.PrimitiveUtil.StringUtil;
-import org.acme.exceptions.ResponseBuilder;
+import org.acme.response.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
 import org.acme.models.asaas.CobrancaParcelada;
 import org.acme.models.asaas.CobrancaParceladaDTO;

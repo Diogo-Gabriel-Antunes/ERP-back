@@ -2,10 +2,9 @@ package org.acme.services;
 
 import com.google.gson.JsonSyntaxException;
 import org.acme.Util.JsonUtil;
-import org.acme.exceptions.ResponseBuilder;
+import org.acme.response.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
 import org.acme.models.Cliente;
-import org.acme.models.DTO.ClienteDTO;
 import org.acme.models.DTO.EstoqueExternoDTO;
 import org.acme.models.EstoqueExterno;
 import org.acme.models.Funcionario;
@@ -42,8 +41,10 @@ public class EstoqueExternoService extends Service implements ServiceInterface {
     @Transactional
     public Response update(String uuid, String json) {
         try {
-            JsonUtil.preValidate(json, EstoqueExternoDTO.class);
-
+            json = JsonUtil.preValidate(json, EstoqueExternoDTO.class);
+            if(json.contains("erro")){
+                return ResponseBuilder.returnResponseErro(json);
+            }
             EstoqueExternoDTO estoqueExternoDTO = gson.fromJson(json, EstoqueExternoDTO.class);
             validaDTO(estoqueExternoDTO);
             EstoqueExterno estoqueExterno = EstoqueExterno.findById(uuid);

@@ -1,28 +1,23 @@
 package org.acme.services;
 
-import com.google.gson.Gson;
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import org.acme.Util.FieldUtil;
-import org.acme.Util.GsonUtil;
 import org.acme.Util.JsonUtil;
-import org.acme.exceptions.ResponseBuilder;
+import org.acme.response.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
 import org.acme.models.*;
-import org.acme.models.DTO.ClienteDTO;
 import org.acme.models.DTO.CompraDTO;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.core.Response;
-import java.net.URI;
-import java.util.Arrays;
 
 @ApplicationScoped
 public class CompraService extends Service {
 
     public Response create(String json) {
         try {
-            JsonUtil.preValidate(json, CompraDTO.class);
-
+            json = JsonUtil.preValidate(json, CompraDTO.class);
+            if(json.contains("erro")){
+                return ResponseBuilder.returnResponseErro(json);
+            }
             CompraDTO compraDTO = gson.fromJson(json, CompraDTO.class);
             validaCompra(compraDTO);
             Compra compra = new Compra();

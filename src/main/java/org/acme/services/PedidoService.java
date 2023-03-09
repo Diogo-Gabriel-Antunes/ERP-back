@@ -5,7 +5,7 @@ import org.acme.Util.JsonUtil;
 import org.acme.Util.PrimitiveUtil.ArrayUtil;
 import org.acme.Util.DateUtil;
 import org.acme.Util.PrimitiveUtil.StringUtil;
-import org.acme.exceptions.ResponseBuilder;
+import org.acme.response.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
 import org.acme.models.*;
 import org.acme.models.DTO.PedidoDTO;
@@ -34,7 +34,10 @@ public class PedidoService extends Service {
 
     public Response create(String json) {
         try{
-            JsonUtil.preValidate(json,PedidoDTO.class);
+            json = JsonUtil.preValidate(json,PedidoDTO.class);
+            if(json.contains("erro")){
+                return ResponseBuilder.returnResponseErro(json);
+            }
             PedidoDTO pedidoDTO = gson.fromJson(json, PedidoDTO.class);
             validaPedido(pedidoDTO);
 

@@ -1,10 +1,8 @@
 package org.acme.controller;
 
 import com.google.gson.Gson;
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import org.acme.Util.GsonUtil;
-import org.acme.exceptions.ResponseBuilder;
-import org.acme.models.DTO.TransportadorDTO;
+import org.acme.response.ResponseBuilder;
 import org.acme.models.Nota_fiscal_eletronica.Transportador;
 import org.acme.services.TransportadoraService;
 

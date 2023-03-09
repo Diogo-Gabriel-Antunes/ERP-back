@@ -4,7 +4,7 @@ import com.google.gson.JsonSyntaxException;
 import org.acme.Util.DateUtil;
 import org.acme.Util.JsonUtil;
 import org.acme.Util.PrimitiveUtil.StringUtil;
-import org.acme.exceptions.ResponseBuilder;
+import org.acme.response.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
 import org.acme.models.Categoria;
 import org.acme.models.DTO.*;
@@ -30,8 +30,10 @@ public class EstoqueService extends Service {
 
     public Response create(String json) {
         try {
-            JsonUtil.preValidate(json,ProdutoDTO.class);
-
+            json = JsonUtil.preValidate(json,ProdutoDTO.class);
+            if(json.contains("erro")){
+                return ResponseBuilder.returnResponseErro(json);
+            }
             ProdutoDTO produtoDTO = gson.fromJson(json, ProdutoDTO.class);
             validaProduto(produtoDTO);
             Estoque estoque = new Estoque();

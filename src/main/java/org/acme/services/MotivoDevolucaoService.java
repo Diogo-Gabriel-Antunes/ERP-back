@@ -2,13 +2,10 @@ package org.acme.services;
 
 import com.google.gson.JsonSyntaxException;
 import org.acme.Util.JsonUtil;
-import org.acme.exceptions.ResponseBuilder;
+import org.acme.response.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
-import org.acme.models.DTO.DevolucaoDTO;
 import org.acme.models.DTO.MotivoDaDevolucaoDTO;
-import org.acme.models.Devolucao;
 import org.acme.models.MotivoDaDevolucao;
-import org.acme.models.Pedido;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
@@ -22,7 +19,10 @@ public class MotivoDevolucaoService extends Service {
     @Transactional
     public Response create(String json) {
         try {
-            JsonUtil.preValidate(json,MotivoDaDevolucaoDTO.class);
+            json = JsonUtil.preValidate(json,MotivoDaDevolucaoDTO.class);
+            if(json.contains("erro")){
+                return ResponseBuilder.returnResponseErro(json);
+            }
             MotivoDaDevolucaoDTO motivoDaDevolucaoDTO = gson.fromJson(json, MotivoDaDevolucaoDTO.class);
             validaMotivoDevolucao(motivoDaDevolucaoDTO);
             MotivoDaDevolucao motivo = new MotivoDaDevolucao();

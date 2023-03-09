@@ -3,7 +3,7 @@ package org.acme.services;
 import com.google.gson.JsonSyntaxException;
 import org.acme.Util.JsonUtil;
 import org.acme.Util.PrimitiveUtil.StringUtil;
-import org.acme.exceptions.ResponseBuilder;
+import org.acme.response.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
 import org.acme.models.DTO.FornecedorDTO;
 import org.acme.models.Fornecedor;
@@ -22,7 +22,10 @@ public class FornecedorService extends Service{
     @Transactional
     public Response create(String json) {
         try{
-            JsonUtil.preValidate(json,FornecedorDTO.class);
+            json = JsonUtil.preValidate(json,FornecedorDTO.class);
+            if(json.contains("erro")){
+                return ResponseBuilder.returnResponseErro(json);
+            }
             FornecedorDTO fornecedorDTO = gson.fromJson(json, FornecedorDTO.class);
             validaFornecedor(fornecedorDTO);
             Fornecedor fornecedor = new Fornecedor();

@@ -1,15 +1,13 @@
 package org.acme.controller;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import org.acme.exceptions.ResponseBuilder;
+import org.acme.response.ResponseBuilder;
 import org.acme.models.EntradaDeProduto;
-import org.acme.models.Model;
 import org.acme.services.EntradaDeProdutoService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

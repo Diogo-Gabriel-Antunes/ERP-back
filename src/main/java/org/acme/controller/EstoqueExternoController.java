@@ -1,7 +1,6 @@
 package org.acme.controller;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import org.acme.exceptions.ResponseBuilder;
+import org.acme.response.ResponseBuilder;
 import org.acme.models.EstoqueExterno;
 import org.acme.services.EstoqueExternoService;
 

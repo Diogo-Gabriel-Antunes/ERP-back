@@ -4,7 +4,7 @@ import org.acme.Util.PrimitiveUtil.ArrayUtil;
 import org.acme.Util.DataUtil;
 import org.acme.Util.IntegerUtil;
 import org.acme.Util.PrimitiveUtil.StringUtil;
-import org.acme.exceptions.ResponseBuilder;
+import org.acme.response.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
 import org.acme.models.Atividade;
 import org.acme.models.DTO.AtividadeDTO;

@@ -1,19 +1,15 @@
 package org.acme.services;
 
 import com.google.gson.JsonSyntaxException;
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import org.acme.Util.JsonUtil;
-import org.acme.exceptions.ResponseBuilder;
+import org.acme.response.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
-import org.acme.models.DTO.ClienteDTO;
 import org.acme.models.DTO.DevolucaoDTO;
-import org.acme.models.DTO.EntradaDeProdutoDTO;
 import org.acme.models.*;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
 import javax.ws.rs.core.Response;
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @ApplicationScoped
@@ -22,8 +18,10 @@ public class DevolucaoService extends Service {
     @Transactional
     public Response create(String json) {
         try {
-            JsonUtil.preValidate(json, DevolucaoDTO.class);
-
+            json = JsonUtil.preValidate(json, DevolucaoDTO.class);
+            if(json.contains("erro")){
+                return ResponseBuilder.returnResponseErro(json);
+            }
             DevolucaoDTO devolucaoDTO = gson.fromJson(json, DevolucaoDTO.class);
             validaDevolucao(devolucaoDTO);
             Devolucao devolucao = new Devolucao();

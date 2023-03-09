@@ -3,7 +3,7 @@ package org.acme.services;
 import com.google.gson.JsonSyntaxException;
 import org.acme.Util.JsonUtil;
 import org.acme.Util.PrimitiveUtil.StringUtil;
-import org.acme.exceptions.ResponseBuilder;
+import org.acme.response.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
 import org.acme.models.DTO.TransportadorDTO;
 import org.acme.models.Nota_fiscal_eletronica.EnderecoNFE;
@@ -28,7 +28,10 @@ public class TransportadoraService extends Service{
 
     public Response create(String json) {
         try{
-            JsonUtil.preValidate(json,TransportadorDTO.class);
+            json = JsonUtil.preValidate(json,TransportadorDTO.class);
+            if(json.contains("erro")){
+                return ResponseBuilder.returnResponseErro(json);
+            }
             TransportadorDTO transportadorDTO = gson.fromJson(json, TransportadorDTO.class);
             validaDTO(transportadorDTO);
             Transportador transportador = new Transportador();

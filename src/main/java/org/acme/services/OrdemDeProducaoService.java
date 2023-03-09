@@ -2,7 +2,7 @@ package org.acme.services;
 
 import org.acme.Util.JsonUtil;
 import org.acme.Util.PrimitiveUtil.StringUtil;
-import org.acme.exceptions.ResponseBuilder;
+import org.acme.response.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
 import org.acme.models.*;
 import org.acme.models.DTO.OrdemDeProducaoDTO;
@@ -24,8 +24,11 @@ public class OrdemDeProducaoService extends Service {
 
     public Response create(String json) {
         try {
-            JsonUtil.preValidate(json,OrdemDeProducaoDTO.class);
-           OrdemDeProducaoDTO ordemDeProducaoDTO = gson.fromJson(json, OrdemDeProducaoDTO.class);
+            json =JsonUtil.preValidate(json,OrdemDeProducaoDTO.class);
+            if(json.contains("erro")){
+                return ResponseBuilder.returnResponseErro(json);
+            }
+            OrdemDeProducaoDTO ordemDeProducaoDTO = gson.fromJson(json, OrdemDeProducaoDTO.class);
             validaOrdemDeProducao(ordemDeProducaoDTO);
             OrdemDeProducao ordemDeProducao = new OrdemDeProducao();
 
