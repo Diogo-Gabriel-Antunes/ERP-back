@@ -2,7 +2,7 @@ package org.acme.models.DTO;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.acme.Anotacao.Type;
+import org.acme.Anotacao.DTO.Type;
 import org.acme.models.Beneficios;
 import org.acme.models.Nota_fiscal_eletronica.EnderecoNFE;
 import org.acme.models.enums.NivelDeEscolaridade;

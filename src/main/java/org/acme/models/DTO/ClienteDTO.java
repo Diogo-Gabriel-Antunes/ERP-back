@@ -2,13 +2,9 @@ package org.acme.models.DTO;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.acme.Anotacao.LabelForm;
-import org.acme.Anotacao.Type;
-import org.acme.Util.FieldUtil;
-import org.acme.models.Cliente;
+import org.acme.Anotacao.DTO.LabelForm;
+import org.acme.Anotacao.DTO.Type;
 import org.acme.models.Nota_fiscal_eletronica.EnderecoNFE;
-
-import java.time.LocalDate;
 
 @Getter
 @Setter

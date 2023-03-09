@@ -1,6 +1,7 @@
 package org.acme.services;
 
 
+import org.acme.Util.JsonUtil;
 import org.acme.Util.PrimitiveUtil.ArrayUtil;
 import org.acme.Util.DateUtil;
 import org.acme.Util.PrimitiveUtil.StringUtil;
@@ -33,6 +34,7 @@ public class PedidoService extends Service {
 
     public Response create(String json) {
         try{
+            JsonUtil.preValidate(json,PedidoDTO.class);
             PedidoDTO pedidoDTO = gson.fromJson(json, PedidoDTO.class);
             validaPedido(pedidoDTO);
 
@@ -61,6 +63,7 @@ public class PedidoService extends Service {
 
     public Response update(String uuid, String json) {
       try {
+
           PedidoDTO pedidoDTO = gson.fromJson(json, PedidoDTO.class);
           validaPedido(pedidoDTO);
 

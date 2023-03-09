@@ -2,12 +2,11 @@ package org.acme.models.DTO;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.acme.Anotacao.Type;
+import org.acme.Anotacao.DTO.Type;
 import org.acme.models.MateriaPrima;
 import org.acme.models.enums.UnidadeDeMedida;
 
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter

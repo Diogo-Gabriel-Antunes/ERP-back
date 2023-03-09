@@ -2,9 +2,8 @@ package org.acme.models.DTO;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.acme.Anotacao.LabelForm;
-import org.acme.Anotacao.Type;
-import org.acme.models.Cliente;
+import org.acme.Anotacao.DTO.LabelForm;
+import org.acme.Anotacao.DTO.Type;
 import org.acme.models.Fornecedor;
 import org.acme.models.Funcionario;
 import org.acme.models.Produto;

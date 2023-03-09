@@ -1,5 +1,6 @@
 package org.acme.services;
 
+import org.acme.Util.JsonUtil;
 import org.acme.Util.PrimitiveUtil.StringUtil;
 import org.acme.exceptions.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
@@ -23,6 +24,7 @@ public class ClienteService extends Service {
 
     public Response create(String json) {
         try {
+            JsonUtil.preValidate(json,ClienteDTO.class);
             ClienteDTO clienteDTO = createDTO(json);
             validaCliente(clienteDTO,null,true);
             Cliente cliente = new Cliente();

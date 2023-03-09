@@ -2,8 +2,8 @@ package org.acme.models.DTO;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.acme.Anotacao.LabelForm;
-import org.acme.Anotacao.Type;
+import org.acme.Anotacao.DTO.LabelForm;
+import org.acme.Anotacao.DTO.Type;
 import org.acme.models.Categoria;
 import org.acme.models.Imagem;
 import org.acme.models.Imposto;

@@ -2,27 +2,24 @@ package org.acme.models.DTO;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.acme.Anotacao.Type;
-import org.acme.Util.FieldUtil;
+import org.acme.Anotacao.DTO.LabelForm;
+import org.acme.Anotacao.DTO.Type;
 import org.acme.models.Nota_fiscal_eletronica.EnderecoNFE;
-import org.acme.models.Nota_fiscal_eletronica.Transportador;
-import org.hibernate.annotations.GenericGenerator;
-
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import java.time.LocalDate;
 
 @Getter
 @Setter
 public class TransportadorDTO implements DTO{
 
     private String uuid;
+    @LabelForm("CNPJ/CPF")
     private String cnpjCpf;
     private String razaoSocial;
+    @LabelForm("Nome")
     private String nome;
+    @LabelForm("Inscrição estadual")
     private String inscricaoEstadual;
     @Type(EnderecoNFE.class)
+    @LabelForm("Endereço")
     private EnderecoNFEDTO endereco;
 
 

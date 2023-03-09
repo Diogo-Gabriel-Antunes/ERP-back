@@ -1,6 +1,7 @@
 package org.acme.services;
 
 import com.google.gson.JsonSyntaxException;
+import org.acme.Util.JsonUtil;
 import org.acme.Util.PrimitiveUtil.StringUtil;
 import org.acme.exceptions.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
@@ -27,6 +28,7 @@ public class TransportadoraService extends Service{
 
     public Response create(String json) {
         try{
+            JsonUtil.preValidate(json,TransportadorDTO.class);
             TransportadorDTO transportadorDTO = gson.fromJson(json, TransportadorDTO.class);
             validaDTO(transportadorDTO);
             Transportador transportador = new Transportador();

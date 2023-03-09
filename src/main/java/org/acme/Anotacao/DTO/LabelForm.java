@@ -1,4 +1,4 @@
-package org.acme.Anotacao;
+package org.acme.Anotacao.DTO;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

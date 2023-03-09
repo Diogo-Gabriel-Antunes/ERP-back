@@ -1,9 +1,11 @@
 package org.acme.services;
 
 import com.google.gson.JsonSyntaxException;
+import org.acme.Util.JsonUtil;
 import org.acme.Util.PrimitiveUtil.StringUtil;
 import org.acme.exceptions.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
+import org.acme.models.DTO.ItensDTO;
 import org.acme.models.DTO.MapaEstoqueDTO;
 import org.acme.models.MapaEstoque;
 import org.acme.models.Produto;
@@ -19,6 +21,8 @@ public class MapaEstoqueService extends Service {
     @Transactional
     public Response create(String json) {
         try {
+            JsonUtil.preValidate(json, MapaEstoqueDTO.class);
+
             MapaEstoqueDTO mapaEstoqueDTO = gson.fromJson(json, MapaEstoqueDTO.class);
             validaMapaEstoque(mapaEstoqueDTO);
             MapaEstoque mapaEstoque = new MapaEstoque();

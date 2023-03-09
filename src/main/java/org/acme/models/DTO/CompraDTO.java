@@ -2,7 +2,7 @@ package org.acme.models.DTO;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.acme.Anotacao.LabelForm;
+import org.acme.Anotacao.DTO.LabelForm;
 import org.acme.models.Cliente;
 import org.acme.models.CondicoesArmazenamentoETransporte;
 import org.acme.models.Garantia;

@@ -2,20 +2,18 @@ package org.acme.models.DTO;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.acme.models.Itens;
-import org.hibernate.annotations.GenericGenerator;
-
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import java.util.Set;
+import org.acme.Anotacao.DTO.LabelForm;
 
 @Getter
 @Setter
 public class MateriaPrimaDTO implements DTO{
     private String uuid;
+    @LabelForm("Nome")
     private String nome;
+    @LabelForm("Descrição")
     private String descricao;
+    @LabelForm("Quantidade")
     private int quantidade;
+    @LabelForm("Preço unitario")
     private double precoUnitario;
 }

@@ -1,12 +1,11 @@
 package org.acme.Util;
 
 import com.google.gson.Gson;
+import org.acme.Anotacao.DTO.LabelForm;
 import org.acme.Util.PrimitiveUtil.StringUtil;
 import org.acme.exceptions.ValidacaoException;
-import org.acme.services.Service;
 
 import javax.enterprise.context.ApplicationScoped;
-import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 
@@ -65,6 +64,8 @@ public class JsonUtil {
                     try{
                         ValidacaoException validacao = new ValidacaoException();
                         Field field = classe.getDeclaredField(String.valueOf(key));
+                        String label = field.getAnnotation(LabelForm.class).value();
+                        validacao.add("Campo " + label + " Esta com algum problema por favor verificar");
                         validacao.add("Caso o erro persistir favor entrar em contato com o suporte");
                         validacao.lancaErro();
                     }catch (Throwable t){

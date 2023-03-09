@@ -26,7 +26,7 @@ public class Produto extends PanacheEntityBase implements Model, Serializable {
     private LocalDateTime dataCriacao;
     private LocalDateTime dataAlteracao;
     private String codigo;
-    private boolean status;
+    private Boolean status;
     @ManyToMany
     @Cascade(CascadeType.ALL)
     @JsonbTransient
@@ -42,7 +42,7 @@ public class Produto extends PanacheEntityBase implements Model, Serializable {
     private Double pesoCubico;
 
     private Double pesoOriginal;
-    private long quantidadeMinima;
+    private Long quantidadeMinima;
     @ManyToOne
     @JsonbTransient
     private Fornecedor fornecedor;

@@ -1,9 +1,8 @@
 package org.acme.models.DTO;
 
-import br.com.swconsultoria.nfe.dom.enuns.EstadosEnum;
 import lombok.Getter;
 import lombok.Setter;
-import org.acme.Anotacao.LabelForm;
+import org.acme.Anotacao.DTO.LabelForm;
 import org.acme.models.enums.Estado;
 import org.acme.models.enums.TipoLogradouro;
 

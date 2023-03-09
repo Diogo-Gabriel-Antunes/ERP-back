@@ -20,6 +20,7 @@ public class Veiculo extends PanacheEntityBase implements Model {
     @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String uuid;
+    private String modeloDoVeiculo;
     private Integer tipoOperacao;
     private String chassi;
     private String placa;

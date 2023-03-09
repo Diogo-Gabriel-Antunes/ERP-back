@@ -3,6 +3,7 @@ package org.acme.services;
 import com.google.gson.JsonSyntaxException;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import org.acme.Util.DateUtil;
+import org.acme.Util.JsonUtil;
 import org.acme.exceptions.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
 import org.acme.models.Cliente;
@@ -43,6 +44,7 @@ public class ItensExternosService extends Service {
     @Transactional
     public Response update(String uuid, String json) {
         try{
+            JsonUtil.preValidate(json,ItensDTO.class);
             ItensDTO itensDTO = gson.fromJson(json, ItensDTO.class);
             validaDTO(itensDTO);
             ItensExternos itensExternos = new ItensExternos();
@@ -68,6 +70,9 @@ public class ItensExternosService extends Service {
             validacao.add("A quantidade não pode ser menor que zero");
         }
         if(itensDTO.getQuantidade() == null){
+            validacao.add("A quantidade deve ser informada");
+        }
+        if(itensDTO.getCliente() == null){
             validacao.add("A quantidade deve ser informada");
         }
 

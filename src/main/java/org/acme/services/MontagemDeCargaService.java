@@ -1,6 +1,7 @@
 package org.acme.services;
 
 import com.google.gson.JsonSyntaxException;
+import org.acme.Util.JsonUtil;
 import org.acme.Util.PrimitiveUtil.ArrayUtil;
 import org.acme.Util.PrimitiveUtil.LongUtil;
 import org.acme.Util.PrimitiveUtil.StringUtil;
@@ -52,6 +53,8 @@ public class MontagemDeCargaService extends Service implements ServiceInterface 
             convertToModel(montagemDeCarga, preparacaoDeCargaPreview.getMontagemDeCargaDTO());
             em.persist(montagemDeCarga);
             PreparacaoDeCarga preparacaoDeCarga = new PreparacaoDeCarga();
+            fieldUtil.updateFieldsDtoToModel(preparacaoDeCarga,preparacaoDeCargaPreview);
+            preparacaoDeCarga.setMontagemDeCarga(montagemDeCarga);
             return ResponseBuilder.responseOk(montagemDeCarga);
         } catch (JsonSyntaxException j) {
             j.printStackTrace();

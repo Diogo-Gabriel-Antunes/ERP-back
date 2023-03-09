@@ -1,6 +1,7 @@
 package org.acme.services;
 
 import com.google.gson.JsonSyntaxException;
+import org.acme.Util.JsonUtil;
 import org.acme.exceptions.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
 import org.acme.models.DTO.DevolucaoDTO;
@@ -21,6 +22,7 @@ public class MotivoDevolucaoService extends Service {
     @Transactional
     public Response create(String json) {
         try {
+            JsonUtil.preValidate(json,MotivoDaDevolucaoDTO.class);
             MotivoDaDevolucaoDTO motivoDaDevolucaoDTO = gson.fromJson(json, MotivoDaDevolucaoDTO.class);
             validaMotivoDevolucao(motivoDaDevolucaoDTO);
             MotivoDaDevolucao motivo = new MotivoDaDevolucao();

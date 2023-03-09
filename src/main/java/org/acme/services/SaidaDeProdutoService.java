@@ -1,6 +1,7 @@
 package org.acme.services;
 
 import com.google.gson.JsonSyntaxException;
+import org.acme.Util.JsonUtil;
 import org.acme.Util.PrimitiveUtil.ArrayUtil;
 import org.acme.exceptions.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
@@ -20,6 +21,7 @@ public class SaidaDeProdutoService extends Service {
     public Response create(String json) {
         AtomicReference<ValidacaoException> validacaoException = new AtomicReference<>(new ValidacaoException());
         try{
+            JsonUtil.preValidate(json,SaidaDeProdutoDTO.class);
             SaidaDeProdutoDTO saidaDeProdutoDTO = gson.fromJson(json, SaidaDeProdutoDTO.class);
             validaSaidaDeProduto(saidaDeProdutoDTO);
             SaidaDeProduto saidaDeProduto = new SaidaDeProduto();

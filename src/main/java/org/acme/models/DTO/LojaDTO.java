@@ -2,16 +2,9 @@ package org.acme.models.DTO;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.acme.Anotacao.Type;
+import org.acme.Anotacao.DTO.Type;
 import org.acme.models.Contato;
-import org.acme.models.Funcionario;
-import org.acme.models.Itens;
 import org.acme.models.Nota_fiscal_eletronica.EnderecoNFE;
-
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Getter
