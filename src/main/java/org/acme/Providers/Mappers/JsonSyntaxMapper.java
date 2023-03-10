@@ -11,6 +11,7 @@ import javax.ws.rs.ext.Provider;
 public class JsonSyntaxMapper implements ExceptionMapper<JsonSyntaxException> {
     @Override
     public Response toResponse(JsonSyntaxException jsonSyntaxException) {
+        jsonSyntaxException.printStackTrace();
         return ResponseBuilder.returnJsonSyntax();
     }
 }

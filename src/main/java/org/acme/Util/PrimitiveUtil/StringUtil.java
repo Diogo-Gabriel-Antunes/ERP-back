@@ -11,5 +11,11 @@ public class StringUtil {
     }
 
 
-
+    public static boolean validaStringAposValidadeSubClass(String newSubClass) {
+        if(newSubClass.length() == 2 && newSubClass.contains("{}") && newSubClass.equals("{}")){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

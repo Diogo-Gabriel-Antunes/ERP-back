@@ -26,7 +26,6 @@ public class FieldUtil {
                     oldObject.getClass().getDeclaredMethod("set" + updateStringToGetorSet(attribute), attribute.getType()).invoke(oldObject, attribute.get(newObject));
                 }else if(attribute.getAnnotation(Type.class) != null && attribute.get(newObject) != null) {
                     Object subModel = montaSubClasse(attribute.getAnnotation(Type.class).value(), attribute.get(newObject));
-
                     oldObject.getClass().getDeclaredMethod("set" + updateStringToGetorSet(attribute), attribute.getAnnotation(Type.class).value()).invoke(oldObject, subModel);
                 }else if(attribute.getAnnotation(Type.class) == null) {
                     oldObject.getClass().getDeclaredMethod("set" + updateStringToGetorSet(attribute), attribute.getType()).invoke(oldObject, (Object) null);

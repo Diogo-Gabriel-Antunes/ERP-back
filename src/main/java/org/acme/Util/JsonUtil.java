@@ -114,7 +114,11 @@ public class JsonUtil {
                     ConcurrentHashMap subClass = gson.fromJson(jsonSubClass, ConcurrentHashMap.class);
                     if (subClass.size() >= 2) {
                         String newSubClass = validateSubClass(subClass);
-                        hashMap.replace(key,newSubClass);
+                        if(StringUtil.validaStringAposValidadeSubClass(newSubClass)){
+                            hashMap.remove(key);
+                        }else{
+                            hashMap.replace(key,newSubClass);
+                        }
                     };
                 }
             }
