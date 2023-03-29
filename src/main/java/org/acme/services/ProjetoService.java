@@ -1,8 +1,5 @@
 package org.acme.services;
 
-import com.google.gson.Gson;
-import org.acme.Util.FieldUtil;
-import org.acme.Util.GsonUtil;
 import org.acme.models.Atividade;
 import org.acme.models.DTO.AtividadeDTO;
 import org.acme.models.DTO.FuncionarioDTO;
@@ -11,10 +8,7 @@ import org.acme.models.Funcionario;
 import org.acme.models.Projeto;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import javax.ws.rs.core.Response;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @ApplicationScoped

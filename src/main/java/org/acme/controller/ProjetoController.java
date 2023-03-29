@@ -1,8 +1,5 @@
 package org.acme.controller;
 
-import com.google.gson.Gson;
-import org.acme.Util.GsonUtil;
-import org.acme.models.DTO.ProjetoDTO;
 import org.acme.models.Projeto;
 import org.acme.services.ProjetoService;
 

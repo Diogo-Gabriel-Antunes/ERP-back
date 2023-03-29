@@ -1,7 +1,5 @@
 package org.acme.controller;
 
-import com.google.gson.Gson;
-import org.acme.Util.GsonUtil;
 import org.acme.response.ResponseBuilder;
 import org.acme.models.Nota_fiscal_eletronica.Transportador;
 import org.acme.services.TransportadoraService;
@@ -21,7 +19,6 @@ public class TransportadorController {
 
     @Inject
     TransportadoraService transportadoraService;
-    private Gson gson = new GsonUtil().parser;
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Transportador> listAll(){

@@ -24,24 +24,24 @@ public class JsonFilter implements ContainerRequestFilter {
     HttpServerRequest request;
     @Override
     public void filter(ContainerRequestContext context) throws IOException {
-        if(context.getMethod().equalsIgnoreCase("POST") || context.getMethod().equalsIgnoreCase("PUT")){
-            entityStream = context.getEntityStream();
-            inputStreamReader = new InputStreamReader(entityStream,"UTF-8");
-            reader = new BufferedReader(inputStreamReader);
-            builder = new StringBuilder();
-            String line;
-            while((line = reader.readLine()) != null){
-                builder.append(line);
-            }
-        }
-        if(builder != null && entityStream != null && inputStreamReader != null && reader != null){
-            entityStream.close();
-            inputStreamReader.close();
-            reader.close();
-            String json = JsonUtil.preValidateFilter(builder.toString());
-            byte[] bytes = json.getBytes(StandardCharsets.UTF_8);
-            context.setEntityStream(new ByteArrayInputStream(bytes));
-        }
+//        if(context.getMethod().equalsIgnoreCase("POST") || context.getMethod().equalsIgnoreCase("PUT")){
+//            entityStream = context.getEntityStream();
+//            inputStreamReader = new InputStreamReader(entityStream,"UTF-8");
+//            reader = new BufferedReader(inputStreamReader);
+//            builder = new StringBuilder();
+//            String line;
+//            while((line = reader.readLine()) != null){
+//                builder.append(line);
+//            }
+//        }
+//        if(builder != null && entityStream != null && inputStreamReader != null && reader != null){
+//            entityStream.close();
+//            inputStreamReader.close();
+//            reader.close();
+//            String json = JsonUtil.preValidateFilter(builder.toString());
+//            byte[] bytes = json.getBytes(StandardCharsets.UTF_8);
+//            context.setEntityStream(new ByteArrayInputStream(bytes));
+//        }
 
     }
 }

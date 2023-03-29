@@ -3,6 +3,7 @@ package org.acme.models;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Getter;
 import lombok.Setter;
+import org.acme.Util.InterfacesUtil.Model;
 import org.acme.models.enums.StatusDaProducao;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
@@ -15,7 +16,7 @@ import org.hibernate.annotations.CascadeType;
 @Getter
 @Setter
 @Entity
-public class TimesOrdemDeProducao extends PanacheEntityBase {
+public class TimesOrdemDeProducao extends PanacheEntityBase implements Model {
     @Id @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String uuid;

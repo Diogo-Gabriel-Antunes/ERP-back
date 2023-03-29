@@ -2,8 +2,7 @@ package org.acme.models.DTO;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.acme.models.Atividade;
-import org.acme.models.Funcionario;
+import org.acme.Util.InterfacesUtil.DTO;
 import org.acme.models.enums.StatusProjeto;
 
 import java.time.LocalDate;
@@ -13,7 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 
-public class ProjetoDTO implements DTO{
+public class ProjetoDTO implements DTO {
     private String objetivoGeral;
     private LocalDate finalizarAte;
     private Double orcamento;

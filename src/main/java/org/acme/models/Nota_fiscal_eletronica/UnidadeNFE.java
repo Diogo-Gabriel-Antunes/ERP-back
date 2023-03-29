@@ -2,7 +2,7 @@ package org.acme.models.Nota_fiscal_eletronica;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.acme.models.Model;
+import org.acme.Util.InterfacesUtil.Model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Entity;

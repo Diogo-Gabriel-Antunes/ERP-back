@@ -1,14 +1,9 @@
 package org.acme.services;
 
-import com.google.gson.Gson;
-import org.acme.Util.FieldUtil;
-import org.acme.Util.GsonUtil;
 import org.acme.models.DTO.NFE.NFEDto;
 import org.acme.models.Nota_fiscal_eletronica.NFe;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -46,7 +41,7 @@ public class NfeService extends Service{
     public Response create(String json) {
             NFe nFe = new NFe();
             NFEDto nfeDto = gson.fromJson(json, NFEDto.class);
-            fieldUtil.updateFieldsDtoToModel(nFe, nfeDto);
+        fieldUtil.updateFieldsDtoToModel(nFe, nfeDto);
             NFe nfeMerged = em.merge(nFe);
             return Response.ok(nfeMerged).build();
     }

@@ -3,6 +3,7 @@ package org.acme.models;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Getter;
 import lombok.Setter;
+import org.acme.Util.InterfacesUtil.Model;
 import org.acme.models.Nota_fiscal_eletronica.BaseCalculo;
 import org.acme.models.Nota_fiscal_eletronica.FundoCombatePobreza;
 import org.acme.models.Nota_fiscal_eletronica.SubstituicaoTributaria;

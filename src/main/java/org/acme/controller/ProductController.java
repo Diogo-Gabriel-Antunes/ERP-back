@@ -1,7 +1,6 @@
 package org.acme.controller;
 
 import com.google.gson.Gson;
-import org.acme.Util.GsonUtil;
 import org.acme.models.Produto;
 import org.acme.services.ProdutoService;
 import org.acme.services.EstoqueService;
@@ -23,7 +22,6 @@ public class ProductController {
     @Inject
     EstoqueService estoqueService;
 
-    private Gson gson = new GsonUtil().parser;
 
 
     @GET

@@ -9,7 +9,6 @@ import org.acme.models.DTO.Financas.ContasAPagarDTO;
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.core.Response;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;

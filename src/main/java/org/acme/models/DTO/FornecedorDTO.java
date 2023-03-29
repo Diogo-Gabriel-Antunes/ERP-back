@@ -4,13 +4,14 @@ import lombok.Getter;
 import lombok.Setter;
 import org.acme.Anotacao.DTO.LabelForm;
 import org.acme.Anotacao.DTO.Type;
+import org.acme.Util.InterfacesUtil.DTO;
 import org.acme.models.Nota_fiscal_eletronica.EnderecoNFE;
 
 import java.util.Set;
 
 @Getter
 @Setter
-public class FornecedorDTO implements DTO{
+public class FornecedorDTO implements DTO {
 
     private String uuid;
     @LabelForm("Nome da empresa")

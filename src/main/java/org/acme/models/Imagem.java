@@ -3,6 +3,7 @@ package org.acme.models;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.acme.Util.InterfacesUtil.Model;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.GenericGenerator;
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
-public class Imagem {
+public class Imagem implements Model {
 
     @Id
     @GeneratedValue(generator = "system-uuid")

@@ -2,7 +2,6 @@ package org.acme.controller;
 
 import com.google.gson.Gson;
 import org.acme.Util.GsonUtil;
-import org.acme.models.DTO.OrdemDeProducaoDTO;
 import org.acme.models.OrdemDeProducao;
 import org.acme.services.OrdemDeProducaoService;
 

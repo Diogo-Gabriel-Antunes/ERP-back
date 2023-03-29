@@ -1,13 +1,12 @@
 package org.acme.models;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Getter;
 import lombok.Setter;
-import org.acme.Util.GsonUtil;
+import org.acme.Util.InterfacesUtil.Model;
 import org.acme.models.Nota_fiscal_eletronica.ImportacaoDados;
 import org.acme.models.Nota_fiscal_eletronica.ImportacaoImposto;
 import org.acme.models.enums.PrioridadeCarga;
@@ -26,7 +25,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-public class ItensExternos extends PanacheEntityBase implements Model, JsonSerializer<ItensExternos> {
+public class ItensExternos extends PanacheEntityBase implements JsonSerializer<ItensExternos>, Model {
     @Id
     @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")

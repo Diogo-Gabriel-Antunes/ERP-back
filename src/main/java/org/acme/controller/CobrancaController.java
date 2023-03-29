@@ -1,9 +1,7 @@
 package org.acme.controller;
 
 import com.google.gson.Gson;
-import org.acme.Util.GsonUtil;
 import org.acme.models.asaas.CobrancaParcelada;
-import org.acme.models.asaas.CobrancaParceladaDTO;
 import org.acme.models.asaas.CobrancaParceladaRetorno;
 import org.acme.services.CobrancaRetornoService;
 import org.acme.services.CobrancaService;
@@ -19,7 +17,6 @@ import java.util.List;
 @Path("/cobranca")
 public class CobrancaController {
 
-    private Gson gson = new GsonUtil().parser;
     @Inject
     CobrancaService cobrancaService;
     @Inject

@@ -2,6 +2,7 @@ package org.acme.models;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.acme.Util.InterfacesUtil.Model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-public class CondicoesDeGarantia {
+public class CondicoesDeGarantia implements Model {
 
     @Id
     @GeneratedValue(generator="system-uuid")

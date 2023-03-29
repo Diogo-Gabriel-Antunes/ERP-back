@@ -1,8 +1,8 @@
 package org.acme.services;
 
-import org.acme.Util.PrimitiveUtil.ArrayUtil;
 import org.acme.Util.DataUtil;
 import org.acme.Util.IntegerUtil;
+import org.acme.Util.PrimitiveUtil.ArrayUtil;
 import org.acme.Util.PrimitiveUtil.StringUtil;
 import org.acme.response.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;

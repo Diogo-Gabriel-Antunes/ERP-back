@@ -1,8 +1,5 @@
 package org.acme.controller;
 
-import com.google.gson.Gson;
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import org.acme.Util.GsonUtil;
 import org.acme.models.Atividade;
 import org.acme.services.AtividadeService;
 
@@ -11,7 +8,6 @@ import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.util.List;
-import java.util.Optional;
 
 @Path("atividade")
 public class AtividadesController {

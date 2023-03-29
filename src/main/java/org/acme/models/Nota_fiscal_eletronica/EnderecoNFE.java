@@ -2,8 +2,8 @@ package org.acme.models.Nota_fiscal_eletronica;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.acme.Util.InterfacesUtil.Model;
 import org.acme.models.DTO.TipoBairro;
-import org.acme.models.Model;
 import org.acme.models.enums.Estado;
 import org.acme.models.enums.TipoLogradouro;
 import org.hibernate.annotations.GenericGenerator;

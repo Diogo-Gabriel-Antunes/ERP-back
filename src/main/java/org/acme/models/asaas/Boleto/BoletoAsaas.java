@@ -3,7 +3,7 @@ package org.acme.models.asaas.Boleto;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Getter;
 import lombok.Setter;
-import org.acme.models.Model;
+import org.acme.Util.InterfacesUtil.Model;
 import org.acme.models.asaas.BillingType;
 import org.acme.models.asaas.ChargeType;
 import org.acme.models.asaas.SubscriptionCycle;

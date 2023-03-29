@@ -1,8 +1,10 @@
 package org.acme.models;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.Getter;
 import lombok.Setter;
+import org.acme.Util.InterfacesUtil.Model;
 import org.acme.models.Nota_fiscal_eletronica.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -12,7 +14,8 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-public class Tributos extends PanacheEntityBase {
+@RegisterForReflection
+public class Tributos extends PanacheEntityBase implements Model {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")

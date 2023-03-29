@@ -2,7 +2,7 @@ package org.acme.models.asaas.Boleto;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.acme.models.DTO.DTO;
+import org.acme.Util.InterfacesUtil.DTO;
 import org.acme.models.asaas.ChargeType;
 import org.acme.models.asaas.SubscriptionCycle;
 import org.acme.models.asaas.BillingType;

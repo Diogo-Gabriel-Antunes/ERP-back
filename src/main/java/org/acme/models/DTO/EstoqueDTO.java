@@ -2,12 +2,11 @@ package org.acme.models.DTO;
 
 import lombok.Getter;
 import lombok.Setter;
-
-import java.time.LocalDate;
+import org.acme.Util.InterfacesUtil.DTO;
 
 @Getter
 @Setter
-public class EstoqueDTO implements DTO{
+public class EstoqueDTO implements DTO {
     private String uuid;
     private ProdutoDTO product;
     private String localNoEstoque;

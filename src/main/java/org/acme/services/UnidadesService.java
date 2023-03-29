@@ -1,13 +1,10 @@
 package org.acme.services;
 
-import org.acme.Util.FieldUtil;
 import org.acme.models.DTO.UnidadeDTO;
 import org.acme.models.Nota_fiscal_eletronica.Pessoa;
 import org.acme.models.Unidade;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import javax.ws.rs.core.Response;
 import java.time.LocalDate;
 import java.util.List;

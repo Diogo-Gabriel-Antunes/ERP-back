@@ -1,9 +1,9 @@
 package org.acme.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Getter;
 import lombok.Setter;
+import org.acme.Util.InterfacesUtil.Model;
 import org.acme.models.enums.UnidadeDeMedida;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
@@ -18,7 +18,7 @@ import java.util.Set;
 @Setter
 @Entity
 @Getter
-public class InformacaoDeFabricacao extends PanacheEntityBase implements Model {
+public class InformacaoDeFabricacao extends PanacheEntityBase implements Model{
     @Id
     @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")

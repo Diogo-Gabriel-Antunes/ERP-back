@@ -48,9 +48,10 @@ public class CobrancaService extends Service {
 
             CobrancaParceladaRetorno cobrancaParceladaRetornoBD = em.merge(cobrancaParceladaRetorno);
             cobrancaParceladaDTO.setCobrancaParceladaRetorno(cobrancaParceladaRetornoBD);
-            CobrancaParcelada cobrancaParceladaMerged = em.merge(cobrancaParceladaDTO.convertToModel());
-
-            return ResponseBuilder.responseOk(cobrancaParceladaMerged);
+            CobrancaParcelada cobrancaParcelada = new CobrancaParcelada();
+            fieldUtil.updateFieldsDtoToModel(cobrancaParcelada,cobrancaParceladaDTO);
+            em.persist(cobrancaParcelada);
+            return ResponseBuilder.responseOk(cobrancaParcelada);
         } catch (ValidacaoException e) {
             return ResponseBuilder.returnResponse(e);
         } catch (Throwable t) {

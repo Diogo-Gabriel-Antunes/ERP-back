@@ -2,10 +2,10 @@ package org.acme.models.DTO;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.acme.Util.InterfacesUtil.DTO;
 import org.acme.models.Itens;
 import org.acme.models.ItensExternos;
 
-import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
 
 @Getter

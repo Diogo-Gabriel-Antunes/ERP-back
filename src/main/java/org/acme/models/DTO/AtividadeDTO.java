@@ -2,18 +2,15 @@ package org.acme.models.DTO;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.acme.models.Funcionario;
+import org.acme.Util.InterfacesUtil.DTO;
 import org.acme.models.enums.Prioridade;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.ManyToOne;
 import java.time.LocalDate;
 import java.util.List;
 
 @Getter
 @Setter
-public class AtividadeDTO implements DTO{
+public class AtividadeDTO implements DTO {
     private String uuid;
     private Prioridade prioridade;
     private String versao;

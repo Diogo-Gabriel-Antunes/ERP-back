@@ -3,6 +3,7 @@ package org.acme.models.DTO;
 import lombok.Getter;
 import lombok.Setter;
 import org.acme.Anotacao.DTO.LabelForm;
+import org.acme.Util.InterfacesUtil.DTO;
 import org.acme.models.Cliente;
 import org.acme.models.CondicoesArmazenamentoETransporte;
 import org.acme.models.Garantia;
@@ -13,7 +14,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class CompraDTO implements DTO{
+public class CompraDTO implements DTO {
 
     @LabelForm("Itens")
     private List<Itens> itens;

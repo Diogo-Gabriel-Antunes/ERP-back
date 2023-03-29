@@ -3,6 +3,7 @@ package org.acme.models.DTO;
 import lombok.Getter;
 import lombok.Setter;
 import org.acme.Anotacao.DTO.LabelForm;
+import org.acme.Util.InterfacesUtil.DTO;
 import org.acme.models.enums.Estado;
 import org.acme.models.enums.TipoLogradouro;
 

@@ -1,7 +1,5 @@
 package org.acme.services;
 
-import com.google.gson.JsonSyntaxException;
-import org.acme.Util.JsonUtil;
 import org.acme.Util.PrimitiveUtil.ArrayUtil;
 import org.acme.response.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
@@ -38,7 +36,7 @@ public class SaidaDeProdutoService extends Service {
                 em.persist(estoqueMerged);
             });
             em.flush();
-            if(ArrayUtil.validaArray(validacaoException.get().getValidacoes())){
+            if(arrayUtil.validaArray(validacaoException.get().getValidacoes())){
                 return ResponseBuilder.respondeOkWithAlert(saidaDeProduto, validacaoException.get());
             }else{
                 return ResponseBuilder.responseOk(saidaDeProduto);

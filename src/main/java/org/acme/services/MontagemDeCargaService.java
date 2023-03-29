@@ -2,6 +2,7 @@ package org.acme.services;
 
 import com.google.gson.JsonSyntaxException;
 import org.acme.Util.PrimitiveUtil.ArrayUtil;
+import org.acme.Util.PrimitiveUtil.BooleanUtils;
 import org.acme.Util.PrimitiveUtil.LongUtil;
 import org.acme.Util.PrimitiveUtil.StringUtil;
 import org.acme.response.ResponseBuilder;
@@ -165,7 +166,7 @@ public class MontagemDeCargaService extends Service implements ServiceInterface 
 
 
     public void validaDTO(MontagemDeCargaDTO montagemDeCargaDTO) {
-        if (montagemDeCargaDTO.getIsManual()) {
+        if (BooleanUtils.isTrue(montagemDeCargaDTO.getIsManual())) {
             if (!ArrayUtil.validaArray(montagemDeCargaDTO.getItens())) {
                 validacao.add("Deve adicionar itens na carga");
             } else {
@@ -225,7 +226,7 @@ public class MontagemDeCargaService extends Service implements ServiceInterface 
         Long tamanhoMedioDosProdutos = 0L;
         Double fatorOcupacao = 1.2;
         for (ItensDTO iten : montagemDeCargaDTO.getItens()) {
-            tamanhoMedioDosProdutos += Long.parseLong(String.valueOf(iten.getProduto().getPesoCubico()));
+            tamanhoMedioDosProdutos += LongUtil.parseFromDouble(iten.getProduto().getPesoCubico());
         }
         tamanhoMedioDosProdutos = tamanhoMedioDosProdutos / montagemDeCargaDTO.getItens().size();
         Long capacidadeTotalDeProdutos = capacidade / tamanhoMedioDosProdutos;

@@ -1,6 +1,5 @@
 package org.acme.services;
 
-import org.acme.response.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
 import org.acme.models.DTO.Financas.AssinaturaDTO;
 import org.acme.models.asaas.Assinatura.Assinatura;
@@ -9,7 +8,6 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
 import javax.ws.rs.core.Response;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;

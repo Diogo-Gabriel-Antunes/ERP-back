@@ -3,6 +3,7 @@ package org.acme.models.DTO;
 import lombok.Getter;
 import lombok.Setter;
 import org.acme.Anotacao.DTO.Type;
+import org.acme.Util.InterfacesUtil.DTO;
 import org.acme.models.Beneficios;
 import org.acme.models.Nota_fiscal_eletronica.EnderecoNFE;
 import org.acme.models.enums.NivelDeEscolaridade;
@@ -17,6 +18,7 @@ public class FuncionarioDTO implements DTO {
     private String nome;
     @Type(EnderecoNFE.class)
     private EnderecoNFEDTO endereco;
+
     private String pis;
     private NivelDeEscolaridade nivelDeEscolaridade;
     private String cpf;

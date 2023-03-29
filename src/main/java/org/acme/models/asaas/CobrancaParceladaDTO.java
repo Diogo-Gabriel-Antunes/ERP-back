@@ -2,8 +2,7 @@ package org.acme.models.asaas;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.acme.Util.FieldUtil;
-import org.acme.models.DTO.DTO;
+import org.acme.Util.InterfacesUtil.DTO;
 import org.acme.models.DTO.Financas.DiscountDTO;
 import org.acme.models.DTO.Financas.FineDTO;
 import org.acme.models.DTO.Financas.InterestDTO;
@@ -30,10 +29,5 @@ public class CobrancaParceladaDTO implements DTO {
     private List<SplitDTO> splits;
     private CobrancaParceladaRetorno cobrancaParceladaRetorno;
 
-    public CobrancaParcelada convertToModel() {
-        CobrancaParcelada cobrancaParcelada = new CobrancaParcelada();
-        FieldUtil fieldUtil = new FieldUtil();
-        fieldUtil.updateFieldsDtoToModel(cobrancaParcelada,this);
-        return cobrancaParcelada;
-    }
+
 }

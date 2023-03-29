@@ -3,17 +3,14 @@ package org.acme.models;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Getter;
 import lombok.Setter;
-import org.acme.Util.FieldUtil;
-import org.acme.models.DTO.ClienteDTO;
+import org.acme.Util.InterfacesUtil.Model;
 import org.acme.models.Nota_fiscal_eletronica.EnderecoNFE;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Getter
 @Setter

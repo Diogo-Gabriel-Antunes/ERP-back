@@ -1,15 +1,9 @@
 package org.acme.services;
 
-import com.google.gson.Gson;
-import org.acme.Util.FieldUtil;
-import org.acme.Util.GsonUtil;
 import org.acme.models.DTO.NFE.UnidadeNFEDto;
 import org.acme.models.Nota_fiscal_eletronica.UnidadeNFE;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.persistence.Entity;
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import javax.ws.rs.core.Response;
 import java.util.List;

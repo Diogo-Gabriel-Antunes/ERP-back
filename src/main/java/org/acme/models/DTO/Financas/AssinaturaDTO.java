@@ -3,7 +3,7 @@ package org.acme.models.DTO.Financas;
 import lombok.Getter;
 import lombok.Setter;
 import org.acme.Anotacao.DTO.Type;
-import org.acme.models.DTO.DTO;
+import org.acme.Util.InterfacesUtil.DTO;
 import org.acme.models.asaas.SubscriptionCycle;
 import org.acme.models.asaas.*;
 

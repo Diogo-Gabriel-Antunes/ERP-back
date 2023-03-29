@@ -2,7 +2,6 @@ package org.acme.controller;
 
 
 import com.google.gson.Gson;
-import org.acme.Util.GsonUtil;
 import org.acme.models.DTO.ItensDTO;
 import org.acme.models.Itens;
 import org.acme.services.ItensService;
@@ -22,7 +21,6 @@ public class ItensController {
     @Inject
     ItensService itensService;
 
-    private Gson gson = new GsonUtil().parser;
 
 
     @GET
@@ -51,9 +49,7 @@ public class ItensController {
     @Transactional
     @Produces(MediaType.APPLICATION_JSON)
     public Response update(@PathParam("uuid")String uuid,String newStorage){
-        ItensDTO itensDTO = gson.fromJson(newStorage, ItensDTO.class);
-        Itens update = itensService.update(uuid, itensDTO);
-        return Response.ok(update).build();
+        return Response.ok("").build();
     }
 
 }

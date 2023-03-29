@@ -2,12 +2,10 @@ package org.acme.models.DTO.NFE;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.acme.models.DTO.DTO;
+import org.acme.Util.InterfacesUtil.DTO;
 import org.acme.models.Itens;
 import org.acme.models.Nota_fiscal_eletronica.*;
-import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
 import java.util.List;
 
 @Getter

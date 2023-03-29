@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import org.acme.Util.GsonUtil;
 import org.acme.models.DTO.UnidadeDTO;
 import org.acme.models.Unidade;
+import org.acme.response.ResponseBuilder;
 import org.acme.services.UnidadesService;
 
 import javax.inject.Inject;
@@ -35,10 +36,10 @@ public class UnidadesController {
     @GET
     @Path("{uuid}")
     @Produces(MediaType.APPLICATION_JSON)
-    public UnidadeDTO listOne(@PathParam("uuid")String uuid){
+    public Response listOne(@PathParam("uuid")String uuid){
         Unidade unidade = unidadesService.findOne(uuid);
 
-        return UnidadeDTO.convert(unidade);
+        return ResponseBuilder.responseOk(unidade);
     }
     @PUT
     @Path("{uuid}")

@@ -1,7 +1,5 @@
 package org.acme.services;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import org.acme.Util.FieldUtil;
 import org.acme.models.DTO.VendasDTO;
 import org.acme.models.Venda;
 

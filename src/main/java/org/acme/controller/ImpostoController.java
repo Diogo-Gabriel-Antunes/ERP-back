@@ -16,11 +16,10 @@ import javax.ws.rs.core.Response;
 
 @Path("imposto")
 public class ImpostoController {
-    private Gson gson = new GsonUtil().parser;
 
     @Inject
     ImpostoService impostoService;
-
+    private Gson gson = new GsonUtil().parser;
     @GET
     public Response listAll() {
         return Response.ok(Imposto.list("SELECT i,b from Imposto i left join fetch i.baseCalculo b")).build();
@@ -48,24 +47,21 @@ public class ImpostoController {
     @Path("icms")
     @Transactional
     public Response createICMS(String json) {
-        ICMSDTO icmsdto = gson.fromJson(json, ICMSDTO.class);
-        return impostoService.create(icmsdto);
+        return impostoService.create("");
     }
 
     @POST
     @Path("cofins")
     @Transactional
     public Response createCofins(String json) {
-        CofinsDTO cofinsDTO = gson.fromJson(json, CofinsDTO.class);
-        return impostoService.create(cofinsDTO);
+        return impostoService.create("");
     }
 
     @POST
     @Path("ipi")
     @Transactional
     public Response createIPI(String json) {
-        IPIDTO ipidto = gson.fromJson(json, IPIDTO.class);
-        return impostoService.create(ipidto);
+        return impostoService.create("");
     }
     @POST
     @Path("pis")
@@ -78,8 +74,7 @@ public class ImpostoController {
     @Path("issqn")
     @Transactional
     public Response createISSQN(String json) {
-        IssqnDTO issqnDTO = gson.fromJson(json, IssqnDTO.class);
-        return impostoService.create(issqnDTO);
+        return impostoService.create("");
     }
 
     @GET

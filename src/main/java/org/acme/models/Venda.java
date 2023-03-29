@@ -1,8 +1,10 @@
 package org.acme.models;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.Getter;
 import lombok.Setter;
+import org.acme.Util.InterfacesUtil.Model;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.CascadeType;
@@ -16,6 +18,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity(name = "VENDAS")
+@RegisterForReflection
 public class Venda extends PanacheEntityBase implements Model {
     @Id
     @GeneratedValue(generator="system-uuid")

@@ -1,13 +1,9 @@
 package org.acme.controller;
 
-import com.google.gson.Gson;
-import org.acme.Util.GsonUtil;
-import org.acme.models.DTO.FuncionarioDTO;
 import org.acme.models.Funcionario;
 import org.acme.services.FuncionarioService;
 
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;

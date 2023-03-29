@@ -3,10 +3,11 @@ package org.acme.models.DTO;
 import lombok.Getter;
 import lombok.Setter;
 import org.acme.Anotacao.DTO.LabelForm;
+import org.acme.Util.InterfacesUtil.DTO;
 
 @Getter
 @Setter
-public class MateriaPrimaDTO implements DTO{
+public class MateriaPrimaDTO implements DTO {
     private String uuid;
     @LabelForm("Nome")
     private String nome;

@@ -4,13 +4,14 @@ import lombok.Getter;
 import lombok.Setter;
 import org.acme.Anotacao.DTO.LabelForm;
 import org.acme.Anotacao.DTO.Type;
+import org.acme.Util.InterfacesUtil.DTO;
 import org.acme.models.MotivoDaDevolucao;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class DevolucaoDTO implements DTO{
+public class DevolucaoDTO implements DTO {
     private String uuid;
     @Type(value = MotivoDaDevolucao.class)
     @LabelForm("Motivo da Devolução")

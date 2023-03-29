@@ -3,6 +3,7 @@ package org.acme.models;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import lombok.Getter;
 import lombok.Setter;
+import org.acme.Util.InterfacesUtil.Model;
 import org.acme.models.Nota_fiscal_eletronica.EnderecoNFE;
 import org.acme.models.enums.NivelDeEscolaridade;
 import org.hibernate.annotations.Cascade;
@@ -18,7 +19,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-public class Funcionario extends PanacheEntityBase implements Model{
+public class Funcionario extends PanacheEntityBase implements Model {
 
     @Id
     @GeneratedValue(generator="system-uuid")

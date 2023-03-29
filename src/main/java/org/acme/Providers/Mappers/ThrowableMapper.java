@@ -10,6 +10,7 @@ import javax.ws.rs.ext.Provider;
 public class ThrowableMapper implements ExceptionMapper<Throwable> {
     @Override
     public Response toResponse(Throwable throwable) {
+        throwable.printStackTrace();
         return ResponseBuilder.returnResponse();
     }
 }

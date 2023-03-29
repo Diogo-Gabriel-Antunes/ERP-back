@@ -3,7 +3,7 @@ package org.acme.models.consulta;
 import lombok.Getter;
 import lombok.Setter;
 import org.acme.Anotacao.DTO.Type;
-import org.acme.models.DTO.DTO;
+import org.acme.Util.InterfacesUtil.DTO;
 import org.acme.models.DTO.MontagemDeCargaDTO;
 import org.acme.models.MontagemDeCarga;
 

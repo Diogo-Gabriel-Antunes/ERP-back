@@ -1,24 +1,14 @@
 package org.acme.controller;
 
 
-import br.com.swconsultoria.nfe.Nfe;
-import br.com.swconsultoria.nfe.schema_4.enviNFe.TEnviNFe;
-import com.google.gson.Gson;
-import com.thoughtworks.xstream.XStream;
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import io.quarkus.hibernate.orm.panache.PanacheQuery;
-import org.acme.Util.GsonUtil;
 import org.acme.models.Compra;
-import org.acme.models.DTO.CompraDTO;
 import org.acme.services.CompraService;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
 
 @Path("/compra")
 @ApplicationScoped

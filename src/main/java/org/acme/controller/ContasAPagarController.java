@@ -1,9 +1,7 @@
 package org.acme.controller;
 
 import com.google.gson.Gson;
-import org.acme.Util.GsonUtil;
 import org.acme.models.asaas.ContasApagar.ContasAPagar;
-import org.acme.models.DTO.Financas.ContasAPagarDTO;
 import org.acme.services.ContasAPagarService;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -19,7 +17,6 @@ import java.util.List;
 public class ContasAPagarController {
     @Inject
     ContasAPagarService contasAPagarService;
-    private Gson gson = new GsonUtil().parser;
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<ContasAPagar> listAll(){

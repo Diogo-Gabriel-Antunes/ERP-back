@@ -2,7 +2,7 @@ package org.acme.models.DTO.Financas;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.acme.models.DTO.DTO;
+import org.acme.Util.InterfacesUtil.DTO;
 
 @Getter
 @Setter

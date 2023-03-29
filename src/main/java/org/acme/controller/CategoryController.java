@@ -1,7 +1,6 @@
 package org.acme.controller;
 
 import com.google.gson.Gson;
-import org.acme.Util.GsonUtil;
 import org.acme.models.Categoria;
 import org.acme.services.CategoryService;
 
@@ -21,7 +20,6 @@ public class CategoryController {
 
     @Inject
     private CategoryService categoryService;
-    private Gson gson = new GsonUtil().parser;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)

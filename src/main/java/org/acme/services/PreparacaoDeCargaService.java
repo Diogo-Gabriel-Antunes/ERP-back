@@ -1,9 +1,7 @@
 package org.acme.services;
 
-import com.google.gson.JsonSyntaxException;
 import org.acme.Util.PrimitiveUtil.LongUtil;
 import org.acme.response.ResponseBuilder;
-import org.acme.exceptions.ValidacaoException;
 import org.acme.models.DTO.ItensDTO;
 import org.acme.models.DTO.MontagemDeCargaDTO;
 import org.acme.models.consulta.PreparacaoDeCargaPreview;

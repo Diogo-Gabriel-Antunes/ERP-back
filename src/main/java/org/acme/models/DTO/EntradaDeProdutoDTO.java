@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.acme.Anotacao.DTO.LabelForm;
 import org.acme.Anotacao.DTO.Type;
+import org.acme.Util.InterfacesUtil.DTO;
 import org.acme.models.Fornecedor;
 import org.acme.models.Funcionario;
 import org.acme.models.Produto;
@@ -13,7 +14,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class EntradaDeProdutoDTO implements DTO{
+public class EntradaDeProdutoDTO implements DTO {
     private String uuid;
     @Type(Produto.class)
     @LabelForm("Produto")

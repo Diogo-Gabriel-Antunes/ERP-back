@@ -4,11 +4,12 @@ import lombok.Getter;
 import lombok.Setter;
 import org.acme.Anotacao.DTO.LabelForm;
 import org.acme.Anotacao.DTO.Type;
+import org.acme.Util.InterfacesUtil.DTO;
 import org.acme.models.Nota_fiscal_eletronica.Cor;
 
 @Getter
 @Setter
-public class VeiculoDTO implements DTO{
+public class VeiculoDTO implements DTO {
     private String uuid;
     private Integer tipoOperacao;
     private String modeloDoVeiculo;

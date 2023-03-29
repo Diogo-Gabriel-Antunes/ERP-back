@@ -1,7 +1,5 @@
 package org.acme.controller;
 
-import com.google.gson.Gson;
-import org.acme.Util.GsonUtil;
 import org.acme.models.Pedido;
 import org.acme.services.PedidoService;
 

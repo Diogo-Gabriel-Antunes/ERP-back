@@ -1,7 +1,6 @@
 package org.acme.services;
 
 import org.acme.Util.ConversorDeUnidadesUtils;
-import org.acme.Util.JsonUtil;
 import org.acme.Util.PrimitiveUtil.StringUtil;
 import org.acme.response.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
