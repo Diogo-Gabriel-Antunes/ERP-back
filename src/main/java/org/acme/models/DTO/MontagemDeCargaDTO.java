@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.acme.Anotacao.DTO.Type;
 import org.acme.Util.InterfacesUtil.DTO;
-import org.acme.models.Motorista;
 import org.acme.models.Nota_fiscal_eletronica.Transportador;
 import org.acme.models.Nota_fiscal_eletronica.Veiculo;
 import org.acme.models.enums.TipoDeCarga;

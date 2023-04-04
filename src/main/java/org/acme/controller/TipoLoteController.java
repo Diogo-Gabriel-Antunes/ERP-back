@@ -1,7 +1,6 @@
 package org.acme.controller;
 
 import org.acme.response.ResponseBuilder;
-import org.acme.models.TipoDeLote;
 import org.acme.services.TipoLoteService;
 
 import javax.enterprise.context.ApplicationScoped;

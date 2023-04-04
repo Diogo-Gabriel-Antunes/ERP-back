@@ -6,7 +6,6 @@ import org.acme.Anotacao.DTO.LabelForm;
 import org.acme.Anotacao.DTO.Type;
 import org.acme.Util.InterfacesUtil.DTO;
 import org.acme.models.Cliente;
-import org.acme.models.Funcionario;
 
 import java.util.Set;
 

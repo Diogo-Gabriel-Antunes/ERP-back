@@ -5,6 +5,7 @@ import org.acme.Util.InterfacesUtil.Model;
 import org.acme.Util.PrimitiveUtil.StringUtil;
 import org.acme.exceptions.ValidacaoException;
 import org.acme.models.DTO.Response.ResponseFactory;
+import org.acme.models.DTO.ResponseError;
 import org.acme.services.Service;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -23,7 +24,7 @@ public class ResponseBuilder extends Service {
         } else {
             return Response.status(Response.Status.BAD_REQUEST)
                     .header("Content-Type", "application/json")
-                    .entity(e.getValidacoes()).build();
+                    .entity(new ResponseError(e.getValidacoes())).build();
         }
     }
 
@@ -37,7 +38,7 @@ public class ResponseBuilder extends Service {
 
     public static Response returnResponse() {
         ValidacaoException validacaoException = new ValidacaoException();
-        validacaoException.add("Ocorreu o erro no sistema, contate o suporte");
+        validacaoException.add("Ocorreu o erro no sistema, contate o suporte",500,"Verifique com o suporte");
         return Response.status(Response.Status.BAD_REQUEST)
                 .header("Content-Type", "application/json")
                 .entity(validacaoException.getValidacoes()).build();
@@ -87,7 +88,8 @@ public class ResponseBuilder extends Service {
 
     public static Response responseEntityNotFound() {
         ValidacaoException validacaoException = new ValidacaoException();
-        validacaoException.add("Conteudo não encontrado");
+        validacaoException.add("Conteudo não encontrado",400,"Verifique se o conteudo existe no sistema, se não contate o suporte");
+        ResponseError response = new ResponseError(validacaoException.getValidacoes());
         return Response.status(Response.Status.NOT_FOUND)
                 .header("Content-Type", "application/json")
                 .entity(validacaoException.getValidacoes()).build();
@@ -95,34 +97,35 @@ public class ResponseBuilder extends Service {
     }
 
     public static Response returnJsonSyntax() {
-        ValidacaoException validacaoException = new ValidacaoException();
-        validacaoException.add("Erro na formatação dos dados");
-        validacaoException.add("Verifique se os dados foram informados corretamente");
-        validacaoException.add("Em caso de continuar o erro contate o suporte");
+        ResponseError response = new ResponseError();
+        response.add("Erro na requisição",400,"Verifique se as informações foram enviadas corretamente");
+
 
         return Response.status(Response.Status.BAD_REQUEST)
                 .header("Content-Type", "application/json")
-                .entity(validacaoException.getValidacoes())
+                .entity(response)
                 .build();
     }
 
     public static Response responseNoContent() {
         ValidacaoException validacao = new ValidacaoException();
-        validacao.add("Não foi encontrado nem uma informação");
+        validacao.add("Não foi encontrado nem uma informação",204,"Sem informações no sistema");
+        ResponseError response = new ResponseError(validacao.getValidacoes());
+
         return Response.status(Response.Status.NO_CONTENT)
                 .header("Content-Type", "application/json")
-                .entity(validacao.getValidacoes())
+                .entity(response)
                 .build();
     }
 
 
     public static Response returnDateTimeException() {
         ValidacaoException validacao = new ValidacaoException();
-        validacao.add("Alguma data não foi informada");
-        validacao.add("Se o erro continuar contate o suporte");
+        validacao.add("Alguma data não foi informada",400,"Se o erro continuar contate o suporte");
+        ResponseError response = new ResponseError(validacao.getValidacoes());
         return Response.status(Response.Status.BAD_REQUEST)
                 .header("Content-Type", "application/json")
-                .entity(validacao.getValidacoes())
+                .entity(response)
                 .build();
     }
 }

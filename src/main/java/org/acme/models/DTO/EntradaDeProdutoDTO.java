@@ -6,7 +6,6 @@ import org.acme.Anotacao.DTO.LabelForm;
 import org.acme.Anotacao.DTO.Type;
 import org.acme.Util.InterfacesUtil.DTO;
 import org.acme.models.Fornecedor;
-import org.acme.models.Funcionario;
 import org.acme.models.Produto;
 import org.acme.models.enums.TipoDeMovimentacao;
 

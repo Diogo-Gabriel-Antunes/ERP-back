@@ -5,7 +5,6 @@ import org.acme.exceptions.ValidacaoException;
 import org.acme.models.Cliente;
 import org.acme.models.DTO.EstoqueExternoDTO;
 import org.acme.models.EstoqueExterno;
-import org.acme.models.Funcionario;
 import org.acme.models.ItensExternos;
 
 import javax.enterprise.context.ApplicationScoped;

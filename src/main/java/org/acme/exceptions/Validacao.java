@@ -7,5 +7,7 @@ import lombok.Setter;
 @Setter
 public class Validacao {
 
-    private String erro;
+    private String mensagem;
+    private Integer statusCode;
+    private String solucao;
 }

@@ -5,7 +5,6 @@ import lombok.Setter;
 import org.acme.Anotacao.DTO.LabelForm;
 import org.acme.Anotacao.DTO.Type;
 import org.acme.Util.InterfacesUtil.DTO;
-import org.acme.models.Funcionario;
 
 import java.time.LocalDateTime;
 import java.util.List;

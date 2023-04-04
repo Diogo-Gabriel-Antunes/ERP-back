@@ -1,11 +1,8 @@
 package org.acme.services;
 
-import org.acme.models.Atividade;
 import org.acme.models.DTO.AtividadeDTO;
 import org.acme.models.DTO.FuncionarioDTO;
 import org.acme.models.DTO.ProjetoDTO;
-import org.acme.models.Funcionario;
-import org.acme.models.Projeto;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.core.Response;

@@ -4,7 +4,6 @@ import org.acme.Util.PrimitiveUtil.StringUtil;
 import org.acme.response.ResponseBuilder;
 import org.acme.exceptions.ValidacaoException;
 import org.acme.models.DTO.TipoDeLoteDTO;
-import org.acme.models.TipoDeLote;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;

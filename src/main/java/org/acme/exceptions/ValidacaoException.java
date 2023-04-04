@@ -21,9 +21,23 @@ public class ValidacaoException extends RuntimeException {
         super(message);
     }
 
-    public void add(String validacao){
+    public void add(String mensagem,Integer statusCode,String solucao){
         Validacao novaValidacao = new Validacao();
-        novaValidacao.setErro(validacao);
+        novaValidacao.setMensagem(mensagem);
+        novaValidacao.setStatusCode(statusCode);
+        novaValidacao.setSolucao(solucao);
+        validacoes.add(novaValidacao);
+    }
+    public void add(String mensagem){
+        Validacao novaValidacao = new Validacao();
+        novaValidacao.setMensagem(mensagem);
+        novaValidacao.setSolucao("Verifique se as informações foram inseridas corretamente");
+        validacoes.add(novaValidacao);
+    }
+    public void add(String mensagem,String solucao){
+        Validacao novaValidacao = new Validacao();
+        novaValidacao.setMensagem(mensagem);
+        novaValidacao.setSolucao(solucao);
         validacoes.add(novaValidacao);
     }
 
